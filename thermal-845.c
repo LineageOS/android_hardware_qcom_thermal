@@ -22,7 +22,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define LOG_TAG "ThermalHAL-8998"
+#define LOG_TAG "ThermalHAL-845"
 #include <utils/Log.h>
 
 #include <hardware/hardware.h>
@@ -32,11 +32,11 @@
 
 #define TEMPERATURE_FILE_FORMAT       "/sys/class/thermal/thermal_zone%d/temp"
 
-#define BATTERY_SENSOR_NUM            0
-#define GPU_SENSOR_NUM                17
-#define SKIN_SENSOR_NUM               5
+#define BATTERY_SENSOR_NUM            60
+#define GPU_SENSOR_NUM                11
+#define SKIN_SENSOR_NUM               56
 
-const int CPU_SENSORS[] = {8, 9, 10, 11, 12, 13, 14,15};
+const int CPU_SENSORS[] = {1, 2, 3, 4, 7, 8, 9,10};
 
 #define CPU_NUM                       (sizeof(CPU_SENSORS) / sizeof(int))
 // Sum of CPU_NUM + 3 for GPU, BATTERY, and SKIN.
@@ -59,7 +59,7 @@ const int CPU_SENSORS[] = {8, 9, 10, 11, 12, 13, 14,15};
 const char *CPU_LABEL[] = {"CPU0", "CPU1", "CPU2", "CPU3", "CPU4", "CPU5", "CPU6", "CPU7"};
 
 const char *get_cpu_label(unsigned int cpu_num) {
-
+    ALOGD("Entering %s",__func__);
     if(cpu_num >= CPU_NUM)
         return NULL;
 
@@ -67,6 +67,7 @@ const char *get_cpu_label(unsigned int cpu_num) {
 }
 
 size_t get_num_cpus() {
+    ALOGD("Entering %s",__func__);
     return CPU_NUM;
 }
 
@@ -86,8 +87,7 @@ size_t get_num_cpus() {
  */
 static ssize_t read_temperature(int sensor_num, int type, const char *name, float mult,
         float throttling_threshold, float shutdown_threshold, float vr_throttling_threshold,
-        temperature_t *out) 
-{
+        temperature_t *out) {
     ALOGD("Entering %s",__func__);
     FILE *file;
     char file_name[MAX_LENGTH];
@@ -119,8 +119,7 @@ static ssize_t read_temperature(int sensor_num, int type, const char *name, floa
     return 0;
 }
 
-static ssize_t get_cpu_temperatures(temperature_t *list, size_t size) 
-{
+static ssize_t get_cpu_temperatures(temperature_t *list, size_t size) {
     ALOGD("Entering %s",__func__);
     size_t cpu;
     for (cpu = 0; cpu < CPU_NUM; cpu++) {
@@ -129,7 +128,7 @@ static ssize_t get_cpu_temperatures(temperature_t *list, size_t size)
         }
         // tsens_tz_sensor[4,6,9,11]: temperature in decidegrees Celsius.
         ssize_t result = read_temperature(CPU_SENSORS[cpu], DEVICE_TEMPERATURE_CPU, CPU_LABEL[cpu],
-                0.1, CPU_THROTTLING_THRESHOLD, CPU_SHUTDOWN_THRESHOLD, UNKNOWN_TEMPERATURE,
+                0.001, CPU_THROTTLING_THRESHOLD, CPU_SHUTDOWN_THRESHOLD, UNKNOWN_TEMPERATURE,
                 &list[cpu]);
         if (result != 0) {
             return result;
@@ -156,8 +155,8 @@ ssize_t get_temperatures(thermal_module_t *module, temperature_t *list, size_t s
 
     // GPU temperature.
     if (current_index < size) {
-        // tsens_tz_sensor14: temperature in decidegrees Celsius.
-        result = read_temperature(GPU_SENSOR_NUM, DEVICE_TEMPERATURE_GPU, GPU_LABEL, 0.1,
+        // tsens_tz_sensor14: temperature in millidegrees Celsius.
+        result = read_temperature(GPU_SENSOR_NUM, DEVICE_TEMPERATURE_GPU, GPU_LABEL, 0.001,
                 UNKNOWN_TEMPERATURE, UNKNOWN_TEMPERATURE, UNKNOWN_TEMPERATURE,
                 &list[current_index]);
         if (result < 0) {
@@ -180,8 +179,8 @@ ssize_t get_temperatures(thermal_module_t *module, temperature_t *list, size_t s
 
     // Skin temperature.
     if (current_index < size) {
-        // tsens_tz_sensor24: temperature in Celsius.
-        result = read_temperature(SKIN_SENSOR_NUM, DEVICE_TEMPERATURE_SKIN, SKIN_LABEL, 1.,
+        // tsens_tz_sensor24: temperature in millidegrees Celsius.
+        result = read_temperature(SKIN_SENSOR_NUM, DEVICE_TEMPERATURE_SKIN, SKIN_LABEL, .001,
                 SKIN_THROTTLING_THRESHOLD, SKIN_SHUTDOWN_THRESHOLD, VR_THROTTLED_BELOW_MIN,
                 &list[current_index]);
         if (result < 0) {
