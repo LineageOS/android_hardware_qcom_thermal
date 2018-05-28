@@ -39,6 +39,7 @@ LOCAL_SRC_FILES := thermal-default.c
 endif
 
 LOCAL_SHARED_LIBRARIES := liblog libcutils
+LOCAL_HEADER_LIBRARIES += libhardware_headers
 LOCAL_MODULE_TAGS := optional
 LOCAL_CFLAGS := -Wno-unused-parameter
 
