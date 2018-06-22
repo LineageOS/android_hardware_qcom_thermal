@@ -23,7 +23,7 @@
 #include <string.h>
 
 #define LOG_TAG "ThermalHAL-845"
-#include <utils/Log.h>
+#include <log/log.h>
 
 #include <hardware/hardware.h>
 #include <hardware/thermal.h>
