@@ -58,6 +58,7 @@ static struct therm_msm_soc_type msm_soc_table[] = {
     {THERM_SDM_630, 385},
     {THERM_SDM_710, 336},
     {THERM_SDM_710, 337},
+    {THERM_SDM_710, 393}, // This SOC ID is for SDM712
     {THERM_QCS_605, 347},
     {THERM_SDM_632, 349},
     {THERM_SDM_632, 350},
@@ -68,7 +69,58 @@ static struct therm_msm_soc_type msm_soc_table[] = {
     {THERM_MSMNILE, 339},
     {THERM_MSMNILE, 362},
     {THERM_MSMNILE, 367},
+    {THERM_TALOS,  355},
 };
+
+static char *cpu_sensors_talos[] =
+{
+    "cpuss-2-usr",
+    "cpuss-2-usr",
+    "cpuss-1-usr",
+    "cpuss-1-usr",
+    "cpuss-0-usr",
+    "cpuss-0-usr",
+    "cpu-1-0-usr",
+    "cpu-1-2-usr",
+};
+
+static char *misc_sensors_talos[] =
+{
+    "gpu-usr",
+    "battery",
+    "xo-therm"
+};
+
+static struct target_therm_cfg sensor_cfg_talos[] = {
+    {
+        .type = DEVICE_TEMPERATURE_CPU,
+        .sensor_list = cpu_sensors_talos,
+        .sens_cnt = ARRAY_SIZE(cpu_sensors_talos),
+        .mult = 0.001,
+    },
+    {
+        .type = DEVICE_TEMPERATURE_GPU,
+        .sensor_list = &misc_sensors_talos[0],
+        .sens_cnt = 1,
+        .mult = 0.001,
+        .label = "GPU",
+    },
+    {
+        .type = DEVICE_TEMPERATURE_BATTERY,
+        .sensor_list = &misc_sensors_talos[1],
+        .sens_cnt = 1,
+        .mult = 0.001,
+        .label = "battery",
+    },
+    {
+        .type = DEVICE_TEMPERATURE_SKIN,
+        .sensor_list = &misc_sensors_talos[2],
+        .sens_cnt = 1,
+        .mult = 0.001,
+        .label = "skin",
+    }
+};
+
 
 static char *cpu_sensors_msmnile[] =
 {
@@ -485,6 +537,10 @@ ssize_t get_temperatures(thermal_module_t *module, temperature_t *list, size_t s
             case THERM_MSMNILE:
                 cfg = sensor_cfg_msmnile;
                 num_cfg = ARRAY_SIZE(sensor_cfg_msmnile);
+                break;
+            case THERM_TALOS:
+                cfg = sensor_cfg_talos;
+                num_cfg = ARRAY_SIZE(sensor_cfg_talos);
                 break;
             default:
                 cfg = NULL;
