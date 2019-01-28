@@ -69,6 +69,7 @@ static struct therm_msm_soc_type msm_soc_table[] = {
     {THERM_MSMNILE, 339},
     {THERM_MSMNILE, 362},
     {THERM_MSMNILE, 367},
+    {THERM_KONA, 356},
     {THERM_TALOS,  355},
     {THERM_SDMMAGPIE, 365},
     {THERM_MSM_8917, 303},
@@ -76,6 +77,7 @@ static struct therm_msm_soc_type msm_soc_table[] = {
     {THERM_MSM_8917, 308},
     {THERM_MSM_8917, 309},
     {THERM_MSM_8917, 386}, // This SOC ID is for QM215
+    {THERM_TRINKET,  394},
 };
 
 static char *cpu_sensors_talos[] =
@@ -170,6 +172,55 @@ static struct target_therm_cfg sensor_cfg_sdmmagpie[] = {
     {
         .type = DEVICE_TEMPERATURE_SKIN,
         .sensor_list = &misc_sensors_sdmmagpie[2],
+        .sens_cnt = 1,
+        .mult = 0.001,
+        .label = "skin",
+    }
+};
+
+static char *cpu_sensors_trinket[] =
+{
+    "cpu-0-0-usr",
+    "cpu-0-1-usr",
+    "cpu-0-2-usr",
+    "cpu-0-3-usr",
+    "cpu-1-0-usr",
+    "cpu-1-1-usr",
+    "cpu-1-2-usr",
+    "cpu-1-3-usr",
+};
+
+static char *misc_sensors_trinket[] =
+{
+    "gpu-usr",
+    "battery",
+    "xo-therm-adc"
+};
+
+static struct target_therm_cfg sensor_cfg_trinket[] = {
+    {
+        .type = DEVICE_TEMPERATURE_CPU,
+        .sensor_list = cpu_sensors_trinket,
+        .sens_cnt = ARRAY_SIZE(cpu_sensors_trinket),
+        .mult = 0.001,
+    },
+    {
+        .type = DEVICE_TEMPERATURE_GPU,
+        .sensor_list = &misc_sensors_trinket[0],
+        .sens_cnt = 1,
+        .mult = 0.001,
+        .label = "GPU",
+    },
+    {
+        .type = DEVICE_TEMPERATURE_BATTERY,
+        .sensor_list = &misc_sensors_trinket[1],
+        .sens_cnt = 1,
+        .mult = 0.001,
+        .label = "battery",
+    },
+    {
+        .type = DEVICE_TEMPERATURE_SKIN,
+        .sensor_list = &misc_sensors_trinket[2],
         .sens_cnt = 1,
         .mult = 0.001,
         .label = "skin",
@@ -638,6 +689,7 @@ ssize_t get_temperatures(thermal_module_t *module, temperature_t *list, size_t s
                 num_cfg = ARRAY_SIZE(sensor_cfg_8917);
                 break;
             case THERM_MSMNILE:
+            case THERM_KONA:
                 cfg = sensor_cfg_msmnile;
                 num_cfg = ARRAY_SIZE(sensor_cfg_msmnile);
                 break;
@@ -648,6 +700,10 @@ ssize_t get_temperatures(thermal_module_t *module, temperature_t *list, size_t s
             case THERM_SDMMAGPIE:
                 cfg = sensor_cfg_sdmmagpie;
                 num_cfg = ARRAY_SIZE(sensor_cfg_sdmmagpie);
+                break;
+            case THERM_TRINKET:
+                cfg = sensor_cfg_trinket;
+                num_cfg = ARRAY_SIZE(sensor_cfg_trinket);
                 break;
             default:
                 cfg = NULL;
