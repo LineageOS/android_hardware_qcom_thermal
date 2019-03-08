@@ -180,10 +180,10 @@ static struct target_therm_cfg sensor_cfg_sdmmagpie[] = {
 
 static char *cpu_sensors_trinket[] =
 {
-    "cpuss-2-usr",
-    "cpuss-2-usr",
-    "cpuss-2-usr",
-    "cpuss-2-usr",
+    "cpuss-0-usr",
+    "cpuss-0-usr",
+    "cpuss-0-usr",
+    "cpuss-0-usr",
     "cpu-1-0-usr",
     "cpu-1-1-usr",
     "cpu-1-2-usr",
