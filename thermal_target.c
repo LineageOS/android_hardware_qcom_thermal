@@ -67,6 +67,7 @@ static struct therm_msm_soc_type msm_soc_table[] = {
     {THERM_SDM_439, 363},
     {THERM_SDM_439, 364},
     {THERM_MSMNILE, 339},
+    {THERM_MSMNILE, 361},
     {THERM_MSMNILE, 362},
     {THERM_MSMNILE, 367},
     {THERM_KONA, 356},
