@@ -80,6 +80,7 @@ static struct therm_msm_soc_type msm_soc_table[] = {
     {THERM_MSM_8917, 386}, // This SOC ID is for QM215
     {THERM_TRINKET,  394},
     {THERM_LITO,  400},
+    {THERM_ATOLL,  407},
 };
 
 static char *cpu_sensors_talos[] =
@@ -745,6 +746,7 @@ ssize_t get_temperatures(thermal_module_t *module, temperature_t *list, size_t s
                 num_cfg = ARRAY_SIZE(sensor_cfg_trinket);
                 break;
             case THERM_LITO:
+            case THERM_ATOLL:
                 cfg = sensor_cfg_lito;
                 num_cfg = ARRAY_SIZE(sensor_cfg_lito);
                 break;
