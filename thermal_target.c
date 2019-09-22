@@ -317,6 +317,36 @@ static struct target_therm_cfg sensor_cfg_msmnile[] = {
     }
 };
 
+static struct target_therm_cfg sensor_cfg_kona[] = {
+    {
+        .type = DEVICE_TEMPERATURE_CPU,
+        .sensor_list = cpu_sensors_msmnile,
+        .sens_cnt = ARRAY_SIZE(cpu_sensors_msmnile),
+        .mult = 0.001,
+    },
+    {
+        .type = DEVICE_TEMPERATURE_GPU,
+        .sensor_list = &misc_sensors_lito[0],
+        .sens_cnt = 1,
+        .mult = 0.001,
+        .label = "GPU",
+    },
+    {
+        .type = DEVICE_TEMPERATURE_BATTERY,
+        .sensor_list = &misc_sensors_lito[1],
+        .sens_cnt = 1,
+        .mult = 0.001,
+        .label = "battery",
+    },
+    {
+        .type = DEVICE_TEMPERATURE_SKIN,
+        .sensor_list = &misc_sensors_lito[2],
+        .sens_cnt = 1,
+        .mult = 0.001,
+        .label = "skin",
+    }
+};
+
 static char *cpu_sensors_660[] =
 {
     "tsens_tz_sensor1",
@@ -730,10 +760,13 @@ ssize_t get_temperatures(thermal_module_t *module, temperature_t *list, size_t s
                 num_cfg = ARRAY_SIZE(sensor_cfg_8917);
                 break;
             case THERM_MSMNILE:
-            case THERM_KONA:
                 cfg = sensor_cfg_msmnile;
                 num_cfg = ARRAY_SIZE(sensor_cfg_msmnile);
                 break;
+            case THERM_KONA:
+		cfg = sensor_cfg_kona;
+		num_cfg = ARRAY_SIZE(sensor_cfg_kona);
+		break;
             case THERM_TALOS:
                 cfg = sensor_cfg_talos;
                 num_cfg = ARRAY_SIZE(sensor_cfg_talos);
