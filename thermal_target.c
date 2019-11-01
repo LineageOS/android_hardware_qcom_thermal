@@ -82,6 +82,7 @@ static struct therm_msm_soc_type msm_soc_table[] = {
     {THERM_TRINKET,  394},
     {THERM_LITO,  400},
     {THERM_ATOLL,  407},
+    {THERM_BENGAL,  417},
 };
 
 static char *cpu_sensors_talos[] =
@@ -262,6 +263,55 @@ static struct target_therm_cfg sensor_cfg_trinket[] = {
     {
         .type = DEVICE_TEMPERATURE_SKIN,
         .sensor_list = &misc_sensors_trinket[2],
+        .sens_cnt = 1,
+        .mult = 0.001,
+        .label = "skin",
+    }
+};
+
+static char *cpu_sensors_bengal[] =
+{
+    "cpuss-2-usr",
+    "cpuss-2-usr",
+    "cpuss-2-usr",
+    "cpuss-2-usr",
+    "cpu-1-0-usr",
+    "cpu-1-1-usr",
+    "cpu-1-2-usr",
+    "cpu-1-3-usr",
+};
+
+static char *misc_sensors_bengal[] =
+{
+    "gpu-usr",
+    "battery",
+    "xo-therm-usr"
+};
+
+static struct target_therm_cfg sensor_cfg_bengal[] = {
+    {
+        .type = DEVICE_TEMPERATURE_CPU,
+        .sensor_list = cpu_sensors_bengal,
+        .sens_cnt = ARRAY_SIZE(cpu_sensors_bengal),
+        .mult = 0.001,
+    },
+    {
+        .type = DEVICE_TEMPERATURE_GPU,
+        .sensor_list = &misc_sensors_bengal[0],
+        .sens_cnt = 1,
+        .mult = 0.001,
+        .label = "GPU",
+    },
+    {
+        .type = DEVICE_TEMPERATURE_BATTERY,
+        .sensor_list = &misc_sensors_bengal[1],
+        .sens_cnt = 1,
+        .mult = 0.001,
+        .label = "battery",
+    },
+    {
+        .type = DEVICE_TEMPERATURE_SKIN,
+        .sensor_list = &misc_sensors_bengal[2],
         .sens_cnt = 1,
         .mult = 0.001,
         .label = "skin",
@@ -778,6 +828,10 @@ ssize_t get_temperatures(thermal_module_t *module, temperature_t *list, size_t s
             case THERM_TRINKET:
                 cfg = sensor_cfg_trinket;
                 num_cfg = ARRAY_SIZE(sensor_cfg_trinket);
+                break;
+            case THERM_BENGAL:
+                cfg = sensor_cfg_bengal;
+                num_cfg = ARRAY_SIZE(sensor_cfg_bengal);
                 break;
             case THERM_LITO:
             case THERM_ATOLL:
