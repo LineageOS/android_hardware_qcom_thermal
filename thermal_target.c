@@ -85,6 +85,13 @@ static struct therm_msm_soc_type msm_soc_table[] = {
     {THERM_BENGAL,  417},
 };
 
+static char *gen_sensors_list[] =
+{
+    "gpuss-max-step",
+    "battery",
+    "skin-msm-therm-usr"
+};
+
 static char *cpu_sensors_talos[] =
 {
     "cpuss-2-usr",
@@ -376,21 +383,21 @@ static struct target_therm_cfg sensor_cfg_kona[] = {
     },
     {
         .type = DEVICE_TEMPERATURE_GPU,
-        .sensor_list = &misc_sensors_lito[0],
+        .sensor_list = &gen_sensors_list[0],
         .sens_cnt = 1,
         .mult = 0.001,
         .label = "GPU",
     },
     {
         .type = DEVICE_TEMPERATURE_BATTERY,
-        .sensor_list = &misc_sensors_lito[1],
+        .sensor_list = &gen_sensors_list[1],
         .sens_cnt = 1,
         .mult = 0.001,
         .label = "battery",
     },
     {
         .type = DEVICE_TEMPERATURE_SKIN,
-        .sensor_list = &misc_sensors_lito[2],
+        .sensor_list = &gen_sensors_list[2],
         .sens_cnt = 1,
         .mult = 0.001,
         .label = "skin",
