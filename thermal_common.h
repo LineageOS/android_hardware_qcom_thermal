@@ -1,4 +1,4 @@
-/* Copyright (c) 2018-2019, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2018-2020, The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -47,6 +47,7 @@ enum therm_msm_id {
     THERM_LITO,
     THERM_ATOLL,
     THERM_BENGAL,
+    THERM_LAGOON,
 };
 
 struct target_therm_cfg {

@@ -1,4 +1,4 @@
-/* Copyright (c) 2018-2019, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2018-2020, The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -86,6 +86,7 @@ static struct therm_msm_soc_type msm_soc_table[] = {
     {THERM_BENGAL,  444},
     {THERM_BENGAL,  445},
     {THERM_BENGAL,  420},
+    {THERM_LAGOON,  434},
 };
 
 static char *gen_sensors_list[] =
@@ -845,6 +846,7 @@ ssize_t get_temperatures(thermal_module_t *module, temperature_t *list, size_t s
                 break;
             case THERM_LITO:
             case THERM_ATOLL:
+            case THERM_LAGOON:
                 cfg = sensor_cfg_lito;
                 num_cfg = ARRAY_SIZE(sensor_cfg_lito);
                 break;
