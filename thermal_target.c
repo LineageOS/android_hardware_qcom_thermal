@@ -1,4 +1,4 @@
-/* Copyright (c) 2018-2019, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2018-2020, The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -78,9 +78,22 @@ static struct therm_msm_soc_type msm_soc_table[] = {
     {THERM_MSM_8917, 308},
     {THERM_MSM_8917, 309},
     {THERM_MSM_8917, 386}, // This SOC ID is for QM215
+    {THERM_MSM_8917, 436}, // This SOC ID is for QCM2150
     {THERM_TRINKET,  394},
     {THERM_LITO,  400},
     {THERM_ATOLL,  407},
+    {THERM_BENGAL,  417},
+    {THERM_BENGAL,  444},
+    {THERM_BENGAL,  445},
+    {THERM_BENGAL,  420},
+    {THERM_LAGOON,  434},
+};
+
+static char *gen_sensors_list[] =
+{
+    "gpuss-max-step",
+    "battery",
+    "skin-msm-therm-usr"
 };
 
 static char *cpu_sensors_talos[] =
@@ -267,6 +280,55 @@ static struct target_therm_cfg sensor_cfg_trinket[] = {
     }
 };
 
+static char *cpu_sensors_bengal[] =
+{
+    "cpuss-2-usr",
+    "cpuss-2-usr",
+    "cpuss-2-usr",
+    "cpuss-2-usr",
+    "cpu-1-0-usr",
+    "cpu-1-1-usr",
+    "cpu-1-2-usr",
+    "cpu-1-3-usr",
+};
+
+static char *misc_sensors_bengal[] =
+{
+    "gpu-usr",
+    "battery",
+    "xo-therm-usr"
+};
+
+static struct target_therm_cfg sensor_cfg_bengal[] = {
+    {
+        .type = DEVICE_TEMPERATURE_CPU,
+        .sensor_list = cpu_sensors_bengal,
+        .sens_cnt = ARRAY_SIZE(cpu_sensors_bengal),
+        .mult = 0.001,
+    },
+    {
+        .type = DEVICE_TEMPERATURE_GPU,
+        .sensor_list = &misc_sensors_bengal[0],
+        .sens_cnt = 1,
+        .mult = 0.001,
+        .label = "GPU",
+    },
+    {
+        .type = DEVICE_TEMPERATURE_BATTERY,
+        .sensor_list = &misc_sensors_bengal[1],
+        .sens_cnt = 1,
+        .mult = 0.001,
+        .label = "battery",
+    },
+    {
+        .type = DEVICE_TEMPERATURE_SKIN,
+        .sensor_list = &misc_sensors_bengal[2],
+        .sens_cnt = 1,
+        .mult = 0.001,
+        .label = "skin",
+    }
+};
+
 static char *cpu_sensors_msmnile[] =
 {
     "cpu-0-0-usr",
@@ -310,6 +372,36 @@ static struct target_therm_cfg sensor_cfg_msmnile[] = {
     {
         .type = DEVICE_TEMPERATURE_SKIN,
         .sensor_list = &misc_sensors_msmnile[2],
+        .sens_cnt = 1,
+        .mult = 0.001,
+        .label = "skin",
+    }
+};
+
+static struct target_therm_cfg sensor_cfg_kona[] = {
+    {
+        .type = DEVICE_TEMPERATURE_CPU,
+        .sensor_list = cpu_sensors_msmnile,
+        .sens_cnt = ARRAY_SIZE(cpu_sensors_msmnile),
+        .mult = 0.001,
+    },
+    {
+        .type = DEVICE_TEMPERATURE_GPU,
+        .sensor_list = &gen_sensors_list[0],
+        .sens_cnt = 1,
+        .mult = 0.001,
+        .label = "GPU",
+    },
+    {
+        .type = DEVICE_TEMPERATURE_BATTERY,
+        .sensor_list = &gen_sensors_list[1],
+        .sens_cnt = 1,
+        .mult = 0.001,
+        .label = "battery",
+    },
+    {
+        .type = DEVICE_TEMPERATURE_SKIN,
+        .sensor_list = &gen_sensors_list[2],
         .sens_cnt = 1,
         .mult = 0.001,
         .label = "skin",
@@ -729,10 +821,13 @@ ssize_t get_temperatures(thermal_module_t *module, temperature_t *list, size_t s
                 num_cfg = ARRAY_SIZE(sensor_cfg_8917);
                 break;
             case THERM_MSMNILE:
-            case THERM_KONA:
                 cfg = sensor_cfg_msmnile;
                 num_cfg = ARRAY_SIZE(sensor_cfg_msmnile);
                 break;
+            case THERM_KONA:
+		cfg = sensor_cfg_kona;
+		num_cfg = ARRAY_SIZE(sensor_cfg_kona);
+		break;
             case THERM_TALOS:
                 cfg = sensor_cfg_talos;
                 num_cfg = ARRAY_SIZE(sensor_cfg_talos);
@@ -745,8 +840,13 @@ ssize_t get_temperatures(thermal_module_t *module, temperature_t *list, size_t s
                 cfg = sensor_cfg_trinket;
                 num_cfg = ARRAY_SIZE(sensor_cfg_trinket);
                 break;
+            case THERM_BENGAL:
+                cfg = sensor_cfg_bengal;
+                num_cfg = ARRAY_SIZE(sensor_cfg_bengal);
+                break;
             case THERM_LITO:
             case THERM_ATOLL:
+            case THERM_LAGOON:
                 cfg = sensor_cfg_lito;
                 num_cfg = ARRAY_SIZE(sensor_cfg_lito);
                 break;
