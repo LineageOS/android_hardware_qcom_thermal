@@ -59,13 +59,13 @@ class ThermalUtils {
 		{
 			return is_cdev_init;
 		};
-		int readTemperatures(hidl_vec<Temperature_1_0> *temp);
+		int readTemperatures(hidl_vec<Temperature_1_0>& temp);
 		int readTemperatures(bool filterType, TemperatureType type,
-                                            hidl_vec<Temperature> *temperatures);
+                                            hidl_vec<Temperature>& temperatures);
 		int readTemperatureThreshold(bool filterType, TemperatureType type,
-                                            hidl_vec<TemperatureThreshold> *thresh);
+                                            hidl_vec<TemperatureThreshold>& thresh);
 		int readCdevStates(bool filterType, cdevType type,
-                                            hidl_vec<CoolingDevice> *cdev);
+                                            hidl_vec<CoolingDevice>& cdev);
 		int fetchCpuUsages(hidl_vec<CpuUsage>& cpu_usages);
 	private:
 		bool is_sensor_init;

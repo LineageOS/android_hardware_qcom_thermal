@@ -51,6 +51,15 @@ namespace implementation {
 
 using ::android::hardware::interfacesEqual;
 
+static const Temperature_1_0 dummy_temp_1_0 = {
+	.type = TemperatureType_1_0::SKIN,
+	.name = "test sensor",
+	.currentValue = 30,
+	.throttlingThreshold = 40,
+	.shutdownThreshold = 60,
+	.vrThrottlingThreshold = 40,
+};
+
 template <typename A, typename B>
 Return<void> exit_hal(A _cb, hidl_vec<B> _data, std::string_view _msg) {
 	ThermalStatus _status;
@@ -86,11 +95,14 @@ Return<void> Thermal::getTemperatures(getTemperatures_cb _hidl_cb)
 	hidl_vec<Temperature_1_0> temperatures;
 
 	status.code = ThermalStatusCode::SUCCESS;
-	if (!utils.isSensorInitialized())
-		return exit_hal(_hidl_cb, temperatures,
-			"ThermalHAL not initialized properly.");
+	if (!utils.isSensorInitialized()) {
+		std::vector<Temperature_1_0> _temp = {dummy_temp_1_0};
+		LOG(INFO) << "Returning Dummy Value" << std::endl;
+		_hidl_cb(status, _temp);
+		return Void();
+	}
 
-	if (!utils.readTemperatures(&temperatures))
+	if (utils.readTemperatures(temperatures) <= 0)
 		return exit_hal(_hidl_cb, temperatures,
 				"Sensor Temperature read failure.");
 
@@ -106,9 +118,6 @@ Return<void> Thermal::getCpuUsages(getCpuUsages_cb _hidl_cb)
 	hidl_vec<CpuUsage> cpu_usages;
 
 	status.code = ThermalStatusCode::SUCCESS;
-	if (!utils.isSensorInitialized())
-		return exit_hal(_hidl_cb, cpu_usages,
-			"ThermalHAL not initialized properly.");
 	if (utils.fetchCpuUsages(cpu_usages) <= 0)
 		return exit_hal(_hidl_cb, cpu_usages,
 				"CPU usage read failure.");
@@ -123,9 +132,6 @@ Return<void> Thermal::getCoolingDevices(getCoolingDevices_cb _hidl_cb)
 	hidl_vec<CoolingDevice_1_0> cdev;
 
 	status.code = ThermalStatusCode::SUCCESS;
-	if (!utils.isCdevInitialized())
-		return exit_hal(_hidl_cb, cdev,
-			"ThermalHAL not initialized properly.");
 	/* V1 Cdev requires only Fan Support. */
 	_hidl_cb(status, cdev);
 	return Void();
@@ -143,7 +149,7 @@ Return<void> Thermal::getCurrentCoolingDevices(
 	if (!utils.isCdevInitialized())
 		return exit_hal(_hidl_cb, cdev,
 			"ThermalHAL not initialized properly.");
-	if (!utils.readCdevStates(filterType, type, &cdev))
+	if (utils.readCdevStates(filterType, type, cdev) <= 0)
 		return exit_hal(_hidl_cb, cdev,
 			"Failed to read thermal cooling devices.");
 
@@ -164,7 +170,7 @@ Return<void> Thermal::getCurrentTemperatures(
 		return exit_hal(_hidl_cb, temperatures,
 			"ThermalHAL not initialized properly.");
 
-	if (!utils.readTemperatures(filterType, type, &temperatures))
+	if (utils.readTemperatures(filterType, type, temperatures) <= 0)
 		return exit_hal(_hidl_cb, temperatures,
 				"Sensor Temperature read failure.");
 
@@ -186,9 +192,9 @@ Return<void> Thermal::getTemperatureThresholds(
 		return exit_hal(_hidl_cb, thresh,
 			"ThermalHAL not initialized properly.");
 
-	if (!utils.readTemperatureThreshold(filterType, type, &thresh))
+	if (utils.readTemperatureThreshold(filterType, type, thresh) <= 0)
 		return exit_hal(_hidl_cb, thresh,
-				"Sensor Temperature threshold read failure.");
+		"Sensor Threshold read failure or type not supported.");
 
 	_hidl_cb(status, thresh);
 
@@ -203,7 +209,6 @@ Return<void> Thermal::registerThermalChangedCallback(
 {
 	ThermalStatus status;
 	std::lock_guard<std::mutex> _lock(thermal_cb_mutex);
-	std::vector<CallbackSetting>::iterator it;
 
         status.code = ThermalStatusCode::SUCCESS;
 	if (callback == nullptr)
@@ -213,8 +218,8 @@ Return<void> Thermal::registerThermalChangedCallback(
 		return exit_hal(_hidl_cb,
 			"BCL current and voltage notification not supported");
 
-	for (it = cb.begin(); it != cb.end(); it++) {
-		if (interfacesEqual(it->callback, callback))
+	for (CallbackSetting _cb: cb) {
+		if (interfacesEqual(_cb.callback, callback))
 			return exit_hal(_hidl_cb,
 				"Same callback interface registered already");
 	}
@@ -264,9 +269,17 @@ void Thermal::sendThrottlingChangeCB(const Temperature &t)
 	LOG(DEBUG) << "Throttle Severity change: " << " Type: " << (int)t.type
 		<< " Name: " << t.name << " Value: " << t.value <<
 		" ThrottlingStatus: " << (int)t.throttlingStatus;
-	for (it = cb.begin(); it != cb.end(); it++) {
-		if (!it->is_filter_type || it->type == t.type)
-			it->callback->notifyThrottling(t);
+	it = cb.begin();
+	while (it != cb.end()) {
+		if (!it->is_filter_type || it->type == t.type) {
+			Return<void> ret = it->callback->notifyThrottling(t);
+			if (!ret.isOk()) {
+				LOG(ERROR) << "Notify callback execution error. Removing";
+				it = cb.erase(it);
+				continue;
+			}
+		}
+		it++;
 	}
 }
 

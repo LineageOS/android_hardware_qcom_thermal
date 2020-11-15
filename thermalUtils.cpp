@@ -103,35 +103,46 @@ void ThermalUtils::ueventParse(std::string sensor_name, int temp)
 	}
 }
 
-int ThermalUtils::readTemperatures(hidl_vec<Temperature_1_0> *temp)
+int ThermalUtils::readTemperatures(hidl_vec<Temperature_1_0>& temp)
 {
 	std::unordered_map<std::string, struct therm_sensor>::iterator it;
 	int ret = 0, idx = 0;
+	std::vector<Temperature_1_0> _temp_v;
 
 	if (!is_sensor_init)
 		return 0;
-	temp->resize(thermalConfig.size());
 	for (it = thermalConfig.begin(); it != thermalConfig.end();
 			it++, idx++) {
 		struct therm_sensor sens = it->second;
+		Temperature_1_0 _temp;
+
+		/* v1 supports only CPU, GPU, Battery and SKIN */
+		if (sens.t.type > TemperatureType::SKIN)
+			continue;
 		ret = cmnInst.read_temperature(&sens);
 		if (ret < 0)
 			return ret;
-		(*temp)[idx].currentValue = sens.t.value;
-		(*temp)[idx].name = sens.t.name;
-		(*temp)[idx].type = (TemperatureType_1_0)sens.t.type;
+		_temp.currentValue = sens.t.value;
+		_temp.name = sens.t.name;
+		_temp.type = (TemperatureType_1_0)sens.t.type;
+		_temp.throttlingThreshold = sens.thresh.hotThrottlingThresholds[
+					(size_t)ThrottlingSeverity::SEVERE];
+		_temp.shutdownThreshold = sens.thresh.hotThrottlingThresholds[
+					(size_t)ThrottlingSeverity::SHUTDOWN];
+		_temp.vrThrottlingThreshold = sens.thresh.vrThrottlingThreshold;
+		_temp_v.push_back(_temp);
 	}
 
-	return temp->size();
+	temp = _temp_v;
+	return temp.size();
 }
 
 int ThermalUtils::readTemperatures(bool filterType, TemperatureType type,
-                                            hidl_vec<Temperature> *temperatures)
+                                            hidl_vec<Temperature>& temp)
 {
-	std::vector<Temperature> local_temp;
 	std::unordered_map<std::string, struct therm_sensor>::iterator it;
 	int ret = 0;
-	Temperature nantemp;
+	std::vector<Temperature> _temp;
 
 	for (it = thermalConfig.begin(); it != thermalConfig.end(); it++) {
 		struct therm_sensor sens = it->second;
@@ -141,75 +152,50 @@ int ThermalUtils::readTemperatures(bool filterType, TemperatureType type,
 		ret = cmnInst.read_temperature(&sens);
 		if (ret < 0)
 			return ret;
-		local_temp.push_back(sens.t);
+		_temp.push_back(sens.t);
 	}
-	if (local_temp.empty()) {
-		nantemp.type = type;
-		nantemp.value = UNKNOWN_TEMPERATURE;
-		local_temp.push_back(nantemp);
-	}
-	*temperatures = local_temp;
 
-	return temperatures->size();
+	temp = _temp;
+	return temp.size();
 }
 
 int ThermalUtils::readTemperatureThreshold(bool filterType, TemperatureType type,
-                                            hidl_vec<TemperatureThreshold> *thresh)
+                                            hidl_vec<TemperatureThreshold>& thresh)
 {
-	std::vector<TemperatureThreshold> local_thresh;
 	std::unordered_map<std::string, struct therm_sensor>::iterator it;
-	int idx = 0;
-	TemperatureThreshold nanthresh;
+	std::vector<TemperatureThreshold> _thresh;
 
 	for (it = thermalConfig.begin(); it != thermalConfig.end(); it++) {
 		struct therm_sensor sens = it->second;
 
 		if (filterType && sens.t.type != type)
 			continue;
-		local_thresh.push_back(sens.thresh);
+		_thresh.push_back(sens.thresh);
 	}
-	if (local_thresh.empty()) {
-		nanthresh.type = type;
-		nanthresh.vrThrottlingThreshold = UNKNOWN_TEMPERATURE;
-		for (idx = 0; idx < (size_t)ThrottlingSeverity::SHUTDOWN;
-				idx++) {
-			nanthresh.hotThrottlingThresholds[idx] =
-			nanthresh.coldThrottlingThresholds[idx] =
-				UNKNOWN_TEMPERATURE;
-		}
-		local_thresh.push_back(nanthresh);
-	}
-	*thresh = local_thresh;
 
-	return thresh->size();
+	thresh = _thresh;
+	return thresh.size();
 }
 
 int ThermalUtils::readCdevStates(bool filterType, cdevType type,
-                                            hidl_vec<CoolingDevice> *cdev_out)
+                                            hidl_vec<CoolingDevice>& cdev_out)
 {
-	std::vector<CoolingDevice> local_cdev;
-	std::vector<struct therm_cdev>::iterator it;
 	int ret = 0;
-	CoolingDevice nanCdev;
+	std::vector<CoolingDevice> _cdev;
 
-	for (it = cdevList.begin(); it != cdevList.end(); it++) {
-		struct therm_cdev cdev = *it;
+	for (struct therm_cdev cdev: cdevList) {
 
 		if (filterType && cdev.c.type != type)
 			continue;
 		ret = cmnInst.read_cdev_state(&cdev);
 		if (ret < 0)
 			return ret;
-		local_cdev.push_back(cdev.c);
+		_cdev.push_back(cdev.c);
 	}
-	if (local_cdev.empty()) {
-		nanCdev.type = type;
-		nanCdev.value = UNKNOWN_TEMPERATURE;
-		local_cdev.push_back(nanCdev);
-	}
-	*cdev_out = local_cdev;
 
-	return cdev_out->size();
+	cdev_out = _cdev;
+
+	return cdev_out.size();
 }
 
 int ThermalUtils::fetchCpuUsages(hidl_vec<CpuUsage>& cpu_usages)
