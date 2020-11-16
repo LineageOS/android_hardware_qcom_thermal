@@ -302,6 +302,72 @@ namespace implementation {
 		"cpu-1-3-usr",
 	};
 
+	std::vector<struct target_therm_cfg>  sensor_cfg_msmnile = {
+		{
+			TemperatureType::CPU,
+			cpu_sensors_kona,
+			"",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-0-usr" },
+			"gpu0",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-1-usr" },
+			"gpu1",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::SKIN,
+			{ "xo-therm" },
+			"skin",
+			40000,
+			95000,
+			40000,
+			true,
+		},
+		{
+			TemperatureType::BCL_CURRENT,
+			{ "pm8150b-ibat-lvl0" },
+			"ibat",
+			4500,
+			5000,
+			4500,
+			true,
+		},
+		{
+			TemperatureType::BCL_VOLTAGE,
+			{ "pm8150b-vbat-lvl0" },
+			"vbat",
+			3200,
+			3000,
+			3200,
+			false,
+		},
+		{
+			TemperatureType::BCL_PERCENTAGE,
+			{ "soc" },
+			"soc",
+			10,
+			2,
+			10,
+			false,
+		},
+	};
+
 	std::vector<struct target_therm_cfg>  kona_common = {
 		{
 			TemperatureType::CPU,
@@ -525,6 +591,10 @@ namespace implementation {
 		{366, sensor_cfg_sdmmagpie},
 		{434, sensor_cfg_lito}, // lagoon
 		{476, sensor_cfg_lito}, // orchid
+		{339, sensor_cfg_msmnile},
+		{361, sensor_cfg_msmnile},
+		{362, sensor_cfg_msmnile},
+		{367, sensor_cfg_msmnile},
 		{356, kona_common}, // kona
 		{415, lahaina_common}, // lahaina
 		{439, lahaina_common}, // lahainap
