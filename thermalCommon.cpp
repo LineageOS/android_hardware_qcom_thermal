@@ -474,6 +474,7 @@ void ThermalCommon::initThreshold(struct therm_sensor& sensor)
 			sensor.t.name;
 		return;
 	}
+#ifndef ENABLE_THERMAL_NETLINK
 	snprintf(file_name, sizeof(file_name), POLICY_FILE_FORMAT,
 			sensor.tzn);
 	ret = readLineFromFile(std::string(file_name), buf);
@@ -487,7 +488,7 @@ void ThermalCommon::initThreshold(struct therm_sensor& sensor)
 			sensor.t.name << std::endl;
 		return;
 	}
-
+#endif
 	next_trip = UNKNOWN_TEMPERATURE;
 	for (idx = 0;idx <= (int)ThrottlingSeverity::SHUTDOWN; idx++) {
 		if (isnan(sensor.thresh.hotThrottlingThresholds[idx])
