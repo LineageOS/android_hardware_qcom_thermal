@@ -80,6 +80,7 @@ class ThermalUtils {
 		ueventCB cb;
 
 		void ueventParse(std::string sensor_name, int temp);
+		void Notify(struct therm_sensor& sens);
 };
 
 }  // namespace implementation

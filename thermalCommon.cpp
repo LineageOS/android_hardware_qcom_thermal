@@ -113,14 +113,14 @@ static int writeToFile(std::string_view path, std::string data)
 	return -1;
 }
 
-static int readLineFromFile(std::string_view path, std::string *out)
+static int readLineFromFile(std::string_view path, std::string& out)
 {
 	char *fgets_ret;
 	FILE *fd;
 	int rv;
 	char buf[MAX_LENGTH];
 
-	out->clear();
+	out.clear();
 
 	fd = fopen(std::string(path).c_str(), "r");
 	if (fd == NULL) {
@@ -132,19 +132,19 @@ static int readLineFromFile(std::string_view path, std::string *out)
 	fgets_ret = fgets(buf, MAX_LENGTH, fd);
 	if (NULL != fgets_ret) {
 		rv = (int)strlen(buf);
-		out->append(buf, rv);
+		out.append(buf, rv);
 	} else {
 		rv = ferror(fd);
 	}
 
 	fclose(fd);
-	out->erase(std::remove(out->begin(), out->end(), '\n'), out->end());
-	LOG(DEBUG) << "Path:" << std::string(path) << " Val:" << *out << std::endl;
+	out.erase(std::remove(out.begin(), out.end(), '\n'), out.end());
+	LOG(DEBUG) << "Path:" << std::string(path) << " Val:" << out << std::endl;
 
 	return rv;
 }
 
-int ThermalCommon::readFromFile(std::string_view path, std::string *out)
+int ThermalCommon::readFromFile(std::string_view path, std::string& out)
 {
 	return readLineFromFile(path, out);
 }
@@ -183,7 +183,7 @@ static int get_tzn(std::string sensor_name)
 
 		snprintf(name, MAX_PATH, "%s%s/%s", THERMAL_SYSFS,
 				tdirent->d_name, TZ_TYPE);
-		ret = readLineFromFile(std::string_view(name), &buf);
+		ret = readLineFromFile(std::string_view(name), buf);
 		if (ret <= 0) {
 			LOG(ERROR) <<
 				"get_tzn: sensor name read error for tz:" <<
@@ -211,7 +211,7 @@ static int get_tzn(std::string sensor_name)
 	return found;
 }
 
-int ThermalCommon::initialize_sensor(struct target_therm_cfg cfg, int sens_idx)
+int ThermalCommon::initialize_sensor(struct target_therm_cfg& cfg, int sens_idx)
 {
 	struct therm_sensor sensor;
 	int idx = 0;
@@ -270,7 +270,7 @@ int ThermalCommon::initialize_sensor(struct target_therm_cfg cfg, int sens_idx)
 	return 0;
 }
 
-int ThermalCommon::initializeCpuSensor(struct target_therm_cfg cpu_cfg)
+int ThermalCommon::initializeCpuSensor(struct target_therm_cfg& cpu_cfg)
 {
 	int cpu = 0;
 
@@ -282,7 +282,7 @@ int ThermalCommon::initializeCpuSensor(struct target_therm_cfg cpu_cfg)
 	return 0;
 }
 
-int ThermalCommon::initThermalZones(std::vector<struct target_therm_cfg> cfg)
+int ThermalCommon::initThermalZones(std::vector<struct target_therm_cfg>& cfg)
 {
 	std::vector<struct target_therm_cfg>::iterator it;
 
@@ -342,7 +342,7 @@ int ThermalCommon::initCdev()
 
 		snprintf(name, MAX_PATH, "%s%s/%s", THERMAL_SYSFS,
 				tdirent->d_name, TZ_TYPE);
-		ret = readLineFromFile(std::string_view(name), &buf);
+		ret = readLineFromFile(std::string_view(name), buf);
 		if (ret <= 0) {
 			LOG(ERROR) <<
 				"init_cdev: cdev type read error for cdev:" <<
@@ -357,7 +357,7 @@ int ThermalCommon::initCdev()
 		cdevInst.c.name = it->first;
 		cdevInst.c.type = it->second;
 		cdevInst.cdevn = cdevn;
-		read_cdev_state(&cdevInst);
+		read_cdev_state(cdevInst);
 		cdev.push_back(cdevInst);
 	}
 
@@ -368,7 +368,7 @@ int ThermalCommon::initCdev()
 	return cdev.size();
 }
 
-int ThermalCommon::read_cdev_state(struct therm_cdev *cdev)
+int ThermalCommon::read_cdev_state(struct therm_cdev& cdev)
 {
 	char file_name[MAX_PATH];
 	std::string buf;
@@ -376,51 +376,68 @@ int ThermalCommon::read_cdev_state(struct therm_cdev *cdev)
 
 	LOG(DEBUG) << "Entering " <<__func__;
 	snprintf(file_name, sizeof(file_name), CDEV_CUR_STATE_PATH,
-			cdev->cdevn);
-	ret = readLineFromFile(std::string(file_name), &buf);
+			cdev.cdevn);
+	ret = readLineFromFile(std::string(file_name), buf);
 	if (ret <= 0) {
 		LOG(ERROR) << "Cdev state read error:"<< ret <<
-			" for cdev: " << cdev->c.name;
+			" for cdev: " << cdev.c.name;
 		return -1;
 	}
-	cdev->c.value = std::stoi(buf);
-	LOG(DEBUG) << "cdev Name:" << cdev->c.name << ". state:" <<
-		cdev->c.value << std::endl;
+	cdev.c.value = std::stoi(buf, nullptr, 0);
+	LOG(DEBUG) << "cdev Name:" << cdev.c.name << ". state:" <<
+		cdev.c.value << std::endl;
 
-	return cdev->c.value;
+	return cdev.c.value;
 }
 
-int ThermalCommon::estimateSeverity(struct therm_sensor *sensor)
+int ThermalCommon::estimateSeverity(struct therm_sensor& sensor)
 {
 	int idx = 0;
 	ThrottlingSeverity severity = ThrottlingSeverity::NONE;
-	float temp = sensor->t.value;
+	float temp = sensor.t.value;
 
 	for (idx = (int)ThrottlingSeverity::SHUTDOWN; idx >= 0; idx--) {
-		if ((sensor->positiveThresh &&
-			!isnan(sensor->thresh.hotThrottlingThresholds[idx]) &&
+		/* If a particular threshold is hit already, check if the
+		 * hysteresis is cleared before changing the severity */
+		if (idx == (int)sensor.t.throttlingStatus) {
+			if ((sensor.positiveThresh &&
+				!isnan(sensor.thresh.hotThrottlingThresholds[idx]) &&
+				temp >=
+				(sensor.thresh.hotThrottlingThresholds[idx] -
+				DEFAULT_HYSTERESIS / sensor.mulFactor)) ||
+				(!sensor.positiveThresh &&
+				!isnan(sensor.thresh.coldThrottlingThresholds[idx]) &&
+				temp <=
+				(sensor.thresh.coldThrottlingThresholds[idx] +
+				DEFAULT_HYSTERESIS / sensor.mulFactor)))
+				break;
+			continue;
+		}
+		if ((sensor.positiveThresh &&
+			!isnan(sensor.thresh.hotThrottlingThresholds[idx]) &&
 			temp >=
-			sensor->thresh.hotThrottlingThresholds[idx]) ||
-		 	(!sensor->positiveThresh &&
-			!isnan(sensor->thresh.coldThrottlingThresholds[idx]) &&
+			sensor.thresh.hotThrottlingThresholds[idx]) ||
+		 	(!sensor.positiveThresh &&
+			!isnan(sensor.thresh.coldThrottlingThresholds[idx]) &&
 			temp <=
-			sensor->thresh.coldThrottlingThresholds[idx]))
+			sensor.thresh.coldThrottlingThresholds[idx]))
 			break;
 	}
 	if (idx >= 0)
 		severity = (ThrottlingSeverity)(idx);
-	LOG(DEBUG) << "Sensor Name:" << sensor->t.name << ". old severity:" <<
-		(int)sensor->t.throttlingStatus << " New severity:" <<
+	LOG(DEBUG) << "Sensor Name:" << sensor.t.name << ". prev severity:" <<
+		(int)sensor.lastThrottleStatus << ". cur severity:" <<
+		(int)sensor.t.throttlingStatus << " New severity:" <<
 		(int)severity << std::endl;
-	if (severity == sensor->t.throttlingStatus)
-		return 0;
-	sensor->lastThrottleStatus = sensor->t.throttlingStatus;
-	sensor->t.throttlingStatus = severity;
+	if (severity == sensor.t.throttlingStatus)
+		return -1;
+	sensor.lastThrottleStatus = sensor.t.throttlingStatus;
+	sensor.t.throttlingStatus = severity;
 
-	return 0;
+	return (int)severity;
 }
 
-int ThermalCommon::read_temperature(struct therm_sensor *sensor)
+int ThermalCommon::read_temperature(struct therm_sensor& sensor)
 {
 	char file_name[MAX_PATH];
 	float temp;
@@ -429,21 +446,21 @@ int ThermalCommon::read_temperature(struct therm_sensor *sensor)
 
 	LOG(DEBUG) << "Entering " <<__func__;
 	snprintf(file_name, sizeof(file_name), TEMPERATURE_FILE_FORMAT,
-			sensor->tzn);
-	ret = readLineFromFile(std::string(file_name), &buf);
+			sensor.tzn);
+	ret = readLineFromFile(std::string(file_name), buf);
 	if (ret <= 0) {
 		LOG(ERROR) << "Temperature read error:"<< ret <<
-			" for sensor " << sensor->t.name;
+			" for sensor " << sensor.t.name;
 		return -1;
 	}
-	sensor->t.value = (float)std::stoi(buf) / (float)sensor->mulFactor;
-	LOG(DEBUG) << "Sensor Name:" << sensor->t.name << ". Temperature:" <<
-		(float)sensor->t.value << std::endl;
+	sensor.t.value = (float)std::stoi(buf, nullptr, 0) / (float)sensor.mulFactor;
+	LOG(DEBUG) << "Sensor Name:" << sensor.t.name << ". Temperature:" <<
+		(float)sensor.t.value << std::endl;
 
-	return estimateSeverity(sensor);
+	return ret;
 }
 
-void ThermalCommon::initThreshold(struct therm_sensor sensor)
+void ThermalCommon::initThreshold(struct therm_sensor& sensor)
 {
 	char file_name[MAX_PATH] = "";
 	std::string buf;
@@ -459,7 +476,7 @@ void ThermalCommon::initThreshold(struct therm_sensor sensor)
 	}
 	snprintf(file_name, sizeof(file_name), POLICY_FILE_FORMAT,
 			sensor.tzn);
-	ret = readLineFromFile(std::string(file_name), &buf);
+	ret = readLineFromFile(std::string(file_name), buf);
 	if (ret <= 0) {
 		LOG(ERROR) << "Policy read error:"<< ret <<
 			" for sensor " << sensor.t.name;

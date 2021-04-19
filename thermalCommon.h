@@ -44,14 +44,14 @@ class ThermalCommon {
 		ThermalCommon();
 		~ThermalCommon() = default;
 
-		int readFromFile(std::string_view path, std::string *out);
-		int initThermalZones(std::vector<struct target_therm_cfg> cfg);
-		void initThreshold(struct therm_sensor sens);
+		int readFromFile(std::string_view path, std::string& out);
+		int initThermalZones(std::vector<struct target_therm_cfg>& cfg);
+		void initThreshold(struct therm_sensor& sens);
 		int initCdev();
 
-		int read_cdev_state(struct therm_cdev *cdev);
-		int read_temperature(struct therm_sensor *sensor);
-		int estimateSeverity(struct therm_sensor *sensor);
+		int read_cdev_state(struct therm_cdev& cdev);
+		int read_temperature(struct therm_sensor& sensor);
+		int estimateSeverity(struct therm_sensor& sensor);
 		int get_cpu_usages(hidl_vec<CpuUsage>& list);
 
 		std::vector<struct therm_sensor> fetch_sensor_list()
@@ -69,8 +69,8 @@ class ThermalCommon {
 		std::vector<struct therm_sensor> sens;
 		std::vector<struct therm_cdev> cdev;
 
-		int initializeCpuSensor(struct target_therm_cfg cpu_cfg);
-		int initialize_sensor(struct target_therm_cfg cfg,
+		int initializeCpuSensor(struct target_therm_cfg& cpu_cfg);
+		int initialize_sensor(struct target_therm_cfg& cfg,
 					int sens_idx);
 };
 
