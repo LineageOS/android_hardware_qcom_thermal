@@ -42,7 +42,7 @@ cc_binary {
 	],
 	vendor: true,
 	relative_install_path: "hw",
-	init_rc: ["android.hardware.thermal@2.0-service.qti.rc"],
+	init_rc: ["android.hardware.thermal@2.0-service.qti-v2.rc"],
 	vintf_fragments: ["android.hardware.thermal@2.0-service.qti.xml"],
 	srcs: [
 		"service.cpp",
