@@ -674,6 +674,96 @@ namespace implementation {
 		},
 	};
 
+	std::vector<std::string> cpu_sensors_waipio =
+	{
+		"cpu-0-0",
+		"cpu-0-1",
+		"cpu-0-2",
+		"cpu-0-3",
+		"cpu-1-0",
+		"cpu-1-2",
+		"cpu-1-4",
+		"cpu-1-6",
+	};
+
+	std::vector<struct target_therm_cfg>  waipio_common = {
+		{
+			TemperatureType::CPU,
+			cpu_sensors_waipio,
+			"",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-0" },
+			"GPU0",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-1" },
+			"GPU1",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nspss-0" },
+			"nsp0",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nspss-1" },
+			"nsp1",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nspss-2" },
+			"nsp2",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::SKIN,
+			{ "xo-therm" },
+			"skin",
+			55000,
+			95000,
+			55000,
+			true,
+		},
+	};
+
+	std::vector<struct target_therm_cfg>  waipio_specific = {
+		{
+			TemperatureType::BCL_CURRENT,
+			{ "pm8350b-ibat-lvl0" },
+			"ibat",
+			6000,
+			7500,
+			6000,
+			true,
+		},
+	};
+
 	struct target_therm_cfg bat_conf = {
 		TemperatureType::BATTERY,
 		{ "battery" },
@@ -739,6 +829,8 @@ namespace implementation {
 		{454, sensor_cfg_holi}, // holi
 		{475, sensor_cfg_yupik}, // yupik
 		{515, sensor_cfg_yupik}, // YUPIK-LTE
+		{457, waipio_common}, //Waipio
+		{482, waipio_common}, //Waipio
 	};
 
 	const std::unordered_map<int, std::vector<struct target_therm_cfg>>
@@ -750,6 +842,8 @@ namespace implementation {
 		{501, lahaina_specific},
 		{502, lahaina_specific},
 		{450, shima_specific}, // shima
+		{457, waipio_specific}, //Waipio
+		{482, waipio_specific}, //Waipio
 	};
 
 	std::vector<struct target_therm_cfg> add_target_config(

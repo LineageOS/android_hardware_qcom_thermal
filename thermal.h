@@ -40,7 +40,12 @@
 
 #include <hidl/Status.h>
 
+#ifdef ENABLE_THERMAL_NETLINK
+#include "thermalUtilsNetlink.h"
+#else
 #include "thermalUtils.h"
+#endif
+
 #include "thermalData.h"
 
 namespace android {

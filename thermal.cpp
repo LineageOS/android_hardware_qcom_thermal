@@ -41,7 +41,6 @@
 #include <hidl/HidlTransportSupport.h>
 
 #include "thermal.h"
-#include "thermalUtils.h"
 
 namespace android {
 namespace hardware {
