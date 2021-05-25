@@ -144,6 +144,54 @@ namespace implementation {
 		},
 	};
 
+	std::vector<std::string> cpu_sensors_monaco =
+	{
+		"cpuss-0-usr",
+		"cpuss-1-usr",
+		"cpuss-0-usr",
+		"cpuss-1-usr",
+	};
+
+	std::vector<struct target_therm_cfg> sensor_cfg_monaco =
+	{
+		{
+			TemperatureType::CPU,
+			cpu_sensors_monaco,
+			"",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpu-usr" },
+			"gpu",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::SKIN,
+			{ "quiet-therm-usr" },
+			"skin",
+			40000,
+			95000,
+			40000,
+			true,
+		},
+		{
+			TemperatureType::BCL_CURRENT,
+			{ "pm5100-ibat-lvl0" },
+			"ibat",
+			1100,
+			1500,
+			1100,
+			true,
+		},
+	};
+
 	std::vector<std::string> cpu_sensors_sdm845 =
 	{
 		"cpu0-silver-usr",
@@ -1167,6 +1215,7 @@ namespace implementation {
 		{507, sensor_cfg_holi}, // blair
 		{475, sensor_cfg_yupik}, // yupik
 		{515, sensor_cfg_yupik}, // YUPIK-LTE
+		{486, sensor_cfg_monaco}, // monaco
 		{457, waipio_common}, //Waipio
 		{482, waipio_common}, //Waipio
 		{552, waipio_common}, //Waipio-LTE
