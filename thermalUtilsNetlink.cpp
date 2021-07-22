@@ -118,7 +118,7 @@ void ThermalUtils::sampleParse(int tzn, int temp)
 	std::lock_guard<std::mutex> _lock(sens_cb_mutex);
 	struct therm_sensor& sens = thermalConfig[tzn];
 	sens.t.value = (float)temp / (float)sens.mulFactor;
-	return;
+	return Notify(sens);
 }
 
 int ThermalUtils::readTemperatures(hidl_vec<Temperature_1_0>& temp)
