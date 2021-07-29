@@ -372,18 +372,30 @@ int ThermalCommon::read_cdev_state(struct therm_cdev& cdev)
 {
 	char file_name[MAX_PATH];
 	std::string buf;
-	int ret = 0;
+	int ret = 0, ct = 0;
+	bool read_ok = false;
 
-	LOG(DEBUG) << "Entering " <<__func__;
 	snprintf(file_name, sizeof(file_name), CDEV_CUR_STATE_PATH,
 			cdev.cdevn);
-	ret = readLineFromFile(std::string(file_name), buf);
-	if (ret <= 0) {
-		LOG(ERROR) << "Cdev state read error:"<< ret <<
-			" for cdev: " << cdev.c.name;
-		return -1;
-	}
-	cdev.c.value = std::stoi(buf, nullptr, 0);
+	do {
+		ret = readLineFromFile(std::string(file_name), buf);
+		if (ret <= 0) {
+			LOG(ERROR) << "Cdev state read error:"<< ret <<
+				" for cdev: " << cdev.c.name;
+			return -1;
+		}
+		try {
+			cdev.c.value = std::stoi(buf, nullptr, 0);
+			read_ok = true;
+		}
+		catch (std::exception &err) {
+			LOG(ERROR) << "Cdev read stoi error:" << err.what()
+				<< " cdev:" << cdev.c.name << " ID:"
+				<< cdev.cdevn << " buf:" << buf <<
+				std::endl;
+		}
+		ct++;
+	} while (!read_ok && ct < RETRY_CT);
 	LOG(DEBUG) << "cdev Name:" << cdev.c.name << ". state:" <<
 		cdev.c.value << std::endl;
 
@@ -425,7 +437,8 @@ int ThermalCommon::estimateSeverity(struct therm_sensor& sensor)
 	}
 	if (idx >= 0)
 		severity = (ThrottlingSeverity)(idx);
-	LOG(DEBUG) << "Sensor Name:" << sensor.t.name << ". prev severity:" <<
+	LOG(INFO) << "Sensor Name:" << sensor.t.name << "temp: " <<
+		temp << ". prev severity:" <<
 		(int)sensor.lastThrottleStatus << ". cur severity:" <<
 		(int)sensor.t.throttlingStatus << " New severity:" <<
 		(int)severity << std::endl;
@@ -442,18 +455,32 @@ int ThermalCommon::read_temperature(struct therm_sensor& sensor)
 	char file_name[MAX_PATH];
 	float temp;
 	std::string buf;
-	int ret = 0;
+	int ret = 0, ct = 0;
+	bool read_ok = false;
 
-	LOG(DEBUG) << "Entering " <<__func__;
-	snprintf(file_name, sizeof(file_name), TEMPERATURE_FILE_FORMAT,
+	do {
+		snprintf(file_name, sizeof(file_name), TEMPERATURE_FILE_FORMAT,
 			sensor.tzn);
-	ret = readLineFromFile(std::string(file_name), buf);
-	if (ret <= 0) {
-		LOG(ERROR) << "Temperature read error:"<< ret <<
-			" for sensor " << sensor.t.name;
-		return -1;
-	}
-	sensor.t.value = (float)std::stoi(buf, nullptr, 0) / (float)sensor.mulFactor;
+		ret = readLineFromFile(std::string(file_name), buf);
+		if (ret <= 0) {
+			LOG(ERROR) << "Temperature read error:"<< ret <<
+				" for sensor " << sensor.t.name;
+			return -1;
+		}
+		try {
+			sensor.t.value = (float)std::stoi(buf, nullptr, 0) /
+				 (float)sensor.mulFactor;
+			read_ok = true;
+		}
+		catch (std::exception &err) {
+			LOG(ERROR) << "Temperature buf stoi error: "
+				<< err.what()
+				<< " buf:" << buf << " sensor:"
+				<< sensor.t.name << " TZ:" <<
+				sensor.tzn << std::endl;
+		}
+		ct++;
+	} while (!read_ok && ct < RETRY_CT);
 	LOG(DEBUG) << "Sensor Name:" << sensor.t.name << ". Temperature:" <<
 		(float)sensor.t.value << std::endl;
 
