@@ -741,6 +741,18 @@ namespace implementation {
 			95000,
 			true,
 		},
+	};
+
+	std::vector<struct target_therm_cfg>  waipio_specific = {
+		{
+			TemperatureType::BCL_CURRENT,
+			{ "pm8350b-ibat-lvl0" },
+			"ibat",
+			6000,
+			7500,
+			6000,
+			true,
+		},
 		{
 			TemperatureType::SKIN,
 			{ "xo-therm" },
@@ -752,7 +764,7 @@ namespace implementation {
 		},
 	};
 
-	std::vector<struct target_therm_cfg>  waipio_specific = {
+	std::vector<struct target_therm_cfg>  diwali_specific = {
 		{
 			TemperatureType::BCL_CURRENT,
 			{ "pm8350b-ibat-lvl0" },
@@ -760,6 +772,15 @@ namespace implementation {
 			6000,
 			7500,
 			6000,
+			true,
+		},
+		{
+			TemperatureType::SKIN,
+			{ "quiet-therm" },
+			"skin",
+			40000,
+			95000,
+			40000,
 			true,
 		},
 	};
@@ -831,6 +852,7 @@ namespace implementation {
 		{515, sensor_cfg_yupik}, // YUPIK-LTE
 		{457, waipio_common}, //Waipio
 		{482, waipio_common}, //Waipio
+		{506, waipio_common}, //diwali
 	};
 
 	const std::unordered_map<int, std::vector<struct target_therm_cfg>>
@@ -844,6 +866,7 @@ namespace implementation {
 		{450, shima_specific}, // shima
 		{457, waipio_specific}, //Waipio
 		{482, waipio_specific}, //Waipio
+		{506, diwali_specific}, //diwali
 	};
 
 	std::vector<struct target_therm_cfg> add_target_config(
