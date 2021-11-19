@@ -37,3 +37,7 @@ service vendor.thermal-hal /vendor/bin/hw/android.hardware.thermal-service.qti
 	class hal
 	user root
 	group root
+
+on boot
+    wait /sys/kernel/boot_adsp/boot
+    restart vendor.thermal-hal
