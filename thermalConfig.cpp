@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020, The Linux Foundation. All rights reserved.
+ * Copyright (c) 2020,2021 The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -853,6 +853,9 @@ namespace implementation {
 		{457, waipio_common}, //Waipio
 		{482, waipio_common}, //Waipio
 		{506, waipio_common}, //diwali
+		{530, waipio_common}, // cape
+		{531, waipio_common}, // cape
+		{540, waipio_common}, // cape
 	};
 
 	const std::unordered_map<int, std::vector<struct target_therm_cfg>>
@@ -867,6 +870,9 @@ namespace implementation {
 		{457, waipio_specific}, //Waipio
 		{482, waipio_specific}, //Waipio
 		{506, diwali_specific}, //diwali
+		{530, waipio_specific}, // cape
+		{531, waipio_specific}, // cape
+		{540, waipio_specific}, // cape
 	};
 
 	std::vector<struct target_therm_cfg> add_target_config(
