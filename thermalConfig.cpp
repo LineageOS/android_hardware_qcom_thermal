@@ -852,6 +852,7 @@ namespace implementation {
 		{515, sensor_cfg_yupik}, // YUPIK-LTE
 		{457, waipio_common}, //Waipio
 		{482, waipio_common}, //Waipio
+		{552, waipio_common}, //Waipio-LTE
 		{506, waipio_common}, //diwali
 		{530, waipio_common}, // cape
 		{531, waipio_common}, // cape
@@ -869,6 +870,7 @@ namespace implementation {
 		{450, shima_specific}, // shima
 		{457, waipio_specific}, //Waipio
 		{482, waipio_specific}, //Waipio
+		{552, waipio_specific}, //Waipio-LTE
 		{506, diwali_specific}, //diwali
 		{530, waipio_specific}, // cape
 		{531, waipio_specific}, // cape
