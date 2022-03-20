@@ -767,11 +767,11 @@ namespace implementation {
 	std::vector<struct target_therm_cfg>  diwali_specific = {
 		{
 			TemperatureType::BCL_CURRENT,
-			{ "pm8350b-ibat-lvl0" },
+			{ "pm7250b-ibat-lvl0" },
 			"ibat",
-			6000,
-			7500,
-			6000,
+			9000,
+			9500,
+			9000,
 			true,
 		},
 		{
