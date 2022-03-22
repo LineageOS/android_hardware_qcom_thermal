@@ -785,6 +785,71 @@ namespace implementation {
 		},
 	};
 
+	std::vector<std::string> cpu_sensors_neo =
+	{
+		"cpu-0-0",
+		"cpu-0-1",
+		"cpu-0-2",
+		"cpu-0-3",
+	};
+
+	std::vector<struct target_therm_cfg>  neo_common = {
+		{
+			TemperatureType::CPU,
+			cpu_sensors_neo,
+			"",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-0" },
+			"GPU0",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-1" },
+			"GPU1",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nspss-0" },
+			"nsp0",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nspss-1" },
+			"nsp1",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nspss-2" },
+			"nsp2",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+	};
+
 	struct target_therm_cfg bat_conf = {
 		TemperatureType::BATTERY,
 		{ "battery" },
@@ -857,6 +922,8 @@ namespace implementation {
 		{530, waipio_common}, // cape
 		{531, waipio_common}, // cape
 		{540, waipio_common}, // cape
+		{525, neo_common},
+		{554, neo_common},
 	};
 
 	const std::unordered_map<int, std::vector<struct target_therm_cfg>>
