@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2020, The Linux Foundation. All rights reserved.
+ * Copyright (c) 2022, Qualcomm Innovation Center, Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -57,6 +58,13 @@ static const Temperature_1_0 dummy_temp_1_0 = {
 	.throttlingThreshold = 40,
 	.shutdownThreshold = 60,
 	.vrThrottlingThreshold = 40,
+};
+
+static const Temperature dummy_temp_2_0 = {
+	.type = TemperatureType::SKIN,
+	.name = "test sensor",
+	.value = 25.0,
+	.throttlingStatus = ThrottlingSeverity::NONE,
 };
 
 template <typename A, typename B>
@@ -169,9 +177,15 @@ Return<void> Thermal::getCurrentTemperatures(
 		return exit_hal(_hidl_cb, temperatures,
 			"ThermalHAL not initialized properly.");
 
-	if (utils.readTemperatures(filterType, type, temperatures) <= 0)
-		return exit_hal(_hidl_cb, temperatures,
-				"Sensor Temperature read failure.");
+	if (utils.readTemperatures(filterType, type, temperatures) <= 0) {
+		if (filterType && type != dummy_temp_2_0.type) {
+			status.code = ThermalStatusCode::FAILURE;
+			status.debugMessage = "Failed to read dummy temperature value";
+		} else {
+			temperatures = {dummy_temp_2_0};
+			LOG(INFO) << "Returning Dummy Temperature Value" << std::endl;
+		}
+	}
 
 	_hidl_cb(status, temperatures);
 
