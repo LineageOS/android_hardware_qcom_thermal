@@ -99,6 +99,7 @@ static std::unordered_map<std::string, cdevType> cdev_map = {
 	{"thermal-pause-80", cdevType::CPU},
 	{"thermal-devfreq-0", cdevType::GPU},
 	{"devfreq-3d00000.qcom,kgsl-3d0", cdevType::GPU},
+	{"gpu", cdevType::GPU},
 	{"modem_tj", cdevType::MODEM},
 	{"modem_lte_dsc", cdevType::MODEM},
 	{"modem_nr_dsc", cdevType::MODEM},
