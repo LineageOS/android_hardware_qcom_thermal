@@ -446,6 +446,46 @@ namespace implementation {
 		},
 	};
 
+	std::vector<struct target_therm_cfg> sensor_cfg_sdm660 =
+	{
+		{
+			TemperatureType::CPU,
+			cpu_sensors_trinket,
+			"",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpu-usr" },
+			"GPU",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::SKIN,
+			{ "xo-therm-adc" },
+			"skin",
+			40000,
+			95000,
+			40000,
+			true,
+		},
+		{
+			TemperatureType::BCL_PERCENTAGE,
+			{ "soc" },
+			"soc",
+			10,
+			2,
+			10,
+			false,
+		},
+	};
+
 	std::vector<std::string> cpu_sensors_monaco =
 	{
 		"cpuss-0",
@@ -1730,6 +1770,8 @@ namespace implementation {
 		{394, sensor_cfg_trinket},
 		{467, sensor_cfg_trinket},
 		{468, sensor_cfg_trinket},
+		{317, sensor_cfg_sdm660},
+		{345, sensor_cfg_sdm660}, // sdm636
 		{400, sensor_cfg_lito}, // lito
 		{440, sensor_cfg_lito},
 		{407, sensor_cfg_lito}, // atoll
