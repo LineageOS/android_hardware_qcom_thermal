@@ -31,5 +31,6 @@ cc_binary {
 	cflags: [
 		"-Wno-unused-parameter",
 		"-Wno-unused-variable",
+		"-fexceptions",
 	],
 }

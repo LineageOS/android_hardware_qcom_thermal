@@ -1020,12 +1020,24 @@ namespace implementation {
 		std::vector<struct target_therm_cfg>::iterator it_vec;
 		bool bcl_defined = false;
 		std::string soc_val;
+		int ct = 0;
+		bool read_ok = false;
 
-		if (cmnInst.readFromFile(socIDPath, soc_val) <= 0) {
-			LOG(ERROR) <<"soc ID fetch error";
-			return;
-		}
-		soc_id = std::stoi(soc_val, nullptr, 0);
+		do {
+			if (cmnInst.readFromFile(socIDPath, soc_val) <= 0) {
+				LOG(ERROR) <<"soc ID fetch error";
+				return;
+			}
+			try {
+				soc_id = std::stoi(soc_val, nullptr, 0);
+				read_ok = true;
+			}
+			catch (std::exception &err) {
+				LOG(ERROR) <<"soc id stoi err:" << err.what()
+					<< " buf:" << soc_val;
+			}
+			ct++;
+		} while (!read_ok && ct < RETRY_CT);
 		if (soc_id <= 0) {
 			LOG(ERROR) << "Invalid soc ID: " << soc_id;
 			return;
