@@ -39,6 +39,8 @@ namespace thermal {
 namespace V2_0 {
 namespace implementation {
 
+#define RETRY_CT 3
+
 class ThermalCommon {
 	public:
 		ThermalCommon();
