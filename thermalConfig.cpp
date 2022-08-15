@@ -909,11 +909,11 @@ namespace implementation {
 		},
 		{
 			TemperatureType::SKIN,
-			{ "xo-therm" },
+			{ "skin-msm-therm" },
 			"skin",
-			55000,
+			46500,
 			95000,
-			55000,
+			46500,
 			true,
 		},
 	};
