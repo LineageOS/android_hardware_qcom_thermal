@@ -113,6 +113,75 @@ namespace implementation {
 		},
 	};
 
+	std::vector<std::string> cpu_sensors_khaje =
+	{
+		"cpuss-0",
+		"cpuss-1",
+		"cpuss-2",
+		"cpu-1-0",
+		"cpu-1-1",
+		"cpu-1-2",
+		"cpu-1-3",
+	};
+
+	std::vector<struct target_therm_cfg> sensor_cfg_khaje =
+	{
+		{
+			TemperatureType::CPU,
+			cpu_sensors_khaje,
+			"",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpu" },
+			"GPU",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::SKIN,
+			{ "xo-therm" },
+			"skin",
+			40000,
+			95000,
+			40000,
+			true,
+		},
+		{
+			TemperatureType::BCL_VOLTAGE,
+			{ "pm7250b-vbat-lvl0" },
+			"vbat",
+			3000,
+			2800,
+			3000,
+			false,
+		},
+		{
+			TemperatureType::BCL_CURRENT,
+			{ "pm7250b-ibat-lvl0" },
+			"ibat",
+			5500,
+			6000,
+			5500,
+			true,
+		},
+		{
+			TemperatureType::BCL_PERCENTAGE,
+			{ "soc" },
+			"soc",
+			10,
+			2,
+			10,
+			false,
+		},
+	};
+
 	std::vector<std::string> cpu_sensors_trinket =
 	{
 		"cpuss-0-usr",
@@ -978,6 +1047,7 @@ namespace implementation {
 		{445, sensor_cfg_bengal},
 		{469, sensor_cfg_bengal},
 		{470, sensor_cfg_bengal},
+		{518, sensor_cfg_khaje},  //khaje
 		{394, sensor_cfg_trinket},
 		{467, sensor_cfg_trinket},
 		{468, sensor_cfg_trinket},
