@@ -1011,6 +1011,69 @@ namespace implementation {
 		},
 	};
 
+	std::vector<struct target_therm_cfg>  diwali_common = {
+		{
+			TemperatureType::CPU,
+			cpu_sensors_waipio,
+			"",
+			95000,
+			115000,
+			95000,
+			true,
+			ThrottlingSeverity::LIGHT,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-0" },
+			"GPU0",
+			95000,
+			115000,
+			95000,
+			true,
+			ThrottlingSeverity::LIGHT,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-1" },
+			"GPU1",
+			95000,
+			115000,
+			95000,
+			true,
+			ThrottlingSeverity::LIGHT,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nspss-0" },
+			"nsp0",
+			95000,
+			115000,
+			95000,
+			true,
+			ThrottlingSeverity::LIGHT,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nspss-1" },
+			"nsp1",
+			95000,
+			115000,
+			95000,
+			true,
+			ThrottlingSeverity::LIGHT,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nspss-2" },
+			"nsp2",
+			95000,
+			115000,
+			95000,
+			true,
+			ThrottlingSeverity::LIGHT,
+		},
+	};
+
 	std::vector<struct target_therm_cfg>  waipio_specific = {
 		{
 			TemperatureType::BCL_CURRENT,
@@ -1050,6 +1113,7 @@ namespace implementation {
 			95000,
 			46000,
 			true,
+			ThrottlingSeverity::LIGHT,
 		},
 	};
 
@@ -1199,6 +1263,153 @@ namespace implementation {
 		},
 	};
 
+	std::vector<std::string> cpu_sensors_anorak =
+	{
+		"cpu-0-0-0",
+		"cpu-0-0-1",
+		"cpu-0-1-0",
+		"cpu-0-1-1",
+		"cpu-1-0-0",
+		"cpu-1-0-1",
+		"cpu-1-1-0",
+		"cpu-1-1-1",
+		"cpu-1-2-0",
+		"cpu-1-2-1",
+		"cpu-1-3-0",
+		"cpu-1-3-1",
+	};
+
+	std::vector<struct target_therm_cfg>  anorak_common = {
+		{
+			TemperatureType::CPU,
+			cpu_sensors_anorak,
+			"",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nspss-0" },
+			"nsp0",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nspss-1" },
+			"nsp1",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nspss-2" },
+			"nsp2",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-0" },
+			"GPU0",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-1" },
+			"GPU1",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-2" },
+			"GPU2",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-3" },
+			"GPU3",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-4" },
+			"GPU4",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-5" },
+			"GPU5",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-6" },
+			"GPU6",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-7" },
+			"GPU7",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+	};
+	std::vector<struct target_therm_cfg>  anorak_specific = {
+		{
+			TemperatureType::BCL_CURRENT,
+			{ "pm8550b-ibat-lvl0" },
+			"ibat",
+			9000,
+			10000,
+			9000,
+			true,
+		},
+		{
+			TemperatureType::SKIN,
+			{ "sys-therm-0" },
+			"skin",
+			55000,
+			95000,
+			55000,
+			true,
+		},
+	};
+
 	struct target_therm_cfg bat_conf = {
 		TemperatureType::BATTERY,
 		{ "battery" },
@@ -1278,15 +1489,16 @@ namespace implementation {
 		{457, waipio_common}, //Waipio
 		{482, waipio_common}, //Waipio
 		{552, waipio_common}, //Waipio-LTE
-		{506, waipio_common}, //diwali
-		{547, waipio_common}, //diwali
-		{564, waipio_common}, //diwali-LTE
+		{506, diwali_common}, //diwali
+		{547, diwali_common}, //diwali
+		{564, diwali_common}, //diwali-LTE
 		{530, waipio_common}, // cape
 		{531, waipio_common}, // cape
 		{540, waipio_common}, // cape
 		{525, neo_common},
 		{554, neo_common},
 		{537, parrot_common},
+		{549, anorak_common},
 	};
 
 	const std::unordered_map<int, std::vector<struct target_therm_cfg>>
@@ -1308,6 +1520,7 @@ namespace implementation {
 		{531, waipio_specific}, // cape
 		{540, waipio_specific}, // cape
 		{537, parrot_specific},
+		{549, anorak_specific},
 	};
 
 	std::vector<struct target_therm_cfg> add_target_config(
