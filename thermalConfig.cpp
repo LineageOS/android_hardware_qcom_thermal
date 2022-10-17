@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2020,2021 The Linux Foundation. All rights reserved.
- * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -27,6 +26,10 @@
  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * Changes from Qualcomm Innovation Center are provided under the following license:
+ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause-Clear
  */
 
 #include <unordered_map>
@@ -100,6 +103,75 @@ namespace implementation {
 			4000,
 			4200,
 			4000,
+			true,
+		},
+		{
+			TemperatureType::BCL_PERCENTAGE,
+			{ "soc" },
+			"soc",
+			10,
+			2,
+			10,
+			false,
+		},
+	};
+
+	std::vector<std::string> cpu_sensors_khaje =
+	{
+		"cpuss-0",
+		"cpuss-1",
+		"cpuss-2",
+		"cpu-1-0",
+		"cpu-1-1",
+		"cpu-1-2",
+		"cpu-1-3",
+	};
+
+	std::vector<struct target_therm_cfg> sensor_cfg_khaje =
+	{
+		{
+			TemperatureType::CPU,
+			cpu_sensors_khaje,
+			"",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpu" },
+			"GPU",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::SKIN,
+			{ "xo-therm" },
+			"skin",
+			40000,
+			95000,
+			40000,
+			true,
+		},
+		{
+			TemperatureType::BCL_VOLTAGE,
+			{ "pm7250b-vbat-lvl0" },
+			"vbat",
+			3000,
+			2800,
+			3000,
+			false,
+		},
+		{
+			TemperatureType::BCL_CURRENT,
+			{ "pm7250b-ibat-lvl0" },
+			"ibat",
+			5500,
+			6000,
+			5500,
 			true,
 		},
 		{
@@ -978,6 +1050,7 @@ namespace implementation {
 		{445, sensor_cfg_bengal},
 		{469, sensor_cfg_bengal},
 		{470, sensor_cfg_bengal},
+		{518, sensor_cfg_khaje},  //khaje
 		{394, sensor_cfg_trinket},
 		{467, sensor_cfg_trinket},
 		{468, sensor_cfg_trinket},
