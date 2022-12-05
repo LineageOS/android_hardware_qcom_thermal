@@ -1219,7 +1219,7 @@ namespace implementation {
 		},
 		{
 			TemperatureType::SKIN,
-			{ "xo-therm" },
+			{ "sys-therm6" },
 			"skin",
 			55000,
 			95000,
