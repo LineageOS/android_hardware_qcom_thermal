@@ -1174,6 +1174,59 @@ namespace implementation {
 		},
 	};
 
+	std::vector<std::string> cpu_sensors_ravelin =
+	{
+		"cpu-0-0",
+		"cpu-0-1",
+		"cpu-0-2",
+		"cpu-0-3",
+		"cpu-0-4",
+		"cpu-0-5",
+		"cpu-1-0",
+		"cpu-1-2",
+	};
+
+	std::vector<struct target_therm_cfg>  ravelin_common = {
+		{
+			TemperatureType::CPU,
+			cpu_sensors_parrot,
+			"",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss" },
+			"GPU",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+	};
+
+	std::vector<struct target_therm_cfg>  ravelin_specific = {
+		{
+			TemperatureType::BCL_CURRENT,
+			{ "pm7250b-ibat-lvl0" },
+			"ibat",
+			6000,
+			7500,
+			6000,
+			true,
+		},
+		{
+			TemperatureType::SKIN,
+			{ "xo-therm" },
+			"skin",
+			55000,
+			95000,
+			55000,
+			true,
+		},
+	};
 	struct target_therm_cfg bat_conf = {
 		TemperatureType::BATTERY,
 		{ "battery" },
@@ -1252,6 +1305,9 @@ namespace implementation {
 		{554, neo_common},
 		{537, parrot_common},
 		{549, anorak_common},
+		{568, ravelin_common}, //Clarence Mobile
+		{581, ravelin_common}, //Clarence IOT
+		{582, ravelin_common}, //Clarence IOT without modem
 	};
 
 	const std::unordered_map<int, std::vector<struct target_therm_cfg>>
@@ -1274,6 +1330,9 @@ namespace implementation {
 		{540, waipio_specific}, // cape
 		{537, parrot_specific},
 		{549, anorak_specific},
+		{568, ravelin_specific}, //Clarence Mobile
+		{581, ravelin_specific}, //Clarence IOT
+		{582, ravelin_specific}, //Clarence IOT without modem
 	};
 
 	std::vector<struct target_therm_cfg> add_target_config(
