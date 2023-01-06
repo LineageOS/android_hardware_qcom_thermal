@@ -107,6 +107,7 @@ static std::unordered_map<std::string, cdevType> cdev_map = {
 	{"cdsp", cdevType::NPU},
 	{"cdsp_hw", cdevType::NPU},
 	{"battery", cdevType::BATTERY},
+	{"fan-max31760", cdevType::FAN},
 };
 
 ThermalCommon::ThermalCommon()
