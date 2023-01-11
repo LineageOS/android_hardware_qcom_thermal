@@ -1303,7 +1303,9 @@ namespace implementation {
 		{540, waipio_common}, // cape
 		{525, neo_common},
 		{554, neo_common},
-		{537, parrot_common},
+		{537, parrot_common}, //Netrani mobile
+		{583, parrot_common}, //Netrani mobile without modem
+		{613, parrot_common}, //Netrani APQ
 		{549, anorak_common},
 		{568, ravelin_common}, //Clarence Mobile
 		{581, ravelin_common}, //Clarence IOT
@@ -1328,7 +1330,9 @@ namespace implementation {
 		{530, waipio_specific}, // cape
 		{531, waipio_specific}, // cape
 		{540, waipio_specific}, // cape
-		{537, parrot_specific},
+		{537, parrot_specific}, //Netrani mobile
+		{583, parrot_specific}, //Netrani mobile without modem
+		{613, parrot_specific}, //Netrani APQ
 		{549, anorak_specific},
 		{568, ravelin_specific}, //Clarence Mobile
 		{581, ravelin_specific}, //Clarence IOT
