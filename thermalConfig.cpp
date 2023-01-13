@@ -434,14 +434,14 @@ namespace implementation {
 
 	std::vector<std::string> cpu_sensors_kona =
 	{
-		"cpu-0-0-usr",
-		"cpu-0-1-usr",
-		"cpu-0-2-usr",
-		"cpu-0-3-usr",
-		"cpu-1-0-usr",
-		"cpu-1-1-usr",
-		"cpu-1-2-usr",
-		"cpu-1-3-usr",
+		"cpu-0-0",
+		"cpu-0-1",
+		"cpu-0-2",
+		"cpu-0-3",
+		"cpu-1-0",
+		"cpu-1-1",
+		"cpu-1-2",
+		"cpu-1-3",
 	};
 
 	std::vector<struct target_therm_cfg>  sensor_cfg_msmnile = {
@@ -522,7 +522,7 @@ namespace implementation {
 		},
 		{
 			TemperatureType::GPU,
-			{ "gpuss-0-usr" },
+			{ "gpuss-0" },
 			"GPU0",
 			95000,
 			115000,
@@ -531,7 +531,7 @@ namespace implementation {
 		},
 		{
 			TemperatureType::GPU,
-			{ "gpuss-1-usr" },
+			{ "gpuss-1" },
 			"GPU1",
 			95000,
 			115000,
@@ -540,7 +540,7 @@ namespace implementation {
 		},
 		{
 			TemperatureType::SKIN,
-			{ "skin-msm-therm-usr" },
+			{ "skin-msm-therm" },
 			"skin",
 			40000,
 			95000,
@@ -561,7 +561,7 @@ namespace implementation {
 		},
 		{
 			TemperatureType::BCL_VOLTAGE,
-			{ "pm8150b-vbat-lvl0" },
+			{ "vbat" },
 			"vbat",
 			3200,
 			3000,
@@ -570,16 +570,16 @@ namespace implementation {
 		},
 		{
 			TemperatureType::BCL_PERCENTAGE,
-			{ "soc" },
-			"soc",
-			10,
-			2,
-			10,
+			{ "socd" },
+			"socd",
+			90,
+			99,
+			90,
 			false,
 		},
 		{
 			TemperatureType::NPU,
-			{ "npu-usr" },
+			{ "npu" },
 			"npu",
 			95000,
 			115000,
