@@ -29,7 +29,7 @@
  *
  * Changes from Qualcomm Innovation Center are provided under the following license:
  *
- * Copyright (c) 2022, Qualcomm Innovation Center, Inc. All rights reserved.
+ * Copyright (c) 2022-2023, Qualcomm Innovation Center, Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -1308,6 +1308,7 @@ namespace implementation {
 		{568, ravelin_common}, //Clarence Mobile
 		{581, ravelin_common}, //Clarence IOT
 		{582, ravelin_common}, //Clarence IOT without modem
+		{591, waipio_common}, //ukee
 	};
 
 	const std::unordered_map<int, std::vector<struct target_therm_cfg>>
@@ -1333,6 +1334,7 @@ namespace implementation {
 		{568, ravelin_specific}, //Clarence Mobile
 		{581, ravelin_specific}, //Clarence IOT
 		{582, ravelin_specific}, //Clarence IOT without modem
+		{591, waipio_specific}, //ukee
 	};
 
 	std::vector<struct target_therm_cfg> add_target_config(
