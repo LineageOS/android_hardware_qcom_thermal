@@ -29,7 +29,7 @@
  *
  * Changes from Qualcomm Innovation Center are provided under the following license:
  *
- * Copyright (c) 2022, Qualcomm Innovation Center, Inc. All rights reserved.
+ * Copyright (c) 2022-2023, Qualcomm Innovation Center, Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -1189,7 +1189,7 @@ namespace implementation {
 	std::vector<struct target_therm_cfg>  ravelin_common = {
 		{
 			TemperatureType::CPU,
-			cpu_sensors_parrot,
+			cpu_sensors_ravelin,
 			"",
 			95000,
 			115000,
@@ -1210,7 +1210,7 @@ namespace implementation {
 	std::vector<struct target_therm_cfg>  ravelin_specific = {
 		{
 			TemperatureType::BCL_CURRENT,
-			{ "pm7250b-ibat-lvl0" },
+			{ "pmi632-ibat-lvl0" },
 			"ibat",
 			6000,
 			7500,
@@ -1219,7 +1219,7 @@ namespace implementation {
 		},
 		{
 			TemperatureType::SKIN,
-			{ "sys-therm6" },
+			{ "sys-therm-1" },
 			"skin",
 			55000,
 			95000,
