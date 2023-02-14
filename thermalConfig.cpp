@@ -118,8 +118,9 @@ namespace implementation {
 
 	std::vector<std::string> cpu_sensors_khaje =
 	{
-		"cpuss-0",
-		"cpuss-1",
+		"cpuss-2",
+		"cpuss-2",
+		"cpuss-2",
 		"cpuss-2",
 		"cpu-1-0",
 		"cpu-1-1",
@@ -158,7 +159,7 @@ namespace implementation {
 		},
 		{
 			TemperatureType::BCL_VOLTAGE,
-			{ "pm7250b-vbat-lvl0" },
+			{ "vbat" },
 			"vbat",
 			3000,
 			2800,
@@ -176,12 +177,12 @@ namespace implementation {
 		},
 		{
 			TemperatureType::BCL_PERCENTAGE,
-			{ "soc" },
-			"soc",
-			10,
-			2,
-			10,
-			false,
+			{ "socd" },
+			"socd",
+			90,
+			99,
+			90,
+			true,
 		},
 	};
 
