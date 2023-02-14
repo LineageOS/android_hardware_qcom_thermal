@@ -1093,6 +1093,8 @@ namespace implementation {
 		{536, kalama_common}, //Kalamap
 		{600, kalama_common}, //Kalama_sg
 		{601, kalama_common}, //Kalamap_sg
+		{603, kalama_common}, //Kalama_qcs
+		{604, kalama_common}, //Kalama_qcm
 	};
 
 	const std::unordered_map<int, std::vector<struct target_therm_cfg>>
@@ -1115,6 +1117,8 @@ namespace implementation {
 		{536, kalama_specific}, //Kalamap
 		{600, kalama_specific}, //Kalama_sg
 		{601, kalama_specific}, //Kalamap_sg
+		{603, kalama_specific}, //Kalama_qcs
+		{604, kalama_specific}, //Kalama_qcm
 	};
 
 	std::vector<struct target_therm_cfg> add_target_config(
