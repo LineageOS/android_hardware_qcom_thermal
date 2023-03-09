@@ -256,6 +256,54 @@ namespace implementation {
 		},
 	};
 
+	std::vector<std::string> cpu_sensors_monaco =
+	{
+		"cpuss-0",
+		"cpuss-1",
+		"cpuss-0",
+		"cpuss-1",
+	};
+
+	std::vector<struct target_therm_cfg> sensor_cfg_monaco =
+	{
+		{
+			TemperatureType::CPU,
+			cpu_sensors_monaco,
+			"",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpu" },
+			"gpu",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::SKIN,
+			{ "pa-therm0" },
+			"skin",
+			40000,
+			95000,
+			40000,
+			true,
+		},
+		{
+			TemperatureType::BCL_CURRENT,
+			{ "pm5100-ibat-lvl0" },
+			"ibat",
+			1100,
+			1500,
+			1100,
+			true,
+		},
+	};
+
 	std::vector<std::string> cpu_sensors_lito =
 	{
 		"cpu-0-0-usr",
@@ -1096,6 +1144,8 @@ namespace implementation {
 		{601, kalama_common}, //Kalamap_sg
 		{603, kalama_common}, //Kalama_qcs
 		{604, kalama_common}, //Kalama_qcm
+		{486, sensor_cfg_monaco}, // monaco
+		{517, sensor_cfg_monaco}, // monaco
 	};
 
 	const std::unordered_map<int, std::vector<struct target_therm_cfg>>
