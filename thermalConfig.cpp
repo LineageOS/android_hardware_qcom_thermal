@@ -29,7 +29,7 @@
  *
  * Changes from Qualcomm Innovation Center are provided under the following license:
  *
- * Copyright (c) 2022, Qualcomm Innovation Center, Inc. All rights reserved.
+ * Copyright (c) 2022-2023, Qualcomm Innovation Center, Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -1189,7 +1189,7 @@ namespace implementation {
 	std::vector<struct target_therm_cfg>  ravelin_common = {
 		{
 			TemperatureType::CPU,
-			cpu_sensors_parrot,
+			cpu_sensors_ravelin,
 			"",
 			95000,
 			115000,
@@ -1210,7 +1210,7 @@ namespace implementation {
 	std::vector<struct target_therm_cfg>  ravelin_specific = {
 		{
 			TemperatureType::BCL_CURRENT,
-			{ "pm7250b-ibat-lvl0" },
+			{ "pmi632-ibat-lvl0" },
 			"ibat",
 			6000,
 			7500,
@@ -1219,7 +1219,7 @@ namespace implementation {
 		},
 		{
 			TemperatureType::SKIN,
-			{ "sys-therm6" },
+			{ "sys-therm-1" },
 			"skin",
 			55000,
 			95000,
@@ -1310,6 +1310,7 @@ namespace implementation {
 		{568, ravelin_common}, //Clarence Mobile
 		{581, ravelin_common}, //Clarence IOT
 		{582, ravelin_common}, //Clarence IOT without modem
+		{591, waipio_common}, //ukee
 	};
 
 	const std::unordered_map<int, std::vector<struct target_therm_cfg>>
@@ -1337,6 +1338,7 @@ namespace implementation {
 		{568, ravelin_specific}, //Clarence Mobile
 		{581, ravelin_specific}, //Clarence IOT
 		{582, ravelin_specific}, //Clarence IOT without modem
+		{591, waipio_specific}, //ukee
 	};
 
 	std::vector<struct target_therm_cfg> add_target_config(
