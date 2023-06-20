@@ -1203,6 +1203,8 @@ namespace implementation {
 		{362, sensor_cfg_msmnile},
 		{367, sensor_cfg_msmnile},
 		{356, kona_common}, // kona
+		{481, kona_common}, //kona iot
+		{548, kona_common}, //kona iot
 		{415, lahaina_common}, // lahaina
 		{439, lahaina_common}, // lahainap
 		{456, lahaina_common}, // lahaina-atp
@@ -1233,6 +1235,8 @@ namespace implementation {
 	const std::unordered_map<int, std::vector<struct target_therm_cfg>>
 		msm_soc_specific = {
 		{356, kona_specific}, // kona
+		{481, kona_specific}, //kona iot
+		{548, kona_specific}, //kona iot
 		{415, lahaina_specific}, // lahaina
 		{439, lahaina_specific}, // lahainap
 		{456, lahaina_specific}, // lahaina-atp
