@@ -1321,6 +1321,7 @@ namespace implementation {
 		{537, parrot_common}, //Netrani mobile
 		{583, parrot_common}, //Netrani mobile without modem
 		{613, parrot_common}, //Netrani APQ
+		{631, parrot_common},
 		{549, anorak_common},
 		{568, ravelin_common}, //Clarence Mobile
 		{581, ravelin_common}, //Clarence IOT
@@ -1349,6 +1350,7 @@ namespace implementation {
 		{537, parrot_specific}, //Netrani mobile
 		{583, parrot_specific}, //Netrani mobile without modem
 		{613, parrot_specific}, //Netrani APQ
+		{631, parrot_specific},
 		{549, anorak_specific},
 		{591, waipio_specific}, //ukee
 	};
