@@ -28,36 +28,8 @@
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * Changes from Qualcomm Innovation Center are provided under the following license:
- *
- * Copyright (c) 2022-2023, Qualcomm Innovation Center, Inc. All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are
- * met:
- *	* Redistributions of source code must retain the above copyright
- *	  notice, this list of conditions and the following disclaimer.
- *	* Redistributions in binary form must reproduce the above
- *	  copyright notice, this list of conditions and the following
- *	  disclaimer in the documentation and/or other materials provided
- *	  with the distribution.
- *	* Neither the name of Qualcomm Innovation Center, Inc. nor the
- *	  names of its contributors may be used to endorse or promote products
- *	  derived from this software without specific prior written permission.
- *
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED
- * BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS
- * AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT HOLDER
- * OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- *(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause-Clear
  */
 
 #include <unordered_map>
@@ -141,54 +113,6 @@ namespace implementation {
 			2,
 			10,
 			false,
-		},
-	};
-
-	std::vector<std::string> cpu_sensors_monaco =
-	{
-		"cpuss-0-usr",
-		"cpuss-1-usr",
-		"cpuss-0-usr",
-		"cpuss-1-usr",
-	};
-
-	std::vector<struct target_therm_cfg> sensor_cfg_monaco =
-	{
-		{
-			TemperatureType::CPU,
-			cpu_sensors_monaco,
-			"",
-			95000,
-			115000,
-			95000,
-			true,
-		},
-		{
-			TemperatureType::GPU,
-			{ "gpu-usr" },
-			"gpu",
-			95000,
-			115000,
-			95000,
-			true,
-		},
-		{
-			TemperatureType::SKIN,
-			{ "quiet-therm-usr" },
-			"skin",
-			40000,
-			95000,
-			40000,
-			true,
-		},
-		{
-			TemperatureType::BCL_CURRENT,
-			{ "pm5100-ibat-lvl0" },
-			"ibat",
-			1100,
-			1500,
-			1100,
-			true,
 		},
 	};
 
@@ -322,11 +246,23 @@ namespace implementation {
 		},
 	};
 
+	std::vector<std::string> cpu_sensors_khaje =
+	{
+		"cpuss-2",
+		"cpuss-2",
+		"cpuss-2",
+		"cpuss-2",
+		"cpu-1-0",
+		"cpu-1-1",
+		"cpu-1-2",
+		"cpu-1-3",
+	};
+
 	std::vector<struct target_therm_cfg> sensor_cfg_khaje =
 	{
 		{
 			TemperatureType::CPU,
-			cpu_sensors_bengal,
+			cpu_sensors_khaje,
 			"",
 			95000,
 			115000,
@@ -335,7 +271,7 @@ namespace implementation {
 		},
 		{
 			TemperatureType::GPU,
-			{ "gpu-usr" },
+			{ "gpu" },
 			"GPU",
 			95000,
 			115000,
@@ -344,7 +280,7 @@ namespace implementation {
 		},
 		{
 			TemperatureType::SKIN,
-			{ "xo-therm-usr" },
+			{ "xo-therm" },
 			"skin",
 			40000,
 			95000,
@@ -353,7 +289,7 @@ namespace implementation {
 		},
 		{
 			TemperatureType::BCL_VOLTAGE,
-			{ "pm7250b-vbat-lvl0" },
+			{ "vbat" },
 			"vbat",
 			3000,
 			2800,
@@ -371,12 +307,12 @@ namespace implementation {
 		},
 		{
 			TemperatureType::BCL_PERCENTAGE,
-			{ "soc" },
-			"soc",
-			10,
-			2,
-			10,
-			false,
+			{ "socd" },
+			"socd",
+			90,
+			99,
+			90,
+			true,
 		},
 	};
 
@@ -447,6 +383,54 @@ namespace implementation {
 			2,
 			10,
 			false,
+		},
+	};
+
+	std::vector<std::string> cpu_sensors_monaco =
+	{
+		"cpuss-0",
+		"cpuss-1",
+		"cpuss-0",
+		"cpuss-1",
+	};
+
+	std::vector<struct target_therm_cfg> sensor_cfg_monaco =
+	{
+		{
+			TemperatureType::CPU,
+			cpu_sensors_monaco,
+			"",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpu" },
+			"gpu",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::SKIN,
+			{ "pa-therm0" },
+			"skin",
+			40000,
+			95000,
+			40000,
+			true,
+		},
+		{
+			TemperatureType::BCL_CURRENT,
+			{ "pm5100-ibat-lvl0" },
+			"ibat",
+			1100,
+			1500,
+			1100,
+			true,
 		},
 	};
 
@@ -629,14 +613,14 @@ namespace implementation {
 
 	std::vector<std::string> cpu_sensors_kona =
 	{
-		"cpu-0-0-usr",
-		"cpu-0-1-usr",
-		"cpu-0-2-usr",
-		"cpu-0-3-usr",
-		"cpu-1-0-usr",
-		"cpu-1-1-usr",
-		"cpu-1-2-usr",
-		"cpu-1-3-usr",
+		"cpu-0-0",
+		"cpu-0-1",
+		"cpu-0-2",
+		"cpu-0-3",
+		"cpu-1-0",
+		"cpu-1-1",
+		"cpu-1-2",
+		"cpu-1-3",
 	};
 
 	std::vector<struct target_therm_cfg>  sensor_cfg_msmnile = {
@@ -717,7 +701,7 @@ namespace implementation {
 		},
 		{
 			TemperatureType::GPU,
-			{ "gpuss-0-usr" },
+			{ "gpuss-0" },
 			"GPU0",
 			95000,
 			115000,
@@ -726,7 +710,7 @@ namespace implementation {
 		},
 		{
 			TemperatureType::GPU,
-			{ "gpuss-1-usr" },
+			{ "gpuss-1" },
 			"GPU1",
 			95000,
 			115000,
@@ -735,7 +719,7 @@ namespace implementation {
 		},
 		{
 			TemperatureType::SKIN,
-			{ "skin-msm-therm-usr" },
+			{ "skin-msm-therm" },
 			"skin",
 			40000,
 			95000,
@@ -756,7 +740,7 @@ namespace implementation {
 		},
 		{
 			TemperatureType::BCL_VOLTAGE,
-			{ "pm8150b-vbat-lvl0" },
+			{ "vbat" },
 			"vbat",
 			3200,
 			3000,
@@ -765,16 +749,16 @@ namespace implementation {
 		},
 		{
 			TemperatureType::BCL_PERCENTAGE,
-			{ "soc" },
-			"soc",
-			10,
-			2,
-			10,
+			{ "socd" },
+			"socd",
+			90,
+			99,
+			90,
 			false,
 		},
 		{
 			TemperatureType::NPU,
-			{ "npu-usr" },
+			{ "npu" },
 			"npu",
 			95000,
 			115000,
@@ -1091,6 +1075,159 @@ namespace implementation {
 			55000,
 			95000,
 			55000,
+			true,
+		},
+	};
+
+	std::vector<std::string> cpu_sensors_kalama =
+	{
+		"cpu-0-0",
+		"cpu-0-1",
+		"cpu-0-2",
+		"cpu-1-0",
+		"cpu-1-2",
+		"cpu-1-4",
+		"cpu-1-6",
+		"cpu-1-8",
+	};
+
+	std::vector<struct target_therm_cfg>  kalama_common = {
+		{
+			TemperatureType::CPU,
+			cpu_sensors_kalama,
+			"",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-0" },
+			"GPU0",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-1" },
+			"GPU1",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-2" },
+			"GPU2",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-3" },
+			"GPU3",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-4" },
+			"GPU4",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-5" },
+			"GPU5",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-6" },
+			"GPU6",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-7" },
+			"GPU7",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nspss-0" },
+			"nsp0",
+			100000,
+			115000,
+			100000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nspss-1" },
+			"nsp1",
+			100000,
+			115000,
+			100000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nspss-2" },
+			"nsp2",
+			100000,
+			115000,
+			100000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nspss-3" },
+			"nsp3",
+			100000,
+			115000,
+			100000,
+			true,
+		},
+	};
+
+	std::vector<struct target_therm_cfg>  kalama_specific = {
+		{
+			TemperatureType::BCL_CURRENT,
+			{ "pm8550b-ibat-lvl0" },
+			"ibat",
+			9000,
+			10000,
+			9000,
+			true,
+		},
+		{
+			TemperatureType::SKIN,
+			{ "skin-msm-therm" },
+			"skin",
+			46500,
+			95000,
+			46500,
 			true,
 		},
 	};
@@ -1511,6 +1648,11 @@ namespace implementation {
 		{469, sensor_cfg_bengal},
 		{470, sensor_cfg_bengal},
 		{518, sensor_cfg_khaje},  //khaje
+		{561, sensor_cfg_khaje},  //khajeP
+		{562, sensor_cfg_khaje},  //khajeQ
+		{584, sensor_cfg_khaje},  //khajeXR
+		{585, sensor_cfg_khaje},  //khajeG
+		{586, sensor_cfg_khaje},  //khajeIOT
 		{394, sensor_cfg_trinket},
 		{467, sensor_cfg_trinket},
 		{468, sensor_cfg_trinket},
@@ -1558,6 +1700,14 @@ namespace implementation {
 		{581, ravelin_common}, //Clarence IOT
 		{582, ravelin_common}, //Clarence IOT without modem
 		{591, waipio_common}, //ukee
+		{519, kalama_common}, //Kalama
+		{536, kalama_common}, //Kalamap
+		{600, kalama_common}, //Kalama_sg
+		{601, kalama_common}, //Kalamap_sg
+		{603, kalama_common}, //Kalama_qcs
+		{604, kalama_common}, //Kalama_qcm
+		{486, sensor_cfg_monaco}, // monaco
+		{517, sensor_cfg_monaco}, // monaco
 	};
 
 	const std::unordered_map<int, std::vector<struct target_therm_cfg>>
@@ -1586,6 +1736,12 @@ namespace implementation {
 		{581, ravelin_specific}, //Clarence IOT
 		{582, ravelin_specific}, //Clarence IOT without modem
 		{591, waipio_specific}, //ukee
+		{519, kalama_specific}, //Kalama
+		{536, kalama_specific}, //Kalamap
+		{600, kalama_specific}, //Kalama_sg
+		{601, kalama_specific}, //Kalamap_sg
+		{603, kalama_specific}, //Kalama_qcs
+		{604, kalama_specific}, //Kalama_qcm
 	};
 
 	std::vector<struct target_therm_cfg> add_target_config(
