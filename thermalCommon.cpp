@@ -26,38 +26,6 @@
  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * Changes from Qualcomm Innovation Center are provided under the following license:
- *
- * Copyright (c) 2022, Qualcomm Innovation Center, Inc. All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are
- * met:
- *	* Redistributions of source code must retain the above copyright
- *	  notice, this list of conditions and the following disclaimer.
- *	* Redistributions in binary form must reproduce the above
- *	  copyright notice, this list of conditions and the following
- *	  disclaimer in the documentation and/or other materials provided
- *	  with the distribution.
- *	* Neither the name of Qualcomm Innovation Center, Inc. nor the
- *	  names of its contributors may be used to endorse or promote products
- *	  derived from this software without specific prior written permission.
- *
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED
- * BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS
- * AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT HOLDER
- * OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- *(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #include <cstdio>
@@ -103,7 +71,16 @@ static std::unordered_map<std::string, cdevType> cdev_map = {
 	{"thermal-cpufreq-5", cdevType::CPU},
 	{"thermal-cpufreq-6", cdevType::CPU},
 	{"thermal-cpufreq-7", cdevType::CPU},
-	{"thermal-cluster-7-4", cdevType::CPU},
+	{"cpufreq-cpu0", cdevType::CPU},
+	{"cpufreq-cpu1", cdevType::CPU},
+	{"cpufreq-cpu2", cdevType::CPU},
+	{"cpufreq-cpu3", cdevType::CPU},
+	{"cpufreq-cpu4", cdevType::CPU},
+	{"cpufreq-cpu5", cdevType::CPU},
+	{"cpufreq-cpu6", cdevType::CPU},
+	{"cpufreq-cpu7", cdevType::CPU},
+	{"thermal-cluster-4-7", cdevType::CPU},
+	{"thermal-cluster-3-7", cdevType::CPU},
 	{"cpu-isolate0", cdevType::CPU},
 	{"cpu-isolate1", cdevType::CPU},
 	{"cpu-isolate2", cdevType::CPU},
@@ -112,8 +89,21 @@ static std::unordered_map<std::string, cdevType> cdev_map = {
 	{"cpu-isolate5", cdevType::CPU},
 	{"cpu-isolate6", cdevType::CPU},
 	{"cpu-isolate7", cdevType::CPU},
+	{"thermal-pause-1", cdevType::CPU},
+	{"thermal-pause-2", cdevType::CPU},
+	{"thermal-pause-4", cdevType::CPU},
+	{"thermal-pause-8", cdevType::CPU},
+	{"thermal-pause-10", cdevType::CPU},
+	{"thermal-pause-20", cdevType::CPU},
+	{"thermal-pause-40", cdevType::CPU},
+	{"thermal-pause-80", cdevType::CPU},
 	{"thermal-devfreq-0", cdevType::GPU},
+	{"devfreq-3d00000.qcom,kgsl-3d0", cdevType::GPU},
+	{"gpu", cdevType::GPU},
 	{"modem_tj", cdevType::MODEM},
+	{"modem_lte_dsc", cdevType::MODEM},
+	{"modem_nr_dsc", cdevType::MODEM},
+	{"modem_nr_scg_dsc", cdevType::MODEM},
 	{"cdsp", cdevType::NPU},
 	{"cdsp_hw", cdevType::NPU},
 	{"battery", cdevType::BATTERY},

@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2021, The Linux Foundation. All rights reserved.
+ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -73,11 +74,13 @@ int thermal_family_cb(struct nl_msg *n, void *data)
 }
 
 ThermalMonitor::ThermalMonitor(const eventMonitorCB &inp_event_cb,
-				const eventMonitorCB &inp_sample_cb):
+				const eventMonitorCB &inp_sample_cb,
+				const eventCreateMonitorCB &inp_event_create_cb):
 	event_group(-1),
 	sample_group(-1),
 	event_cb(inp_event_cb),
-	sample_cb(inp_sample_cb)
+	sample_cb(inp_sample_cb),
+	event_create_cb(inp_event_create_cb)
 {
 	monitor_shutdown = false;
 }
@@ -99,6 +102,7 @@ int ThermalMonitor::event_parse(struct nl_msg *n, void *data)
 	struct genlmsghdr *hdr = genlmsg_hdr(nl_hdr);
 	struct nlattr *attrs[THERMAL_GENL_ATTR_MAX + 1];
 	int tzn = -1, trip = -1;
+	const char *tz_name = "";
 
 	genlmsg_parse(nl_hdr, 0, attrs, THERMAL_GENL_ATTR_MAX, NULL);
 
@@ -111,9 +115,18 @@ int ThermalMonitor::event_parse(struct nl_msg *n, void *data)
 		if (attrs[THERMAL_GENL_ATTR_TZ_TRIP_ID])
 			trip = nla_get_u32(
 					attrs[THERMAL_GENL_ATTR_TZ_TRIP_ID]);
-		LOG(INFO) << "thermal_nl_event: TZ:" << tzn << " Trip:"
-		       << trip << "event:" << hdr->cmd << std::endl;
+		LOG(DEBUG) << "thermal_nl_event: TZ:" << tzn << " Trip:"
+		       << trip << "event:" << (int)hdr->cmd << std::endl;
 		event_cb(tzn, trip);
+		break;
+	case THERMAL_GENL_EVENT_TZ_CREATE:
+		if (attrs[THERMAL_GENL_ATTR_TZ_ID])
+			tzn = nla_get_u32(attrs[THERMAL_GENL_ATTR_TZ_ID]);
+		if (attrs[THERMAL_GENL_ATTR_TZ_NAME])
+			tz_name = nla_get_string(attrs[THERMAL_GENL_ATTR_TZ_NAME]);
+		LOG(DEBUG) << "thermal_nl_event: TZ_CREATE: TZ:" << tzn << " TZ_NAME:"
+		       << tz_name << "event:" << (int)hdr->cmd << std::endl;
+		event_create_cb(tzn, tz_name);
 		break;
 	}
 
