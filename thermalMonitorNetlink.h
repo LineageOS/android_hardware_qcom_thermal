@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2021, The Linux Foundation. All rights reserved.
+ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -46,11 +47,13 @@ namespace V2_0 {
 namespace implementation {
 
 using eventMonitorCB = std::function<void(int, int)>;
+using eventCreateMonitorCB = std::function<void(int, const char *)>;
 
 class ThermalMonitor {
 	public:
 		ThermalMonitor(const eventMonitorCB &inp_event_cb,
-				const eventMonitorCB &inp_sample_cb);
+			const eventMonitorCB &inp_sample_cb,
+			const eventCreateMonitorCB &inp_event_create_cb);
 		~ThermalMonitor();
 
 		void parse_and_notify(char *inp_buf, ssize_t len);
@@ -68,6 +71,7 @@ class ThermalMonitor {
 		int event_group, sample_group;
 		bool monitor_shutdown;
 		eventMonitorCB event_cb, sample_cb;
+		eventCreateMonitorCB event_create_cb;
 
 		int fetch_group_id();
 		int send_nl_msg(struct nl_msg *msg);

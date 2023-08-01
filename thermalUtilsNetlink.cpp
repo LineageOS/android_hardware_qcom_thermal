@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2021, The Linux Foundation. All rights reserved.
+ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -84,6 +85,9 @@ ThermalUtils::ThermalUtils(const ueventCB &inp_cb):
 				std::placeholders::_2),
 		std::bind(&ThermalUtils::sampleParse, this,
 				std::placeholders::_1,
+				std::placeholders::_2),
+		std::bind(&ThermalUtils::eventCreateParse, this,
+				std::placeholders::_1,
 				std::placeholders::_2)),
 	cb(inp_cb)
 {
@@ -104,8 +108,8 @@ ThermalUtils::ThermalUtils(const ueventCB &inp_cb):
 			cmnInst.estimateSeverity(sens);
 			cmnInst.initThreshold(sens);
 		}
-		monitor.start();
 	}
+	monitor.start();
 	ret = cmnInst.initCdev();
 	if (ret > 0) {
 		is_cdev_init = true;
@@ -151,6 +155,45 @@ void ThermalUtils::sampleParse(int tzn, int temp)
 	struct therm_sensor& sens = thermalConfig[tzn];
 	sens.t.value = (float)temp / (float)sens.mulFactor;
 	return Notify(sens);
+}
+
+void ThermalUtils::eventCreateParse(int tzn, const char *name)
+{
+	int ret = 0;
+	std::vector<struct therm_sensor> sensorList;
+	std::vector<struct target_therm_cfg> therm_cfg = cfg.fetchConfig();
+	std::vector<struct target_therm_cfg>::iterator it_vec;
+	std::vector<std::string>::iterator it;
+
+	if (isSensorInitialized())
+		return;
+	for (it_vec = therm_cfg.begin();
+		it_vec != therm_cfg.end(); it_vec++) {
+		for (it = it_vec->sensor_list.begin();
+			       it != it_vec->sensor_list.end(); it++) {
+			if (!it->compare(name))
+				break;
+		}
+		if (it != it_vec->sensor_list.end())
+			break;
+	}
+	if (it_vec == therm_cfg.end()) {
+		LOG(DEBUG) << "sensor is not monitored:" << tzn
+			<< std::endl;
+		return;
+	}
+	ret = cmnInst.initThermalZones(therm_cfg);
+	if (ret > 0) {
+		is_sensor_init = true;
+		sensorList = cmnInst.fetch_sensor_list();
+		std::lock_guard<std::mutex> _lock(sens_cb_mutex);
+		for (struct therm_sensor sens: sensorList) {
+			thermalConfig[sens.tzn] = sens;
+			cmnInst.read_temperature(sens);
+			cmnInst.estimateSeverity(sens);
+			cmnInst.initThreshold(sens);
+		}
+	}
 }
 
 int ThermalUtils::readTemperatures(hidl_vec<Temperature_1_0>& temp)
