@@ -58,6 +58,64 @@ namespace implementation {
 		"cpuss0-usr",
 	};
 
+    std::vector<struct target_therm_cfg> sensor_cfg_349 =
+	{
+		{
+			TemperatureType::CPU,
+			cpu_sensors_439,
+			"",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpu0-usr" },
+			"GPU",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::SKIN,
+			{ "xo-therm-adc" },
+			"skin",
+			40000,
+			95000,
+			40000,
+			true,
+		},
+		{
+			TemperatureType::BCL_VOLTAGE,
+			{ "pmi-vbat-lvl0" },
+			"vbat",
+			3200,
+			3000,
+			3200,
+			false,
+		},
+		{
+			TemperatureType::BCL_CURRENT,
+			{ "pmi-ibat-lvl0" },
+			"ibat",
+			4200,
+			4400,
+			4200,
+			true,
+		},
+		{
+			TemperatureType::BCL_PERCENTAGE,
+			{ "soc" },
+			"soc",
+			10,
+			2,
+			10,
+			false,
+		},
+	};
+
 	std::vector<struct target_therm_cfg> sensor_cfg_439 =
 	{
 		{
@@ -1639,6 +1697,7 @@ namespace implementation {
 		{364, sensor_cfg_439},
 		{416, sensor_cfg_439},
 		{437, sensor_cfg_439},
+		{349, sensor_cfg_349},
 		{321, sensor_cfg_sdm845},
 		{341, sensor_cfg_sdm845},
 		{417, sensor_cfg_bengal}, // bengal
