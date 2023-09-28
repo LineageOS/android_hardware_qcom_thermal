@@ -18,6 +18,23 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "455492bb_c8ea0b01",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 32245
+      },
+      "writtenOn": "2023-09-28T10:35:29Z",
+      "side": 1,
+      "message": "if really wanted to add config just for that SOC ID, better to name it like \"sensor_cfg_id349\" to avoid confusion i think",
+      "revId": "cde22300ed0cc1a44b3ed5da1102922e6cb5bea2",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "983deca7_2129c230",
