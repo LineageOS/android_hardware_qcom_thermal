@@ -35,6 +35,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "38579c38_bf05e147",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 28232
+      },
+      "writtenOn": "2023-09-28T16:56:18Z",
+      "side": 1,
+      "message": "The SOC_ID that gets reported on msm8953 is 349:\n```\nFP3:/ $ cat /sys/devices/soc0/soc_id\n349\n```\n\nHence, we have used 349 it self.",
+      "parentUuid": "4d647193_93339bc0",
+      "revId": "cde22300ed0cc1a44b3ed5da1102922e6cb5bea2",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "983deca7_2129c230",
@@ -48,6 +66,24 @@
       "writtenOn": "2023-09-28T10:14:18Z",
       "side": 1,
       "message": "indent",
+      "revId": "cde22300ed0cc1a44b3ed5da1102922e6cb5bea2",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "572534d2_16bc82cc",
+        "filename": "thermalConfig.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 28232
+      },
+      "writtenOn": "2023-09-28T16:56:18Z",
+      "side": 1,
+      "message": "@ankit, please fix the indent.",
+      "parentUuid": "983deca7_2129c230",
       "revId": "cde22300ed0cc1a44b3ed5da1102922e6cb5bea2",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
