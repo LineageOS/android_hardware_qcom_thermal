@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d647193_93339bc0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 32245
+      },
+      "writtenOn": "2023-09-28T10:14:18Z",
+      "side": 1,
+      "message": "why not naming it sensor_cfg_8953 or sensor_cfg_msm8953 though\n\nsensor_cfg_439 is for SDM439",
+      "revId": "cde22300ed0cc1a44b3ed5da1102922e6cb5bea2",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "983deca7_2129c230",
+        "filename": "thermalConfig.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 32245
+      },
+      "writtenOn": "2023-09-28T10:14:18Z",
+      "side": 1,
+      "message": "indent",
+      "revId": "cde22300ed0cc1a44b3ed5da1102922e6cb5bea2",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
