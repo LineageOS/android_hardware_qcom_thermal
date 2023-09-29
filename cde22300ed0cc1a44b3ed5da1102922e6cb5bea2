@@ -71,6 +71,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1494e36f_0d32e2fa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 32245
+      },
+      "writtenOn": "2023-09-29T07:36:50Z",
+      "side": 1,
+      "message": "I mean, the naming convention, no-one there uses soc id but uses part name...\n\nIf you really want to use soc id then IG it\u0027s better to *avoid confusion* with the others\n(such as the existing _439 stands for SDM439 but not SoC ID \u003d\u003d 439)\n\nYou can consider naming it \"sensor_cfg_id349\"\n\nJust a suggestion, lemme quit this now",
+      "parentUuid": "455492bb_c8ea0b01",
+      "revId": "cde22300ed0cc1a44b3ed5da1102922e6cb5bea2",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "983deca7_2129c230",
