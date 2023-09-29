@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d42e148_6ccd2038",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 16779
+      },
+      "writtenOn": "2023-09-29T12:20:02Z",
+      "side": 1,
+      "message": "sdm632",
+      "range": {
+        "startLine": 7,
+        "startChar": 36,
+        "endLine": 7,
+        "endChar": 43
+      },
+      "revId": "1cfb928e9f8b238f6a884cc3feec177b9a3f637b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ca8b113_34c8b861",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 16779
+      },
+      "writtenOn": "2023-09-29T12:20:02Z",
+      "side": 1,
+      "message": "SOC ID 349 is sdm632",
+      "range": {
+        "startLine": 9,
+        "startChar": 31,
+        "endLine": 9,
+        "endChar": 59
+      },
+      "revId": "1cfb928e9f8b238f6a884cc3feec177b9a3f637b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}

@@ -127,6 +127,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "28bfa592_f9149d2e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 16779
+      },
+      "writtenOn": "2023-09-29T12:20:02Z",
+      "side": 1,
+      "message": "Just name it name it sensor_cfg_sdm632",
+      "parentUuid": "e35f6eae_69889102",
+      "revId": "cde22300ed0cc1a44b3ed5da1102922e6cb5bea2",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "983deca7_2129c230",
         "filename": "thermalConfig.cpp",
         "patchSetId": 1
