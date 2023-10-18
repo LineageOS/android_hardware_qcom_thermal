@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "392d32b9_4a89a623",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 32245
+      },
+      "writtenOn": "2023-10-18T11:05:04Z",
+      "side": 1,
+      "message": "I own a SDM455 QRD running k4.19, and those thermal zones are present and working on it\n\nI\u0027ll try out this change in probably some hours later",
+      "revId": "abb95d9025acf7560af3f66e1775ea51d3968f5c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
