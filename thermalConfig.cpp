@@ -1326,6 +1326,7 @@ namespace implementation {
 		{634, parrot_common}, //Netrani Gaming SKU without modem
 		{638, parrot_common}, //SM7435P
 		{549, anorak_common},
+		{649, anorak_common}, // Halliday Pro
 		{568, ravelin_common}, //Clarence Mobile
 		{581, ravelin_common}, //Clarence IOT
 		{582, ravelin_common}, //Clarence IOT without modem
@@ -1355,6 +1356,7 @@ namespace implementation {
 		{613, parrot_specific}, //Netrani APQ
 		{631, parrot_specific},
 		{549, anorak_specific},
+		{649, anorak_specific}, // Halliday Pro
 		{591, waipio_specific}, //ukee
 	};
 
