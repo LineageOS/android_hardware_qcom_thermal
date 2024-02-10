@@ -16,6 +16,24 @@
       "message": "You should pick the original commits instead",
       "revId": "f36fc9ee8b1308a0939ea260523f6167078395a1",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5451ca8_ada36fb9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 32739
+      },
+      "writtenOn": "2024-02-10T13:51:25Z",
+      "side": 1,
+      "message": "I\u0027m not sure what do you mean by original commits, SDM710 family never got QTI thermal hal 2.0 support. The appropriate sensors were taken by referencing 1.0 thermal hal from SDM710 CAF tag and the skin temperatures were updated by taking SDM845 entries in current 2.0 hal for reference.",
+      "parentUuid": "631ae12f_3730291b",
+      "revId": "f36fc9ee8b1308a0939ea260523f6167078395a1",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
