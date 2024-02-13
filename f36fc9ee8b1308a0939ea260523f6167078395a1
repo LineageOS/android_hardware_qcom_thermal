@@ -139,6 +139,24 @@
       "parentUuid": "e47a2266_3c68511c",
       "revId": "f36fc9ee8b1308a0939ea260523f6167078395a1",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fab36dd4_bb6ad824",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 32739
+      },
+      "writtenOn": "2024-02-13T13:34:54Z",
+      "side": 1,
+      "message": "\u003e I did my best to search, but as previously said, I don\u0027t think I was able to find any official commit for sdm710 or any of its variants. I assume they didn\u0027t bother supporting it. Thus, I did it myself.\n\u003e \n\u003e Also, please let me know how it goes on your device.\n\nWait i think i got what you meant... You meant to pick the old thermal hal commit while mentioning the adaptations made for the new one in the description?",
+      "parentUuid": "bf8ec1fb_a7732eb4",
+      "revId": "f36fc9ee8b1308a0939ea260523f6167078395a1",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
