@@ -51,6 +51,24 @@
       "message": "Tested on RealmeXT (sdm712). Thermal service is able register with proper configuration.",
       "revId": "f36fc9ee8b1308a0939ea260523f6167078395a1",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e47a2266_3c68511c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 32245
+      },
+      "writtenOn": "2024-02-13T02:35:26Z",
+      "side": 1,
+      "message": "he meant to do cherry-pick in this way, i guess\nhttps://github.com/LineageOS/android_device_xiaomi_mithorium-common/commit/8ec43f205543d5cc41c0e262abe99f0cbb0787e4\n\nbtw, I have a sdm710 device, I\u0027ll try this on it, thanks",
+      "parentUuid": "c5451ca8_ada36fb9",
+      "revId": "f36fc9ee8b1308a0939ea260523f6167078395a1",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
