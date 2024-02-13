@@ -69,6 +69,23 @@
       "parentUuid": "c5451ca8_ada36fb9",
       "revId": "f36fc9ee8b1308a0939ea260523f6167078395a1",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d2bb5e5_4095f439",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 32245
+      },
+      "writtenOn": "2024-02-13T09:22:35Z",
+      "side": 1,
+      "message": "02-13 17:21:27.855  8517  8517 I thermal_hal: Thermal HAL Service 2.0 starting...\n02-13 17:21:27.856  8517  8517 E android.hardware.thermal@2.0-service.qti: No config for soc ID: 360\n02-13 17:21:27.856  8517  8517 E android.hardware.thermal@2.0-service.qti: initThermalZones:Invalid input\n02-13 17:21:27.861  8517  8517 I HidlServiceManagement: Registered android.hardware.thermal@2.0::IThermal/default\n02-13 17:21:27.861  8517  8517 I HidlServiceManagement: Removing namespace from process name android.hardware.thermal@2.0-service.qti to thermal@2.0-service.qti.\n02-13 17:21:27.862  8517  8517 I thermal_hal: Thermal HAL Service 2.0 started successfully.",
+      "revId": "f36fc9ee8b1308a0939ea260523f6167078395a1",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
