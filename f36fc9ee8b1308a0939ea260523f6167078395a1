@@ -103,6 +103,42 @@
       "message": "uh, sorry, ignore the log I just posted please, i was dumb)",
       "revId": "f36fc9ee8b1308a0939ea260523f6167078395a1",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "90e4f20b_6da094e0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 32739
+      },
+      "writtenOn": "2024-02-13T13:29:24Z",
+      "side": 1,
+      "message": "Yeah, no problem; I assume you did not build it with the commit applied?",
+      "parentUuid": "1d26c7ce_6435d13b",
+      "revId": "f36fc9ee8b1308a0939ea260523f6167078395a1",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf8ec1fb_a7732eb4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 32739
+      },
+      "writtenOn": "2024-02-13T13:29:24Z",
+      "side": 1,
+      "message": "I did my best to search, but as previously said, I don\u0027t think I was able to find any official commit for sdm710 or any of its variants. I assume they didn\u0027t bother supporting it. Thus, I did it myself.\n\nAlso, please let me know how it goes on your device.",
+      "parentUuid": "e47a2266_3c68511c",
+      "revId": "f36fc9ee8b1308a0939ea260523f6167078395a1",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
