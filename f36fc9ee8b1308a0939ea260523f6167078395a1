@@ -157,6 +157,42 @@
       "parentUuid": "bf8ec1fb_a7732eb4",
       "revId": "f36fc9ee8b1308a0939ea260523f6167078395a1",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "68e6eaaf_5857e45b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 32245
+      },
+      "writtenOn": "2024-02-13T15:41:29Z",
+      "side": 1,
+      "message": "\u003e You meant to pick the old thermal hal commit while mentioning the adaptations made for the new one in the description\n\nyeah\n\n\u003e Also, please let me know how it goes on your device.\n\nRefer to Iae471a16a0284cd24a598bac1a3ea0736faceb9f\nI haven\u0027t dig into it yet, will do soon\nI didn\u0027t join the initial kernel bringup so idk why it has became like that",
+      "parentUuid": "fab36dd4_bb6ad824",
+      "revId": "f36fc9ee8b1308a0939ea260523f6167078395a1",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c64758b5_2c7f69f9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 32245
+      },
+      "writtenOn": "2024-02-13T15:41:29Z",
+      "side": 1,
+      "message": "yes...",
+      "parentUuid": "90e4f20b_6da094e0",
+      "revId": "f36fc9ee8b1308a0939ea260523f6167078395a1",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
