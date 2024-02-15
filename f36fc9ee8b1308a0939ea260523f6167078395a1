@@ -227,6 +227,23 @@
       "message": "Verified on pyxis",
       "revId": "f36fc9ee8b1308a0939ea260523f6167078395a1",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c8f91e9_8818160c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2024-02-15T18:46:49Z",
+      "side": 1,
+      "message": "For reference:\n- https://git.codelinaro.org/clo/la/platform/hardware/qcom/thermal/-/commit/3cd560ff0b230d8054460c5a77db3d0ef49f4632\n- https://git.codelinaro.org/clo/la/platform/hardware/qcom/thermal/-/commit/4760e81c19261cc847678fb093bc31e13ec54314\n- https://git.codelinaro.org/clo/la/platform/hardware/qcom/thermal/-/commit/850ead3b93f77014b8e83eb78b84c1296658dfd9",
+      "revId": "f36fc9ee8b1308a0939ea260523f6167078395a1",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
