@@ -1331,6 +1331,8 @@ namespace implementation {
 		{581, ravelin_common}, //Clarence IOT
 		{582, ravelin_common}, //Clarence IOT without modem
 		{591, waipio_common}, //ukee
+		{653, ravelin_common}, //Clarence Gaming
+		{654, ravelin_common}, //Clarence Gaming
 	};
 
 	const std::unordered_map<int, std::vector<struct target_therm_cfg>>
