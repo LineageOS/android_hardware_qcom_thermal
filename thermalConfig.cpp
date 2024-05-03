@@ -1325,11 +1325,15 @@ namespace implementation {
 		{633, parrot_common}, //Netrani Gaming SKU with modem
 		{634, parrot_common}, //Netrani Gaming SKU without modem
 		{638, parrot_common}, //SM7435P
+		{663, parrot_common}, //SM7435
 		{549, anorak_common},
+		{649, anorak_common}, // Halliday Pro
 		{568, ravelin_common}, //Clarence Mobile
 		{581, ravelin_common}, //Clarence IOT
 		{582, ravelin_common}, //Clarence IOT without modem
 		{591, waipio_common}, //ukee
+		{653, ravelin_common}, //Clarence Gaming
+		{654, ravelin_common}, //Clarence Gaming
 	};
 
 	const std::unordered_map<int, std::vector<struct target_therm_cfg>>
@@ -1354,7 +1358,9 @@ namespace implementation {
 		{583, parrot_specific}, //Netrani mobile without modem
 		{613, parrot_specific}, //Netrani APQ
 		{631, parrot_specific},
+		{663, parrot_specific}, //Netrani pro
 		{549, anorak_specific},
+		{649, anorak_specific}, // Halliday Pro
 		{591, waipio_specific}, //ukee
 	};
 
