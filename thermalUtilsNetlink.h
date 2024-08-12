@@ -31,7 +31,7 @@
 
 /* Changes from Qualcomm Innovation Center are provided under the following license:
 
-Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+Copyright (c) 2023, 2025 Qualcomm Innovation Center, Inc. All rights reserved.
 SPDX-License-Identifier: BSD-3-Clause-Clear */
 
 #ifndef THERMAL_THERMAL_UTILS_H__
@@ -56,10 +56,8 @@ class ThermalUtils {
 	public:
 		ThermalUtils(const ueventCB &inp_cb);
 		~ThermalUtils() = default;
-		bool isSensorInitialized()
-		{
-			return is_sensor_init;
-		};
+		bool isSensorInitialized();
+		bool isSensorInitialized(TemperatureType type);
 		bool isCdevInitialized()
 		{
 			return is_cdev_init;
@@ -74,7 +72,6 @@ class ThermalUtils {
 		int readCdevStates(cdevType type,
                                             std::vector<CoolingDevice>& cdev);
 	private:
-		bool is_sensor_init;
 		bool is_cdev_init;
 		ThermalConfig cfg;
 		ThermalCommon cmnInst;
