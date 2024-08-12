@@ -496,7 +496,7 @@ namespace implementation {
 		},
 		{
 			TemperatureType::GPU,
-			{ "gpuss-0-usr" },
+			{ "gpuss-0" },
 			"gpu0",
 			95000,
 			115000,
@@ -505,7 +505,7 @@ namespace implementation {
 		},
 		{
 			TemperatureType::GPU,
-			{ "gpuss-1-usr" },
+			{ "gpuss-1" },
 			"gpu1",
 			95000,
 			115000,
@@ -521,6 +521,10 @@ namespace implementation {
 			40000,
 			true,
 		},
+	};
+
+	std::vector<struct target_therm_cfg>  sensor_cfg_msmnile_specific =
+	{
 		{
 			TemperatureType::BCL_CURRENT,
 			{ "pm8150b-ibat-lvl0" },
@@ -541,11 +545,11 @@ namespace implementation {
 		},
 		{
 			TemperatureType::BCL_PERCENTAGE,
-			{ "soc" },
-			"soc",
-			10,
-			2,
-			10,
+			{ "socd" },
+			"socd",
+			90,
+			99,
+			90,
 			false,
 		},
 	};
@@ -1201,6 +1205,61 @@ namespace implementation {
 		},
 	};
 
+	std::vector<std::string> cpu_sensors_talos =
+	{
+		"cpuss-2",
+		"cpuss-2",
+		"cpuss-1",
+		"cpuss-1",
+		"cpuss-0",
+		"cpuss-0",
+		"cpu-1-0",
+		"cpu-1-2",
+	};
+
+	std::vector<struct target_therm_cfg>  sensor_cfg_talos_common =
+	{
+		{
+			TemperatureType::CPU,
+			cpu_sensors_talos,
+			"",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpu" },
+			"gpu",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::SKIN,
+			{ "xo-therm" },
+			"skin",
+			40000,
+			95000,
+			40000,
+			true,
+		},
+	};
+
+	std::vector<struct target_therm_cfg>  sensor_cfg_talos_specific = {
+		{
+			TemperatureType::BCL_PERCENTAGE,
+			{ "socd" },
+			"socd",
+			90,
+			99,
+			90,
+			false,
+		},
+	};
+
 	struct target_therm_cfg bat_conf = {
 		TemperatureType::BATTERY,
 		{ "battery" },
@@ -1292,6 +1351,9 @@ namespace implementation {
 		{608, crow_common}, //crow
 		{644, crow_common}, //crow 4G
 		{532, lemansAU_common}, //Lemans auto
+		{355, sensor_cfg_talos_common},
+		{377, sensor_cfg_talos_common},
+		{380, sensor_cfg_talos_common},
 	};
 
 	const std::unordered_map<int, std::vector<struct target_therm_cfg>>
@@ -1320,6 +1382,18 @@ namespace implementation {
 		{604, kalama_specific}, //Kalama_qcm
 		{608, crow_specific}, //crow
 		{644, crow_specific}, //crow
+		{339, sensor_cfg_msmnile_specific},
+		{361, sensor_cfg_msmnile_specific},
+		{355, sensor_cfg_talos_specific},
+	};
+
+	const std::unordered_map<int, std::string>
+        batt_bcl_not_supported = {
+		{367, "nileAU"},
+		{362, "nileAU"},
+		{532, "lemansAU"},
+		{377, "talosAU"},
+		{380, "talosAU"},
 	};
 
 	std::vector<struct target_therm_cfg> add_target_config(
@@ -1377,10 +1451,12 @@ namespace implementation {
 				bcl_defined = true;
 		}
 
-		thermalConfig.push_back(bat_conf);
-		if (!bcl_defined)
-			thermalConfig.insert(thermalConfig.end(),
-				bcl_conf.begin(), bcl_conf.end());
+		if (batt_bcl_not_supported.find(soc_id) == batt_bcl_not_supported.end()) {
+			thermalConfig.push_back(bat_conf);
+			if (!bcl_defined)
+				thermalConfig.insert(thermalConfig.end(),
+					bcl_conf.begin(), bcl_conf.end());
+		}
 		LOG(DEBUG) << "Total sensors:" << thermalConfig.size();
 	}
 }  // namespace implementation
