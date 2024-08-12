@@ -288,6 +288,7 @@ int ThermalCommon::initialize_sensor(struct target_therm_cfg& cfg, int sens_idx)
 			sensor.thresh.coldThrottlingThresholds[idx] =
 				cfg.thresh[idx] / (float)sensor.mulFactor;
 	}
+	cfg.sens = &sensor;
 	sens.push_back(sensor);
 
 	return 0;
@@ -305,6 +306,17 @@ int ThermalCommon::initializeCpuSensor(struct target_therm_cfg& cpu_cfg)
 	return 0;
 }
 
+int ThermalCommon::initNewThermalZone(struct target_therm_cfg& cfg)
+{
+
+	if (cfg.type == TemperatureType::CPU)
+		initializeCpuSensor(cfg);
+	else
+		initialize_sensor(cfg, 0);
+
+	return 1;
+}
+
 int ThermalCommon::initThermalZones(std::vector<struct target_therm_cfg>& cfg)
 {
 	std::vector<struct target_therm_cfg>::iterator it;
@@ -316,14 +328,10 @@ int ThermalCommon::initThermalZones(std::vector<struct target_therm_cfg>& cfg)
 
 	for (it = cfg.begin(); it != cfg.end(); it++)
 	{
-		if (it->type == TemperatureType::CPU) {
-			if (initializeCpuSensor(*it) < 0)
-				return -1;
-			continue;
-		}
-		if (initialize_sensor(*it, 0) < 0) {
-			return -1;
-		}
+		if (it->type == TemperatureType::CPU)
+			initializeCpuSensor(*it);
+		else
+			initialize_sensor(*it, 0);
 	}
 
 	return sens.size();

@@ -71,15 +71,6 @@ using ::aidl::android::hardware::thermal::ThrottlingSeverity;
 		SHUTDOWN = (size_t)ThrottlingSeverity::SHUTDOWN,
 	};
 
-	struct target_therm_cfg {
-		TemperatureType type;
-		std::vector<std::string> sensor_list;
-		std::string label;
-		int thresh[SHUTDOWN + 1];
-		bool positive_thresh_ramp;
-		bool no_trip_set = false;
-	};
-
 	struct therm_sensor {
 		int tzn;
 		int mulFactor;
@@ -89,6 +80,16 @@ using ::aidl::android::hardware::thermal::ThrottlingSeverity;
 		Temperature t;
 		TemperatureThreshold thresh;
 		bool no_trip_set;
+	};
+
+	struct target_therm_cfg {
+		TemperatureType type;
+		std::vector<std::string> sensor_list;
+		std::string label;
+		int thresh[SHUTDOWN + 1];
+		bool positive_thresh_ramp;
+		bool no_trip_set = false;
+		struct therm_sensor *sens = NULL;
 	};
 
 	struct therm_cdev {
