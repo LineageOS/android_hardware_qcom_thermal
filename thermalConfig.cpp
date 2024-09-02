@@ -1154,6 +1154,24 @@ namespace implementation {
 			95000,
 			true,
 		},
+		{
+			TemperatureType::BCL_VOLTAGE,
+			{ "vbat" },
+			"vbat",
+			3200,
+			3000,
+			3200,
+			false,
+		},
+		{
+			TemperatureType::BCL_PERCENTAGE,
+			{ "socd" },
+			"socd",
+			95,
+			99,
+			95,
+			true,
+		},
 	};
 	std::vector<struct target_therm_cfg>  anorak_specific = {
 		{
@@ -1371,6 +1389,12 @@ namespace implementation {
 		{568, std::make_pair("IDP", ravelin_specific_idp)},
 	};
 
+	const std::unordered_map<int, bool>
+		battery_bcl_cfg_disable_map = {
+		{549, true},
+		{649, true},
+	};
+
 	std::vector<struct target_therm_cfg> add_target_config(
 			int socID, std::string hwPlatform,
 			std::vector<struct target_therm_cfg> conf)
@@ -1401,6 +1425,7 @@ namespace implementation {
 	ThermalConfig::ThermalConfig():cmnInst()
 	{
 		std::unordered_map<int, std::vector<struct target_therm_cfg>>::const_iterator it;
+		std::unordered_map<int, bool>::const_iterator it_2;
 		std::vector<struct target_therm_cfg>::iterator it_vec;
 		bool bcl_defined = false;
 		std::string soc_val;
@@ -1444,10 +1469,13 @@ namespace implementation {
 				bcl_defined = true;
 		}
 
-		thermalConfig.push_back(bat_conf);
-		if (!bcl_defined)
-			thermalConfig.insert(thermalConfig.end(),
-				bcl_conf.begin(), bcl_conf.end());
+		it_2 = battery_bcl_cfg_disable_map.find(soc_id);
+		if (it_2 == battery_bcl_cfg_disable_map.end() || !it_2->second) {
+			thermalConfig.push_back(bat_conf);
+			if (!bcl_defined)
+				thermalConfig.insert(thermalConfig.end(),
+					bcl_conf.begin(), bcl_conf.end());
+		}
 		LOG(DEBUG) << "Total sensors:" << thermalConfig.size();
 	}
 }  // namespace implementation
