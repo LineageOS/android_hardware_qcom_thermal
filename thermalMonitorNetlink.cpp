@@ -111,7 +111,7 @@ int ThermalMonitor::event_parse(struct nl_msg *n, void *data)
 		if (attrs[THERMAL_GENL_ATTR_TZ_TRIP_ID])
 			trip = nla_get_u32(
 					attrs[THERMAL_GENL_ATTR_TZ_TRIP_ID]);
-		LOG(INFO) << "thermal_nl_event: TZ:" << tzn << " Trip:"
+		LOG(DEBUG) << "thermal_nl_event: TZ:" << tzn << " Trip:"
 		       << trip << "event:" << hdr->cmd << std::endl;
 		event_cb(tzn, trip);
 		break;
@@ -138,7 +138,7 @@ int ThermalMonitor::sample_parse(struct nl_msg *n, void *data)
 		if (attrs[THERMAL_GENL_ATTR_TZ_TEMP])
 			temp = nla_get_u32(attrs[THERMAL_GENL_ATTR_TZ_TEMP]);
 
-		LOG(INFO) << "thermal_sample_event: TZ:" << tzn << " temp:"
+		LOG(DEBUG) << "thermal_sample_event: TZ:" << tzn << " temp:"
 			<< temp << std::endl;
 		sample_cb(tzn, temp);
 		break;

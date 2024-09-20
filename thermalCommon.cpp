@@ -471,7 +471,7 @@ int ThermalCommon::estimateSeverity(struct therm_sensor& sensor)
 	}
 	if (idx >= 0)
 		severity = (ThrottlingSeverity)(idx);
-	LOG(INFO) << "Sensor Name:" << sensor.t.name << "temp: " <<
+	LOG(DEBUG) << "Sensor Name:" << sensor.t.name << "temp: " <<
 		temp << ". prev severity:" <<
 		(int)sensor.lastThrottleStatus << ". cur severity:" <<
 		(int)sensor.t.throttlingStatus << " New severity:" <<
