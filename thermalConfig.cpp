@@ -2006,6 +2006,247 @@ namespace thermal {
 		},
 	};
 
+	std::vector<std::string> cpu_sensors_canoe = {
+		"cpu-0-0-0",
+		"cpu-0-1-0",
+		"cpu-0-2-0",
+		"cpu-0-3-0",
+		"cpu-0-4-0",
+		"cpu-0-5-0",
+		"cpu-1-0-0",
+		"cpu-1-1-0",
+	};
+
+	std::vector<struct target_therm_cfg> canoe_common = {
+		{
+			TemperatureType::CPU,
+			cpu_sensors_canoe,
+			"",
+			{
+			[SEVERE] = 105000,
+			[SHUTDOWN] = 125000,
+			},
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-0" },
+			"GPU0",
+			{
+			[SEVERE] = 105000,
+			[SHUTDOWN] = 125000,
+			},
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-1" },
+			"GPU1",
+			{
+			[SEVERE] = 105000,
+			[SHUTDOWN] = 125000,
+			},
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-2" },
+			"GPU2",
+			{
+			[SEVERE] = 105000,
+			[SHUTDOWN] = 125000,
+			},
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-3" },
+			"GPU3",
+			{
+			[SEVERE] = 105000,
+			[SHUTDOWN] = 125000,
+			},
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-4" },
+			"GPU4",
+			{
+			[SEVERE] = 105000,
+			[SHUTDOWN] = 125000,
+			},
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-5" },
+			"GPU5",
+			{
+			[SEVERE] = 105000,
+			[SHUTDOWN] = 125000,
+			},
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-6" },
+			"GPU6",
+			{
+			[SEVERE] = 105000,
+			[SHUTDOWN] = 125000,
+			},
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-7" },
+			"GPU7",
+			{
+			[SEVERE] = 105000,
+			[SHUTDOWN] = 125000,
+			},
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-8" },
+			"GPU8",
+			{
+			[SEVERE] = 105000,
+			[SHUTDOWN] = 125000,
+			},
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-9" },
+			"GPU9",
+			{
+			[SEVERE] = 105000,
+			[SHUTDOWN] = 125000,
+			},
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-10" },
+			"GPU10",
+			{
+			[SEVERE] = 105000,
+			[SHUTDOWN] = 125000,
+			},
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nsphvx-0" },
+			"nsp0",
+			{
+			[SEVERE] = 105000,
+			[SHUTDOWN] = 125000,
+			},
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nsphvx-1" },
+			"nsp1",
+			{
+			[SEVERE] = 105000,
+			[SHUTDOWN] = 125000,
+			},
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nsphvx-2" },
+			"nsp2",
+			{
+			[SEVERE] = 105000,
+			[SHUTDOWN] = 125000,
+			},
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nsphvx-3" },
+			"nsp3",
+			{
+			[SEVERE] = 105000,
+			[SHUTDOWN] = 125000,
+			},
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nsphmx-0" },
+			"nsp4",
+			{
+			[SEVERE] = 105000,
+			[SHUTDOWN] = 125000,
+			},
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nsphmx-1" },
+			"nsp5",
+			{
+			[SEVERE] = 105000,
+			[SHUTDOWN] = 125000,
+			},
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nsphmx-2" },
+			"nsp6",
+			{
+			[SEVERE] = 105000,
+			[SHUTDOWN] = 125000,
+			},
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nsphmx-3" },
+			"nsp7",
+			{
+			[SEVERE] = 105000,
+			[SHUTDOWN] = 125000,
+			},
+			true,
+		},
+	};
+
+	std::vector<struct target_therm_cfg> canoe_specific = {
+		{
+			TemperatureType::BCL_CURRENT,
+			{ "pmih010x-ibat-lvl0" },
+			"ibat",
+			{
+			[SEVERE] = 13500,
+			[SHUTDOWN] = 15000,
+			},
+			true,
+		},
+		{
+			TemperatureType::SKIN,
+			{ "sys-therm-2" },
+			"skin",
+			{
+			[LIGHT] = 48000,
+			[MODERATE] = 49000,
+			[SEVERE] = 50000,
+			[CRITICAL] = 60000,
+			[EMERGENCY] = 61000,
+			[SHUTDOWN] = 90000,
+			},
+			true,
+		},
+	};
+
 	const std::unordered_map<int, std::vector<struct target_therm_cfg>>
 		msm_soc_map = {
 		{417, sensor_cfg_bengal}, // bengal
@@ -2066,6 +2307,8 @@ namespace thermal {
 		{663, parrot_common}, //SM7435
 		{486, sensor_cfg_monaco}, // monaco
 		{517, sensor_cfg_monaco}, // monaco
+		{660, canoe_common}, //Canoe
+		{661, canoe_common}, //Canoep
 	};
 
 	const std::unordered_map<int, std::vector<struct target_therm_cfg>>
@@ -2095,6 +2338,8 @@ namespace thermal {
 		{613, parrot_specific}, //Netrani APQ
 		{631, parrot_specific},
 		{663, parrot_specific}, //Netrani pro
+		{660, canoe_common}, //Canoe
+		{661, canoe_common}, //Canoep
 	};
 
 	const std::unordered_multimap<int, std::pair<int, std::vector<struct target_therm_cfg>>>
