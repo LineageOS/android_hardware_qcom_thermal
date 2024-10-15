@@ -1336,6 +1336,7 @@ namespace implementation {
 		{540, waipio_common}, // cape
 		{525, neo_common},
 		{554, neo_common},
+		{579, neo_common},
 		{537, parrot_common}, //Netrani mobile
 		{583, parrot_common}, //Netrani mobile without modem
 		{613, parrot_common}, //Netrani APQ
