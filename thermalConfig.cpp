@@ -1353,6 +1353,7 @@ namespace implementation {
 		{591, waipio_common}, //ukee
 		{653, ravelin_common}, //Clarence Gaming
 		{654, ravelin_common}, //Clarence Gaming
+		{602, ravelin_common}, //Clarence APQ
 	};
 
 	const std::unordered_map<int, std::vector<struct target_therm_cfg>>
