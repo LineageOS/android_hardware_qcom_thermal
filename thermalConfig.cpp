@@ -725,14 +725,14 @@ namespace thermal {
 
 	std::vector<std::string> cpu_sensors_msmnile =
 	{
-		"cpu-0-0",
-		"cpu-0-1",
-		"cpu-0-2",
-		"cpu-0-3",
-		"cpu-1-0",
-		"cpu-1-1",
-		"cpu-1-2",
-		"cpu-1-3",
+		"cpu-0-0-usr",
+		"cpu-0-1-usr",
+		"cpu-0-2-usr",
+		"cpu-0-3-usr",
+		"cpu-1-0-usr",
+		"cpu-1-1-usr",
+		"cpu-1-2-usr",
+		"cpu-1-3-usr",
 	};
 
 	std::vector<struct target_therm_cfg>  sensor_cfg_msmnile_common = {
@@ -746,7 +746,7 @@ namespace thermal {
 		},
 		{
 			TemperatureType::GPU,
-			{ "gpuss-0" },
+			{ "gpuss-0-usr" },
 			"gpu0",
 			95000,
 			115000,
@@ -754,7 +754,7 @@ namespace thermal {
 		},
 		{
 			TemperatureType::GPU,
-			{ "gpuss-1" },
+			{ "gpuss-1-usr" },
 			"gpu1",
 			95000,
 			115000,
@@ -762,10 +762,57 @@ namespace thermal {
 		},
 	};
 
+	std::vector<struct target_therm_cfg>  sensor_cfg_msmnile_specific = {
+		{
+			TemperatureType::SKIN,
+			{ "xo-therm" },
+			"skin",
+			40000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::BCL_CURRENT,
+			{ "pm8150b-ibat-lvl0" },
+			"ibat",
+			4500,
+			5000,
+			true,
+		},
+		{
+			TemperatureType::BCL_VOLTAGE,
+			{ "pm8150b-vbat-lvl0" },
+			"vbat",
+			3200,
+			3000,
+			false,
+		},
+		{
+			TemperatureType::BCL_PERCENTAGE,
+			{ "soc" },
+			"soc",
+			10,
+			2,
+			false,
+		},
+	};
+
+	std::vector<std::string> cpu_sensors_sa8155 =
+	{
+		"cpu-0-0",
+		"cpu-0-1",
+		"cpu-0-2",
+		"cpu-0-3",
+		"cpu-1-0",
+		"cpu-1-1",
+		"cpu-1-2",
+		"cpu-1-3",
+	};
+
 	std::vector<struct target_therm_cfg>  sensor_cfg_sa8155_common = {
 		{
 			TemperatureType::CPU,
-			cpu_sensors_msmnile,
+			cpu_sensors_sa8155,
 			"",
 			105000,
 			118000,
@@ -792,7 +839,7 @@ namespace thermal {
 	std::vector<struct target_therm_cfg>  sensor_cfg_sa8195_common = {
 		{
 			TemperatureType::CPU,
-			cpu_sensors_msmnile,
+			cpu_sensors_sa8155,
 			"",
 			105000,
 			118000,
@@ -2668,6 +2715,8 @@ std::vector<std::string> cpu_sensors_cliffs = {
 
 	const std::unordered_map<int, std::vector<struct target_therm_cfg>>
 		msm_soc_specific = {
+		{339, sensor_cfg_msmnile_specific},
+		{361, sensor_cfg_msmnile_specific},
 		{356, kona_specific}, // kona
 		{481, kona_specific}, //kona iot
 		{548, kona_specific}, //kona iot
