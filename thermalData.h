@@ -98,7 +98,6 @@ using ::aidl::android::hardware::thermal::ThrottlingSeverity;
 		int thresh[SHUTDOWN + 1];
 		bool positive_thresh_ramp;
 		bool no_trip_set = false;
-		struct therm_sensor *sens = NULL;
 		bool virtual_sensor_flag = false;
 		std::vector<std::string> vs_sensor_list;
 		std::vector<double> weight_list;

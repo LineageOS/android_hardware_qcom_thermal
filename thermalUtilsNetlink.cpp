@@ -269,12 +269,18 @@ void ThermalUtils::eventCreateParse(int tzn, const char *name)
 	}
 	ret = cmnInst.initNewThermalZone(*it_vec);
 	if (ret > 0) {
+		sensorList = cmnInst.fetch_sensor_list();
 		std::lock_guard<std::mutex> _lock(sens_cb_mutex);
-		thermalConfig[it_vec->sens->tzn] = *it_vec->sens;
-		cmnInst.read_temperature(*it_vec->sens);
-		cmnInst.estimateSeverity(*it_vec->sens);
-		if (!it_vec->sens->no_trip_set)
-			cmnInst.initThreshold(*it_vec->sens);
+		for (struct therm_sensor sens: sensorList) {
+			if (sens.sensor_name != name)
+				continue;
+			thermalConfig[sens.tzn] = sens;
+			cmnInst.read_temperature(sens);
+			cmnInst.estimateSeverity(sens);
+			if (!sens.no_trip_set)
+				cmnInst.initThreshold(sens);
+			break;
+		}
 	}
 }
 

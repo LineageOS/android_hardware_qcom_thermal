@@ -341,7 +341,6 @@ int ThermalCommon::initialize_sensor(struct target_therm_cfg& cfg, int sens_idx)
 			sensor.thresh.coldThrottlingThresholds[idx] =
 				cfg.thresh[idx] / (float)sensor.mulFactor;
 	}
-	cfg.sens = &sensor;
 	sens.push_back(sensor);
 
 	if (sensor.virtual_sensor_flag) {
