@@ -355,5 +355,8 @@ void Thermal::sendThrottlingChangeCB(const Temperature &t)
 	}
 }
 
+ndk::ScopedAStatus Thermal::forecastSkinTemperature(int32_t forecastSeconds, float*_aidl_return) {
+    return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
+}
 
 }  // namespace aidl::android::hardware::thermal
