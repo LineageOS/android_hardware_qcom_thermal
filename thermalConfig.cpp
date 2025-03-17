@@ -2338,8 +2338,8 @@ namespace thermal {
 		{613, parrot_specific}, //Netrani APQ
 		{631, parrot_specific},
 		{663, parrot_specific}, //Netrani pro
-		{660, canoe_specific}, //Canoe
-		{661, canoe_specific}, //Canoep
+		{660, canoe_common}, //Canoe
+		{661, canoe_common}, //Canoep
 	};
 
 	const std::unordered_multimap<int, std::pair<int, std::vector<struct target_therm_cfg>>>
