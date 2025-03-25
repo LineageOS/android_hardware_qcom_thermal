@@ -568,11 +568,15 @@ void ThermalCommon::initThreshold(struct therm_sensor& sensor)
 					sensor.mulFactor);
 		else
 			hyst_temp = hysteresis * sensor.mulFactor;
+
+	/* trip_point_x_hyst is no more writable,disable it until it properly handle it */
+#if 0
 		LOG(DEBUG) << "Sensor: " << sensor.t.name << " hysteresis:"
 			<< hyst_temp << std::endl;
 		snprintf(file_name, sizeof(file_name), HYST_FILE_FORMAT,
 				sensor.tzn);
 		writeToFile(std::string_view(file_name), std::to_string(hyst_temp));
+#endif
 	}
 
 	return;
