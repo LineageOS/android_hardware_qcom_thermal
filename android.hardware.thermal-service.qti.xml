@@ -36,7 +36,7 @@ SPDX-License-Identifier: BSD-3-Clause-Clear -->
 <manifest version="2.0" type="device">
     <hal format="aidl">
         <name>android.hardware.thermal</name>
-        <version>2</version>
+        <version>3</version>
         <fqname>IThermal/default</fqname>
     </hal>
 </manifest>
