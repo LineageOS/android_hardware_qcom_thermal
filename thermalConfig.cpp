@@ -2269,6 +2269,89 @@ namespace thermal {
 		},
 	};
 
+	std::vector<std::string> cpu_sensors_vienna = {
+		"cpu-0-0-0",
+		"cpu-0-0-1",
+		"cpu-1-0-0",
+		"cpu-1-0-1",
+		"cpu-0-0-0",
+		"cpu-0-0-1",
+		"cpu-1-0-0",
+		"cpu-1-0-1",
+	};
+
+	std::vector<struct target_therm_cfg> vienna_common = {
+		{
+			TemperatureType::CPU,
+			cpu_sensors_seraph,
+			"",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-0" },
+			"GPU0",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-1" },
+			"GPU1",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nsphvx-0" },
+			"nsp0",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nsphmx-0" },
+			"nsp1",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nspmxu" },
+			"nsp2",
+			95000,
+			115000,
+			true,
+		},
+	};
+
+	std::vector<struct target_therm_cfg>  vienna_specific = {
+		{
+			TemperatureType::BCL_CURRENT,
+			{ "pmw6100-ibat-lvl0" },
+			"ibat",
+			{
+			[SEVERE] = 2730,
+			[SHUTDOWN] = 3000,
+			},
+			true,
+		},
+		{
+			TemperatureType::SKIN,
+			{ "sys-therm-0" },
+			"skin",
+			60000,
+			95000,
+			true,
+		},
+	};
+
 	const std::unordered_map<int, std::vector<struct target_therm_cfg>>
 		msm_soc_map = {
 		{417, sensor_cfg_bengal}, // bengal
@@ -2331,6 +2414,8 @@ namespace thermal {
 		{517, sensor_cfg_monaco}, // monaco
 		{660, canoe_common}, //Canoe
 		{661, canoe_common}, //Canoep
+		{669, vienna_common}, //SW6100
+		{670, vienna_common}, //SW6100P
 	};
 
 	const std::unordered_map<int, std::vector<struct target_therm_cfg>>
@@ -2362,6 +2447,8 @@ namespace thermal {
 		{663, parrot_specific}, //Netrani pro
 		{660, canoe_specific}, //Canoe
 		{661, canoe_specific}, //Canoep
+		{669, vienna_specific}, //SW6100
+		{670, vienna_specific}, //SW6100P
 	};
 
 	const std::unordered_multimap<int, std::pair<int, std::vector<struct target_therm_cfg>>>
