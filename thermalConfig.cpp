@@ -2283,7 +2283,7 @@ namespace thermal {
 	std::vector<struct target_therm_cfg> vienna_common = {
 		{
 			TemperatureType::CPU,
-			cpu_sensors_seraph,
+			cpu_sensors_vienna,
 			"",
 			95000,
 			115000,
