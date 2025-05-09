@@ -474,6 +474,30 @@ int ThermalCommon::estimateSeverity(struct therm_sensor& sensor)
 	sensor.lastThrottleStatus = sensor.t.throttlingStatus;
 	sensor.t.throttlingStatus = severity;
 
+	if (sensor.sensor_name == "disp-lea-left" || sensor.sensor_name == "disp-lea-right") {
+		ThrottlingSeverity cur_severity =
+				std::max(left_display_throttle_severity, right_display_throttle_severity);
+		if (sensor.sensor_name == "disp-lea-left") {
+			left_display_throttle_severity = severity;
+		} else if (sensor.sensor_name == "disp-lea-right") {
+			right_display_throttle_severity = severity;
+		}
+
+		ThrottlingSeverity new_severity =
+				std::max(left_display_throttle_severity, right_display_throttle_severity);
+
+		LOG(DEBUG) << "Current display severity: " << (int)cur_severity
+			<< " New severity L: " << (int)left_display_throttle_severity
+			<< " New severity R: " << (int)right_display_throttle_severity
+			<< " New severity combined: " << (int)new_severity << std::endl;
+
+		if (cur_severity != new_severity) {
+			return (int)new_severity;
+		} else {
+			return -1;
+		}
+	}
+
 	return (int)severity;
 }
 
