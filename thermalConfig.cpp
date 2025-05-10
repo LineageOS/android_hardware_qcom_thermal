@@ -1609,7 +1609,7 @@ std::vector<std::string> cpu_sensors_cliffs = {
 	std::vector<struct target_therm_cfg>  seraph_specific = {
 		{
 			TemperatureType::SKIN,
-			{ "sys-therm-0" },
+			{ "sys-therm-1" },
 			"skin",
 			60000,
 			95000,
