@@ -1875,6 +1875,65 @@ std::vector<std::string> cpu_sensors_cliffs = {
 		},
 	};
 
+	std::vector<std::string> cpu_sensors_neo =
+	{
+		"cpu-0-0",
+		"cpu-0-1",
+		"cpu-0-2",
+		"cpu-0-3",
+	};
+
+	std::vector<struct target_therm_cfg>  neo_common = {
+		{
+			TemperatureType::CPU,
+			cpu_sensors_neo,
+			"",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-0" },
+			"GPU0",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-1" },
+			"GPU1",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nspss-0" },
+			"nsp0",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nspss-1" },
+			"nsp1",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nspss-2" },
+			"nsp2",
+			95000,
+			115000,
+			true,
+		},
+	};
+
 	const std::unordered_map<int, std::vector<struct target_therm_cfg>>
 		msm_soc_map = {
 		{355, sensor_cfg_talos_common},
@@ -1950,6 +2009,8 @@ std::vector<std::string> cpu_sensors_cliffs = {
 		{649, anorak_common}, // Halliday Pro
 		{672, seraph_common}, //Balsam-SAR1250P
 		{673, seraph_common}, //Balsam-SAR2230P
+		{525, neo_common},
+		{554, neo_common},
 	};
 
 	const std::unordered_map<int, std::vector<struct target_therm_cfg>>
