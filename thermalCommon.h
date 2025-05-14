@@ -47,6 +47,7 @@ class ThermalCommon {
 
 		int readFromFile(std::string_view path, std::string& out);
 		int initThermalZones(std::vector<struct target_therm_cfg>& cfg);
+		int initNewThermalZone(struct target_therm_cfg& cfg);
 		void initThreshold(struct therm_sensor& sens);
 		int initCdev();
 
