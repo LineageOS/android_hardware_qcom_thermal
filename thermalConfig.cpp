@@ -677,14 +677,14 @@ namespace thermal {
 
 	std::vector<std::string> cpu_sensors_lahaina =
 	{
-		"cpu-0-0-usr",
-		"cpu-0-1-usr",
-		"cpu-0-2-usr",
-		"cpu-0-3-usr",
-		"cpu-1-0-usr",
-		"cpu-1-2-usr",
-		"cpu-1-4-usr",
-		"cpu-1-6-usr",
+		"cpu-0-0",
+		"cpu-0-1",
+		"cpu-0-2",
+		"cpu-0-3",
+		"cpu-1-0",
+		"cpu-1-2",
+		"cpu-1-4",
+		"cpu-1-6",
 	};
 
 	std::vector<struct target_therm_cfg>  lahaina_common = {
@@ -807,7 +807,7 @@ namespace thermal {
 		},
 		{
 			TemperatureType::GPU,
-			{ "gpuss-0-usr" },
+			{ "gpuss-0" },
 			"GPU0",
 			{
 			[SEVERE] = 95000,
@@ -817,7 +817,7 @@ namespace thermal {
 		},
 		{
 			TemperatureType::GPU,
-			{ "gpuss-1-usr" },
+			{ "gpuss-1" },
 			"GPU1",
 			{
 			[SEVERE] = 95000,
@@ -827,7 +827,7 @@ namespace thermal {
 		},
 		{
 			TemperatureType::NPU,
-			{ "nspss-0-usr" },
+			{ "nspss-0" },
 			"nsp0",
 			{
 			[SEVERE] = 95000,
@@ -837,7 +837,7 @@ namespace thermal {
 		},
 		{
 			TemperatureType::NPU,
-			{ "nspss-1-usr" },
+			{ "nspss-1" },
 			"nsp1",
 			{
 			[SEVERE] = 95000,
@@ -847,7 +847,7 @@ namespace thermal {
 		},
 		{
 			TemperatureType::SKIN,
-			{ "quiet-therm-usr" },
+			{ "quiet-therm" },
 			"skin",
 			{
 			[LIGHT] = 36500,
@@ -2387,6 +2387,10 @@ namespace thermal {
 		{454, sensor_cfg_holi}, // holi
 		{475, sensor_cfg_yupik}, // yupik
 		{515, sensor_cfg_yupik}, // YUPIK-LTE
+		{497, sensor_cfg_yupik}, // YUPIK-iot mdm
+		{498, sensor_cfg_yupik}, // YUPIK-iot
+		{575, sensor_cfg_yupik}, // YUPIK 5430 mdm
+		{576, sensor_cfg_yupik}, // YUPIK 5430
 		{457, waipio_common}, //Waipio
 		{482, waipio_common}, //Waipio
 		{552, waipio_common}, //Waipio-LTE
