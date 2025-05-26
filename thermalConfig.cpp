@@ -2551,6 +2551,61 @@ namespace thermal {
 			true,
 			true,
 		},
+		{
+			TemperatureType::BCL_CURRENT,
+			{ "pmih010x-ibat-lvl0" },
+			"ibat",
+			{
+			[SEVERE] = 11000,
+			[SHUTDOWN] = 11800,
+			},
+			true,
+			true,
+		},
+		{
+			TemperatureType::BCL_CURRENT,
+			{ "pm7550ba-ibat-lvl0" },
+			"ibat",
+			{
+			[SEVERE] = 11000,
+			[SHUTDOWN] = 11800,
+			},
+			true,
+			true,
+		},
+		{
+			TemperatureType::BCL_CURRENT,
+			{ "pmih010x-2s-ibat-lvl0" },
+			"ibat",
+			{
+			[SEVERE] = 5000,
+			[SHUTDOWN] = 7000,
+			},
+			true,
+			true,
+		},
+		{
+			TemperatureType::BCL_CURRENT,
+			{ "pm7550ba-2s-ibat-lvl0 " },
+			"ibat",
+			{
+			[SEVERE] = 5000,
+			[SHUTDOWN] = 7000,
+			},
+			true,
+			true,
+		},
+		{
+			TemperatureType::BCL_CURRENT,
+			{ "pmiv010x-ibat-lvl0" },
+			"ibat",
+			{
+			[SEVERE] = 11000,
+			[SHUTDOWN] = 11800,
+			},
+			true,
+			true,
+		},
 	};
 
 	const std::unordered_map<int, std::vector<struct target_therm_cfg>>
