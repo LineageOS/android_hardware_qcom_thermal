@@ -2556,6 +2556,7 @@ namespace thermal {
 		{663, parrot_common}, //SM7435
 		{713, parrot_common}, //Netrani APQ
 		{714, parrot_common}, //Netrani APQ
+		{715, parrot_common}, //Netrani Lite
 		{486, sensor_cfg_monaco}, // monaco
 		{517, sensor_cfg_monaco}, // monaco
 		{355, sensor_cfg_talos_common},
@@ -2605,6 +2606,7 @@ namespace thermal {
 		{663, parrot_specific}, //Netrani pro
 		{713, parrot_specific},
 		{714, parrot_specific}, //Netrani APQ
+		{715, parrot_specific}, //Netrani Lite
 		{355, sensor_cfg_talos_specific},
 		{681, tuna_specific}, //Bonito
 		{655, tuna_specific}, //Bonito
