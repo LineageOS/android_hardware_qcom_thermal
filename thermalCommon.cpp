@@ -39,6 +39,7 @@ SPDX-License-Identifier: BSD-3-Clause-Clear */
 #include <dirent.h>
 #include <unordered_map>
 #include <fstream>
+#include <sys/time.h>
 
 #include <android-base/logging.h>
 #include "thermalCommon.h"
@@ -128,6 +129,21 @@ ThermalCommon::ThermalCommon()
 	ncpus = (int)sysconf(_SC_NPROCESSORS_CONF);
 	if (ncpus < 1)
 		LOG(ERROR) << "Error retrieving number of cores";
+}
+
+ThermalCommon::ThermalCommon(const virtualCB &inp_cb):
+	cb(inp_cb)
+{
+	LOG(DEBUG) << "Entering " << __func__;
+	ncpus = (int)sysconf(_SC_NPROCESSORS_CONF);
+	if (ncpus < 1)
+		LOG(ERROR) << "Error retrieving number of cores";
+}
+
+ThermalCommon::~ThermalCommon()
+{
+	exitMode = true;
+	virtualThread.join();
 }
 
 static int writeToFile(std::string_view path, std::string data)
@@ -237,6 +253,8 @@ static int get_tzn(std::string sensor_name)
 		LOG(DEBUG) << "Sensor: " << sensor_name <<
 			" found at tz: " << tzn << std::endl;
 		found = tzn;
+	} else {
+		found  = -1;
 	}
 
 	closedir(tdir);
@@ -251,13 +269,39 @@ int ThermalCommon::initialize_sensor(struct target_therm_cfg& cfg, int sens_idx)
 	struct therm_sensor sensor;
 	int idx = 0;
 
-	sensor.tzn = get_tzn(cfg.sensor_list[sens_idx]);
-	if (sensor.tzn < 0) {
-		LOG(ERROR) << "No thermal zone for sensor: " <<
-			cfg.sensor_list[sens_idx] << ", ret:" <<
-			sensor.tzn << std::endl;
-		return -1;
+	if (!cfg.virtual_sensor_flag) {
+		sensor.tzn = get_tzn(cfg.sensor_list[sens_idx]);
+		if (sensor.tzn < 0) {
+			LOG(ERROR) << "No thermal zone for sensor: " <<
+				cfg.sensor_list[sens_idx] << ", ret:" <<
+				sensor.tzn << std::endl;
+			return -1;
+		}
+	} else {
+		if (cfg.vs_sensor_list.size()!= cfg.weight_list.size()) {
+			LOG(ERROR) << "Invalid virtual sensor " <<
+				cfg.sensor_list[sens_idx] << std::endl;
+			return -1;
+		}
+		sensor.tzn = get_tzn(cfg.trip_sensor_list);
+		if (sensor.tzn < 0) {
+			LOG(ERROR) << "No thermal zone for trip sensor: " <<
+				cfg.trip_sensor_list << ", ret:" <<
+				sensor.tzn << std::endl;
+			return -1;
+		}
+
+		for (int i = 0; i < cfg.vs_sensor_list.size(); i++) {
+			sensor.vs_tzns.push_back(get_tzn(cfg.vs_sensor_list[i]));
+			if (sensor.vs_tzns.at(i) < 0) {
+				LOG(ERROR) << "No thermal zone for sensor list: " <<
+				cfg.vs_sensor_list[i] << ", ret:" <<
+					sensor.vs_tzns.at(i) << std::endl;
+				return -1;
+			}
+		}
 	}
+
 	if (cfg.type == TemperatureType::CPU)
 		sensor.thresh.name = sensor.t.name =
 			std::string("CPU") + std::to_string(sens_idx);
@@ -275,6 +319,15 @@ int ThermalCommon::initialize_sensor(struct target_therm_cfg& cfg, int sens_idx)
 	sensor.lastThrottleStatus = sensor.t.throttlingStatus =
 		ThrottlingSeverity::NONE;
 	sensor.thresh.type = sensor.t.type = cfg.type;
+	sensor.vs_sensor_list = cfg.vs_sensor_list;
+	sensor.weight_list = cfg.weight_list;
+	sensor.trip_sensor_list = cfg.trip_sensor_list;
+	sensor.trip_sensor_thresholds = cfg.trip_sensor_thresholds;
+	sensor.trip_sensor_thresholds_clr = cfg.trip_sensor_thresholds_clr;
+	sensor.y_intercept = cfg.y_intercept;
+	sensor.sampling_period_ms = cfg.sampling_period_ms;
+	sensor.virtual_sensor_flag = cfg.virtual_sensor_flag;
+
 	for (idx = 0; idx <= (size_t)ThrottlingSeverity::SHUTDOWN; idx++) {
 		sensor.thresh.hotThrottlingThresholds.push_back(UNKNOWN_TEMPERATURE);
 		sensor.thresh.coldThrottlingThresholds.push_back(UNKNOWN_TEMPERATURE);
@@ -290,6 +343,16 @@ int ThermalCommon::initialize_sensor(struct target_therm_cfg& cfg, int sens_idx)
 	}
 	cfg.sens = &sensor;
 	sens.push_back(sensor);
+
+	if (sensor.virtual_sensor_flag) {
+		pthread_mutex_init(&waitMutex, NULL);
+		pthread_cond_init(&waitCond, NULL);
+		try {
+			virtualThread = std::thread(&ThermalCommon::TripSensorMonitorLoop, this, &sens.back());
+		} catch(...) {
+			LOG(ERROR) << "Virtual thread creation failed" << std::endl;
+		}
+	}
 
 	return 0;
 }
@@ -481,6 +544,57 @@ int ThermalCommon::estimateSeverity(struct therm_sensor& sensor)
 	return (int)severity;
 }
 
+int ThermalCommon::virtual_sensor_read_temperature(struct therm_sensor& sensor)
+{
+	char file_name[MAX_PATH];
+	double temp = 0, value = 0;
+	std::string buf;
+	int ret = 0, ct = 0;
+	bool read_ok = false;
+
+	if (!sensor.virtual_sensor_flag)
+		return -1;
+
+	for (int i = 0; i < sensor.vs_sensor_list.size(); i++) {
+		do {
+			snprintf(file_name, sizeof(file_name), TEMPERATURE_FILE_FORMAT,
+				sensor.vs_tzns.at(i));
+			ret = readLineFromFile(std::string(file_name), buf);
+			if (ret <= 0) {
+				LOG(ERROR) << "Temperature read error:"<< ret <<
+					" for sensor " << sensor.vs_sensor_list[i];
+				return -1;
+			}
+			value = (float)std::stoi(buf, nullptr, 0);
+			try {
+				LOG(DEBUG) << "VS Temperature read: "<< value <<
+					" for sensor " << sensor.vs_sensor_list[i];
+				value *= sensor.weight_list[i];
+				temp += value;
+				read_ok = true;
+			}
+			catch (std::exception &err) {
+				LOG(ERROR) << "Temperature buf stoi error: "
+				<< err.what()
+				<< " buf:" << buf << " sensor:"
+				<< sensor.vs_sensor_list[i] << " TZ:"
+				<< sensor.vs_tzns.at(i) << std::endl;
+			}
+			ct++;
+		} while (!read_ok && ct < RETRY_CT);
+
+		if (!read_ok)
+			return -1;
+	}
+	temp += (float)sensor.y_intercept;
+	sensor.t.value = temp / (float)sensor.mulFactor;
+
+	LOG(DEBUG) << "Sensor Name:" << sensor.t.name << ". Temperature:" <<
+		(float)sensor.t.value << std::endl;
+
+	return ret;
+}
+
 int ThermalCommon::read_temperature(struct therm_sensor& sensor)
 {
 	char file_name[MAX_PATH];
@@ -488,6 +602,9 @@ int ThermalCommon::read_temperature(struct therm_sensor& sensor)
 	std::string buf;
 	int ret = 0, ct = 0;
 	bool read_ok = false;
+
+	if (sensor.virtual_sensor_flag)
+		return virtual_sensor_read_temperature(sensor);
 
 	do {
 		snprintf(file_name, sizeof(file_name), TEMPERATURE_FILE_FORMAT,
@@ -647,6 +764,89 @@ int ThermalCommon::findLimitProfile(void)
 	} while (1);
 
 	return lp;
+}
+
+int ThermalCommon::read_trip_temperature(struct therm_sensor& sensor)
+{
+	char file_name[MAX_PATH];
+	int temp = INT_MIN;
+	std::string buf;
+	int ret = 0, ct = 0;
+	bool read_ok = false;
+
+	do {
+		snprintf(file_name, sizeof(file_name), TEMPERATURE_FILE_FORMAT,
+			sensor.tzn);
+		ret = readLineFromFile(std::string(file_name), buf);
+		if (ret <= 0) {
+			LOG(ERROR) << "Temperature read error:"<< ret <<
+				" for sensor " << sensor.t.name;
+			return -1;
+		}
+		temp = std::stoi(buf, nullptr, 0);
+		try {
+			read_ok = true;
+		}
+		catch (std::exception &err) {
+			LOG(ERROR) << "Temperature buf stoi error: "
+				<< err.what()
+				<< " buf:" << buf << " sensor:"
+				<< sensor.t.name << " TZ:" <<
+				sensor.tzn << std::endl;
+		}
+		ct++;
+	} while (!read_ok && ct < RETRY_CT);
+
+	if (!read_ok)
+		return -1;
+
+	return temp;
+}
+
+void ThermalCommon::TripSensorMonitorLoop(struct therm_sensor *vs)
+{
+	struct timespec time_val;
+	char file_name[MAX_PATH];
+	int ret = 0, temp = 0;
+	std::string buf;
+
+	if (!vs->virtual_sensor_flag)
+		return;
+
+	pthread_mutex_lock(&waitMutex);
+	/* Temperature can be >= trip before we start */
+	temp = read_trip_temperature(*vs);
+	if (temp >= vs->trip_sensor_thresholds)
+		pollingMode = true;
+
+	while (!exitMode) {
+		/* Poll if polling mode is true OR if throttling status is not NONE */
+		if (pollingMode || vs->t.throttlingStatus != ThrottlingSeverity::NONE) {
+			clock_gettime(CLOCK_REALTIME, &time_val);
+			time_val.tv_sec += vs->sampling_period_ms / 1000;
+			time_val.tv_nsec += (vs->sampling_period_ms % 1000) * 1000000;
+			pthread_cond_timedwait(&waitCond, &waitMutex,
+								&time_val);
+		} else {
+			pthread_cond_wait(&waitCond, &waitMutex);
+		}
+
+		ret = virtual_sensor_read_temperature(*vs);
+		if (ret < 0)
+			continue;
+
+		int severity = estimateSeverity(*vs);
+		if (severity != -1) {
+			LOG(ERROR) << "sensor: " << vs->sensor_name <<" temperature: "
+				<< vs->t.value << " old: " <<
+				(int)vs->lastThrottleStatus << " new: " <<
+				(int)vs->t.throttlingStatus << std::endl;
+			cb(vs);
+		}
+	}
+
+	pthread_mutex_unlock(&waitMutex);
+	return;
 }
 }// namespace thermal
 }// namespace hardware

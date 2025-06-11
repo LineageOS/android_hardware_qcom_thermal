@@ -77,7 +77,7 @@ int thermal_family_cb(struct nl_msg *n, void *data)
 	return t->family_msg_cb(n, NULL);
 }
 
-ThermalMonitor::ThermalMonitor(const eventMonitorCB &inp_event_cb,
+ThermalMonitor::ThermalMonitor(const eventMonCB &inp_event_cb,
 				const eventMonitorCB &inp_sample_cb,
 				const eventCreateMonitorCB &inp_event_create_cb,
 				const eventMonitorCB &inp_event_cdev_cb):
@@ -107,7 +107,7 @@ int ThermalMonitor::event_parse(struct nl_msg *n, void *data)
 	struct nlmsghdr *nl_hdr = nlmsg_hdr(n);
 	struct genlmsghdr *hdr = genlmsg_hdr(nl_hdr);
 	struct nlattr *attrs[THERMAL_GENL_ATTR_MAX + 1];
-	int tzn = -1, trip = -1, cdev_id = -1, curr_state = -1;
+	int tzn = -1, trip = -1, cdev_id = -1, curr_state = -1, temp = INT_MIN;
 	const char *tz_name = "";
 
 	genlmsg_parse(nl_hdr, 0, attrs, THERMAL_GENL_ATTR_MAX, NULL);
@@ -121,9 +121,11 @@ int ThermalMonitor::event_parse(struct nl_msg *n, void *data)
 		if (attrs[THERMAL_GENL_ATTR_TZ_TRIP_ID])
 			trip = nla_get_u32(
 					attrs[THERMAL_GENL_ATTR_TZ_TRIP_ID]);
+		if (attrs[THERMAL_GENL_ATTR_TZ_TEMP])
+			temp = (int)nla_get_u32(attrs[THERMAL_GENL_ATTR_TZ_TEMP]);
 		LOG(DEBUG) << "thermal_nl_event: TZ:" << tzn << " Trip:"
-		       << trip << "event:" << (int)hdr->cmd << std::endl;
-		event_cb(tzn, trip);
+		       << trip << "Temp:" << temp << "event:" << (int)hdr->cmd << std::endl;
+		event_cb(tzn, trip, temp);
 		break;
 	case THERMAL_GENL_EVENT_TZ_CREATE:
 		if (attrs[THERMAL_GENL_ATTR_TZ_ID])

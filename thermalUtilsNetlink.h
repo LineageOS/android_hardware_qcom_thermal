@@ -84,9 +84,11 @@ class ThermalUtils {
 		ueventCB cb;
 		notifyCB notify;
 
-		void eventParse(int tzn, int trip);
+		void VirturalSensorEventParse(struct therm_sensor& sens, int tzn, int temp);
+		void eventParse(int tzn, int trip, int temp);
 		void sampleParse(int tzn, int temp);
 		void eventCreateParse(int tzn, const char *name);
+		void virtualNotify(struct therm_sensor *sens);
 		void Notify(struct therm_sensor& sens);
 		void cdevNotify(struct therm_cdev& cdev, int state);
 		void cdevEventParse(int cdevn, int state);
