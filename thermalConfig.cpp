@@ -2254,7 +2254,7 @@ namespace thermal {
 		},
 		{
 			TemperatureType::SKIN,
-			{ "sys-therm-2" },
+			{ "sys-therm-0" },
 			"skin",
 			{
 			[LIGHT] = 48000,
@@ -2266,6 +2266,14 @@ namespace thermal {
 			},
 			true,
 			true,
+			true,
+			{ "sys-therm-0" },
+			{ 0.76 },
+			{ "sys-therm-0" },
+			40000,
+			38000,
+			5160,
+			5000,
 		},
 	};
 
