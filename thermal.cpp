@@ -30,7 +30,7 @@
 
 /* Changes from Qualcomm Innovation Center are provided under the following license:
 
-Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+Copyright (c) 2023, 2025 Qualcomm Innovation Center, Inc. All rights reserved.
 SPDX-License-Identifier: BSD-3-Clause-Clear */
 
 #include <ctype.h>
@@ -139,9 +139,9 @@ ScopedAStatus Thermal::getTemperaturesWithType(TemperatureType in_type,
 
 	std::vector<Temperature> temperatures;
 
-	if (!utils.isSensorInitialized())
+	if (!utils.isSensorInitialized(in_type))
 		return ndk::ScopedAStatus::fromExceptionCodeWithMessage(EX_ILLEGAL_ARGUMENT,
-					"ThermalHAL not initialized properly.");
+					"ThermalHAL given sensor type Not initialized.");
 	else {
 		if (utils.readTemperatures(in_type, temperatures) <= 0)
 			LOG(VERBOSE) << __func__ << "Sensor Temperature read failure.";
@@ -159,7 +159,7 @@ ScopedAStatus Thermal::getTemperatureThresholds(std::vector<TemperatureThreshold
 
 	if (!utils.isSensorInitialized())
 		return ndk::ScopedAStatus::fromExceptionCodeWithMessage(EX_ILLEGAL_ARGUMENT,
-					"ThermalHAL not initialized properly.");
+					"ThermalHAL for sensor not initialized.");
 
 	if (utils.readTemperatureThreshold(thresh) <= 0)
 		LOG(VERBOSE) << __func__ << "Sensor Threshold read failure or type not supported.";
@@ -176,9 +176,9 @@ ScopedAStatus Thermal::getTemperatureThresholdsWithType(
 
 	std::vector<TemperatureThreshold> thresh;
 
-	if (!utils.isSensorInitialized())
+	if (!utils.isSensorInitialized(in_type))
 		return ndk::ScopedAStatus::fromExceptionCodeWithMessage(EX_ILLEGAL_ARGUMENT,
-					"ThermalHAL not initialized properly.");
+					"ThermalHAL given sensor type not initialized.");
 	else{
 		if (utils.readTemperatureThreshold(in_type, thresh) <= 0)
 			LOG(VERBOSE) << __func__ << "Sensor Threshold read failure or type not supported.";
