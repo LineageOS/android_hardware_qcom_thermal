@@ -51,10 +51,12 @@ namespace thermal {
 
 ThermalUtils::ThermalUtils(const ueventCB &inp_cb, const notifyCB &inp_cdev_cb):
 	cfg(),
-	cmnInst(),
+	cmnInst(std::bind(&ThermalUtils::virtualNotify, this,
+				std::placeholders::_1)),
 	monitor(std::bind(&ThermalUtils::eventParse, this,
 				std::placeholders::_1,
-				std::placeholders::_2),
+				std::placeholders::_2,
+				std::placeholders::_3),
 		std::bind(&ThermalUtils::sampleParse, this,
 				std::placeholders::_1,
 				std::placeholders::_2),
@@ -71,11 +73,8 @@ ThermalUtils::ThermalUtils(const ueventCB &inp_cb, const notifyCB &inp_cdev_cb):
 	std::vector<struct therm_sensor> sensorList;
 	std::vector<struct target_therm_cfg> therm_cfg = cfg.fetchConfig();
 
-	is_sensor_init = false;
-	is_cdev_init = false;
 	ret = cmnInst.initThermalZones(therm_cfg);
 	if (ret > 0) {
-		is_sensor_init = true;
 		sensorList = cmnInst.fetch_sensor_list();
 		std::lock_guard<std::mutex> _lock(sens_cb_mutex);
 		for (struct therm_sensor sens: sensorList) {
@@ -89,7 +88,6 @@ ThermalUtils::ThermalUtils(const ueventCB &inp_cb, const notifyCB &inp_cdev_cb):
 	monitor.start();
 	ret = cmnInst.initCdev();
 	if (ret > 0) {
-		is_cdev_init = true;
 		cdevList = cmnInst.fetch_cdev_list();
 		std::lock_guard<std::mutex> _lock(cdev_cb_mutex);
 		for (struct therm_cdev cdevs: cdevList) {
@@ -97,6 +95,51 @@ ThermalUtils::ThermalUtils(const ueventCB &inp_cb, const notifyCB &inp_cdev_cb):
 			cdev[cdevs.cdevn] = cdevs;
 		}
 	}
+}
+
+bool ThermalUtils::isSensorInitialized()
+{
+	std::lock_guard<std::mutex> _lock(sens_cb_mutex);
+
+	if (thermalConfig.begin() == thermalConfig.end())
+		return false;
+
+	return true;
+}
+
+bool ThermalUtils::isSensorInitialized(TemperatureType type)
+{
+	std::unordered_map<int, struct therm_sensor>::iterator it;
+	std::lock_guard<std::mutex> _lock(sens_cb_mutex);
+
+	if (thermalConfig.begin() == thermalConfig.end())
+		return false;
+
+	for (it = thermalConfig.begin(); it != thermalConfig.end();
+			it++) {
+		struct therm_sensor& sens = it->second;
+		if (sens.t.type == type)
+			return true;
+	}
+
+	return false;
+}
+
+bool ThermalUtils::isCdevInitialized(CoolingType type)
+{
+	for (struct therm_cdev cdev: cdevList)
+		if (cdev.c.type == type)
+			return true;
+
+	return false;
+}
+
+bool ThermalUtils::isCdevInitialized()
+{
+	if (cdev.begin() == cdev.end())
+		return false;
+
+	return true;
 }
 
 void ThermalUtils::Notify(struct therm_sensor& sens)
@@ -111,6 +154,11 @@ void ThermalUtils::Notify(struct therm_sensor& sens)
 		if (!sens.no_trip_set)
 			cmnInst.initThreshold(sens);
 	}
+}
+
+void ThermalUtils::virtualNotify(struct therm_sensor *sens)
+{
+	cb(sens->t);
 }
 
 void ThermalUtils::cdevNotify(struct therm_cdev& cdev, int state)
@@ -136,7 +184,31 @@ void ThermalUtils::cdevEventParse(int cdevn, int state)
 	return cdevNotify(cdevs, state);
 }
 
-void ThermalUtils::eventParse(int tzn, int trip)
+void ThermalUtils::VirturalSensorEventParse(struct therm_sensor& sens,
+                                              int tzn, int temp)
+{
+	pthread_mutex_lock(&cmnInst.waitMutex);
+	if (temp >= sens.trip_sensor_thresholds) {
+		if (!cmnInst.pollingMode) {
+			cmnInst.pollingMode = true;
+			pthread_cond_broadcast(&cmnInst.waitCond);
+		}
+
+		if (!sens.no_trip_set)
+			cmnInst.initThreshold(sens);
+	} else if (temp < sens.trip_sensor_thresholds_clr) {
+		if (!sens.no_trip_set)
+			cmnInst.initThreshold(sens);
+
+		if (cmnInst.pollingMode) {
+			cmnInst.pollingMode = false;
+			pthread_cond_broadcast(&cmnInst.waitCond);
+		}
+	}
+	pthread_mutex_unlock(&cmnInst.waitMutex);
+}
+
+void ThermalUtils::eventParse(int tzn, int trip, int temp)
 {
 	if (trip != 1)
 		return;
@@ -147,7 +219,11 @@ void ThermalUtils::eventParse(int tzn, int trip)
 	}
 	std::lock_guard<std::mutex> _lock(sens_cb_mutex);
 	struct therm_sensor& sens = thermalConfig[tzn];
-	return Notify(sens);
+
+	if (!sens.virtual_sensor_flag)
+		return Notify(sens);
+
+	VirturalSensorEventParse(sens, tzn, temp);
 }
 
 void ThermalUtils::sampleParse(int tzn, int temp)
@@ -159,6 +235,8 @@ void ThermalUtils::sampleParse(int tzn, int temp)
 	}
 	std::lock_guard<std::mutex> _lock(sens_cb_mutex);
 	struct therm_sensor& sens = thermalConfig[tzn];
+	if (sens.virtual_sensor_flag)
+		return;
 	sens.t.value = (float)temp / (float)sens.mulFactor;
 	return Notify(sens);
 }
@@ -171,8 +249,9 @@ void ThermalUtils::eventCreateParse(int tzn, const char *name)
 	std::vector<struct target_therm_cfg>::iterator it_vec;
 	std::vector<std::string>::iterator it;
 
-	if (isSensorInitialized())
+	if (thermalConfig.find(tzn) != thermalConfig.end())
 		return;
+
 	for (it_vec = therm_cfg.begin();
 		it_vec != therm_cfg.end(); it_vec++) {
 		for (it = it_vec->sensor_list.begin();
@@ -188,17 +267,19 @@ void ThermalUtils::eventCreateParse(int tzn, const char *name)
 			<< std::endl;
 		return;
 	}
-	ret = cmnInst.initThermalZones(therm_cfg);
+	ret = cmnInst.initNewThermalZone(*it_vec);
 	if (ret > 0) {
-		is_sensor_init = true;
 		sensorList = cmnInst.fetch_sensor_list();
 		std::lock_guard<std::mutex> _lock(sens_cb_mutex);
 		for (struct therm_sensor sens: sensorList) {
+			if (sens.sensor_name != name)
+				continue;
 			thermalConfig[sens.tzn] = sens;
 			cmnInst.read_temperature(sens);
 			cmnInst.estimateSeverity(sens);
 			if (!sens.no_trip_set)
 				cmnInst.initThreshold(sens);
+			break;
 		}
 	}
 }

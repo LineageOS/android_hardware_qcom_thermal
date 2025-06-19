@@ -71,15 +71,6 @@ using ::aidl::android::hardware::thermal::ThrottlingSeverity;
 		SHUTDOWN = (size_t)ThrottlingSeverity::SHUTDOWN,
 	};
 
-	struct target_therm_cfg {
-		TemperatureType type;
-		std::vector<std::string> sensor_list;
-		std::string label;
-		int thresh[SHUTDOWN + 1];
-		bool positive_thresh_ramp;
-		bool no_trip_set = false;
-	};
-
 	struct therm_sensor {
 		int tzn;
 		int mulFactor;
@@ -89,6 +80,32 @@ using ::aidl::android::hardware::thermal::ThrottlingSeverity;
 		Temperature t;
 		TemperatureThreshold thresh;
 		bool no_trip_set;
+		bool virtual_sensor_flag = false;
+		std::vector<std::string> vs_sensor_list;
+		std::vector<double> weight_list;
+		std::string trip_sensor_list;
+		std::vector<int> vs_tzns;
+		int trip_sensor_thresholds;
+		int trip_sensor_thresholds_clr;
+		int y_intercept;
+		uint32_t sampling_period_ms;
+	};
+
+	struct target_therm_cfg {
+		TemperatureType type;
+		std::vector<std::string> sensor_list;
+		std::string label;
+		int thresh[SHUTDOWN + 1];
+		bool positive_thresh_ramp;
+		bool no_trip_set = false;
+		bool virtual_sensor_flag = false;
+		std::vector<std::string> vs_sensor_list;
+		std::vector<double> weight_list;
+		std::string trip_sensor_list;
+		int trip_sensor_thresholds;
+		int trip_sensor_thresholds_clr;
+		int y_intercept;
+		uint32_t sampling_period_ms;
 	};
 
 	struct therm_cdev {

@@ -57,14 +57,10 @@ class ThermalUtils {
 	public:
 		ThermalUtils(const ueventCB &inp_cb, const notifyCB &inp_cdev_cb);
 		~ThermalUtils() = default;
-		bool isSensorInitialized()
-		{
-			return is_sensor_init;
-		};
-		bool isCdevInitialized()
-		{
-			return is_cdev_init;
-		};
+		bool isCdevInitialized();
+		bool isCdevInitialized(CoolingType type);
+		bool isSensorInitialized();
+		bool isSensorInitialized(TemperatureType type);
 		int readTemperatures(std::vector<Temperature>& temp);
 		int readTemperatures(TemperatureType type,
                                             std::vector<Temperature>& temperatures);
@@ -75,8 +71,6 @@ class ThermalUtils {
 		int readCdevStates(cdevType type,
                                             std::vector<CoolingDevice>& cdev);
 	private:
-		bool is_sensor_init;
-		bool is_cdev_init;
 		ThermalConfig cfg;
 		ThermalCommon cmnInst;
 		ThermalMonitor monitor;
@@ -90,9 +84,11 @@ class ThermalUtils {
 		ueventCB cb;
 		notifyCB notify;
 
-		void eventParse(int tzn, int trip);
+		void VirturalSensorEventParse(struct therm_sensor& sens, int tzn, int temp);
+		void eventParse(int tzn, int trip, int temp);
 		void sampleParse(int tzn, int temp);
 		void eventCreateParse(int tzn, const char *name);
+		void virtualNotify(struct therm_sensor *sens);
 		void Notify(struct therm_sensor& sens);
 		void cdevNotify(struct therm_cdev& cdev, int state);
 		void cdevEventParse(int cdevn, int state);
