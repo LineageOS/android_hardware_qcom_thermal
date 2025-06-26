@@ -81,7 +81,7 @@ ScopedAStatus Thermal::getCoolingDevices(std::vector<CoolingDevice>* out_data) {
 	std::vector<CoolingDevice> cdev;
 
 	if (!utils.isCdevInitialized())
-		return ndk::ScopedAStatus::fromExceptionCodeWithMessage(EX_ILLEGAL_ARGUMENT,
+		return ndk::ScopedAStatus::fromExceptionCodeWithMessage(EX_ILLEGAL_STATE,
 						"ThermalHAL given cdev not initialized.");
 	else {
 		if (utils.readCdevStates(cdev) <= 0)
@@ -100,7 +100,7 @@ ScopedAStatus Thermal::getCoolingDevicesWithType(CoolingType in_type,
 	std::vector<CoolingDevice> cdev;
 
 	if (!utils.isCdevInitialized(in_type))
-		return ndk::ScopedAStatus::fromExceptionCodeWithMessage(EX_ILLEGAL_ARGUMENT,
+		return ndk::ScopedAStatus::fromExceptionCodeWithMessage(EX_ILLEGAL_STATE,
 						"ThermalHAL given cdev type not initialized.");
 	else {
 		if (utils.readCdevStates(in_type, cdev) <= 0)
@@ -142,8 +142,8 @@ ScopedAStatus Thermal::getTemperaturesWithType(TemperatureType in_type,
 	std::vector<Temperature> temperatures;
 
 	if (!utils.isSensorInitialized(in_type))
-		return ndk::ScopedAStatus::fromExceptionCodeWithMessage(EX_ILLEGAL_ARGUMENT,
-					"ThermalHAL given sensor type Not initialized.");
+		return ndk::ScopedAStatus::fromExceptionCodeWithMessage(EX_ILLEGAL_STATE,
+					"ThermalHAL given sensor type not initialized.");
 	else {
 		if (utils.readTemperatures(in_type, temperatures) <= 0)
 			LOG(VERBOSE) << __func__ << "Sensor Temperature read failure.";
@@ -160,7 +160,7 @@ ScopedAStatus Thermal::getTemperatureThresholds(std::vector<TemperatureThreshold
 	std::vector<TemperatureThreshold> thresh;
 
 	if (!utils.isSensorInitialized())
-		return ndk::ScopedAStatus::fromExceptionCodeWithMessage(EX_ILLEGAL_ARGUMENT,
+		return ndk::ScopedAStatus::fromExceptionCodeWithMessage(EX_ILLEGAL_STATE,
 					"ThermalHAL for sensor not initialized.");
 
 	if (utils.readTemperatureThreshold(thresh) <= 0)
@@ -179,7 +179,7 @@ ScopedAStatus Thermal::getTemperatureThresholdsWithType(
 	std::vector<TemperatureThreshold> thresh;
 
 	if (!utils.isSensorInitialized(in_type))
-		return ndk::ScopedAStatus::fromExceptionCodeWithMessage(EX_ILLEGAL_ARGUMENT,
+		return ndk::ScopedAStatus::fromExceptionCodeWithMessage(EX_ILLEGAL_STATE,
 					"ThermalHAL given sensor type not initialized.");
 	else{
 		if (utils.readTemperatureThreshold(in_type, thresh) <= 0)
