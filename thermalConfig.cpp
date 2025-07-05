@@ -2835,6 +2835,7 @@ namespace thermal {
 			[SHUTDOWN] = 7500,
 			},
 			true,
+			true,
 		},
 		{
 			TemperatureType::SKIN,
@@ -3245,6 +3246,7 @@ namespace thermal {
 			[SEVERE] = 9000,
 			[SHUTDOWN] = 10000,
 			},
+			true,
 			true,
 		},
 		{
