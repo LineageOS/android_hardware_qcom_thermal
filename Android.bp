@@ -1,3 +1,6 @@
+soong_namespace {
+}
+
 cc_binary {
 	name: "android.hardware.thermal-service.qti",
 	relative_install_path: "hw",
