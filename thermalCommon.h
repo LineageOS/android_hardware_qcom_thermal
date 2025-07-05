@@ -70,6 +70,9 @@ class ThermalCommon {
 		std::vector<struct therm_sensor> sens;
 		std::vector<struct therm_cdev> cdev;
 
+		ThrottlingSeverity left_display_throttle_severity{ThrottlingSeverity::NONE};
+		ThrottlingSeverity right_display_throttle_severity{ThrottlingSeverity::NONE};
+
 		int initializeCpuSensor(struct target_therm_cfg& cpu_cfg);
 		int initialize_sensor(struct target_therm_cfg& cfg,
 					int sens_idx);

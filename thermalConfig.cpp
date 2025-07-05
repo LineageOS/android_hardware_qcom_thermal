@@ -443,11 +443,23 @@ namespace thermal {
 		},
 	};
 
+	std::vector<std::string> cpu_sensors_holi =
+	{
+		"cpu-0-0",
+		"cpu-0-1",
+		"cpu-0-2",
+		"cpu-0-3",
+		"cpu-0-4",
+		"cpu-0-5",
+		"cpu-1-0",
+		"cpu-1-2",
+	};
+
 	std::vector<struct target_therm_cfg> sensor_cfg_holi =
 	{
 		{
 			TemperatureType::CPU,
-			cpu_sensors_lito,
+			cpu_sensors_holi,
 			"",
 			{
 			[SEVERE] = 95000,
@@ -457,7 +469,7 @@ namespace thermal {
 		},
 		{
 			TemperatureType::GPU,
-			{ "gpuss-0-usr" },
+			{ "gpuss-0" },
 			"gpu0",
 			{
 			[SEVERE] = 95000,
@@ -467,7 +479,7 @@ namespace thermal {
 		},
 		{
 			TemperatureType::GPU,
-			{ "gpuss-1-usr" },
+			{ "gpuss-1" },
 			"gpu1",
 			{
 			[SEVERE] = 95000,
@@ -477,7 +489,7 @@ namespace thermal {
 		},
 		{
 			TemperatureType::SKIN,
-			{ "quiet-therm-usr" },
+			{ "quiet-therm" },
 			"skin",
 			{
 			[LIGHT] = 36500,
@@ -2495,6 +2507,690 @@ namespace thermal {
 		},
 	};
 
+	std::vector<std::string> cpu_sensors_cliffs = {
+		"cpu-0-0-0",
+		"cpu-0-1-0",
+		"cpu-0-2-0",
+		"cpu-1-0-0",
+		"cpu-1-1-0",
+		"cpu-1-2-0",
+		"cpu-1-3-0",
+		"cpu-2-0-0",
+	};
+
+	std::vector<struct target_therm_cfg> cliffs_common = {
+		{
+			TemperatureType::CPU,
+			cpu_sensors_cliffs,
+			"",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-0" },
+			"GPU0",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-1" },
+			"GPU1",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-2" },
+			"GPU2",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-3" },
+			"GPU3",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nsphvx-0" },
+			"nsp0",
+			100000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nsphvx-1" },
+			"nsp1",
+			100000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nsphmx-0" },
+			"nsp2",
+			100000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nsphmx-1" },
+			"nsp3",
+			100000,
+			115000,
+			true,
+		},
+	};
+
+	std::vector<struct target_therm_cfg>  cliffs_specific = {
+		{
+			TemperatureType::SKIN,
+			{ "sys-therm-4" },
+			"skin",
+			60000,
+			95000,
+			true,
+		},
+	};
+
+	std::vector<std::string> cpu_sensors_pitti =
+	{
+		"cpu-0-0",
+		"cpu-0-1",
+		"cpu-0-2",
+		"cpu-0-3",
+		"cpu-0-4",
+		"cpu-0-5",
+		"cpu-1-0",
+		"cpu-2-0",
+	};
+
+	std::vector<struct target_therm_cfg> sensor_cfg_pitti =
+	{
+		{
+			TemperatureType::CPU,
+			cpu_sensors_pitti,
+			"",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss" },
+			"gpu",
+			95000,
+			115000,
+			true,
+		},
+	};
+
+	std::vector<struct target_therm_cfg>  pitti_specific = {
+		{
+			TemperatureType::SKIN,
+			{ "sys-therm-3" },
+			"skin",
+			40000,
+			95000,
+			true,
+		},
+	};
+
+	std::vector<std::string> cpu_sensors_niobe = {
+		"cpu-0-0-0",
+		"cpu-0-1-0",
+		"cpu-1-0-0",
+		"cpu-1-1-0",
+		"cpu-1-2-0",
+		"cpu-1-2-1",
+		"cpu-1-3-0",
+		"cpu-1-3-1",
+	};
+
+	std::vector<struct target_therm_cfg> niobe_common = {
+		{
+			TemperatureType::CPU,
+			cpu_sensors_niobe,
+			"",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-0" },
+			"GPU0",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-1" },
+			"GPU1",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-2" },
+			"GPU2",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-3" },
+			"GPU3",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-4" },
+			"GPU4",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-5" },
+			"GPU5",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-6" },
+			"GPU6",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-7" },
+			"GPU7",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nsphvx-0" },
+			"nsp0",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nsphvx-1" },
+			"nsp1",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nsphmx-0" },
+			"nsp2",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nsphmx-1" },
+			"nsp3",
+			95000,
+			115000,
+			true,
+		},
+	};
+
+	std::vector<struct target_therm_cfg>  niobe_specific = {
+		{
+			TemperatureType::BCL_CURRENT,
+			{ "pm8550b-ibat-lvl0" },
+			"ibat",
+			7000,
+			7500,
+			true,
+		},
+		{
+			TemperatureType::SKIN,
+			{ "sys-therm-0" },
+			"skin",
+			60000,
+			95000,
+			true,
+		},
+	};
+
+	std::vector<std::string> cpu_sensors_seraph = {
+		"cpu-0-0",
+		"cpu-0-1",
+		"cpu-1-0",
+		"cpu-1-1",
+		"cpu-0-0",
+		"cpu-0-1",
+		"cpu-1-0",
+		"cpu-1-1",
+	};
+
+	std::vector<struct target_therm_cfg> seraph_common = {
+		{
+			TemperatureType::CPU,
+			cpu_sensors_seraph,
+			"",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpu-0" },
+			"GPU0",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpu-1" },
+			"GPU1",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nspvxu-0" },
+			"nsp0",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nspvxu-1" },
+			"nsp1",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nspmxu" },
+			"nsp2",
+			95000,
+			115000,
+			true,
+		},
+	};
+
+	std::vector<struct target_therm_cfg>  seraph_specific = {
+		{
+			TemperatureType::SKIN,
+			{ "sys-therm-1" },
+			"skin",
+			60000,
+			95000,
+			true,
+		},
+	};
+
+	std::vector<std::string> cpu_sensors_volcano = {
+		"cpu-0-0-0",
+		"cpu-0-1-0",
+		"cpu-0-2-0",
+		"cpu-1-0-0",
+		"cpu-1-1-0",
+		"cpu-1-2-0",
+		"cpu-1-3-0",
+		"cpu-1-3-1",
+	};
+
+	std::vector<struct target_therm_cfg> volcano_common = {
+		{
+			TemperatureType::CPU,
+			cpu_sensors_volcano,
+			"",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-0" },
+			"GPU0",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-1" },
+			"GPU1",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nsphvx-0" },
+			"nsp0",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nsphmx-0" },
+			"nsp2",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nsphmx-1" },
+			"nsp3",
+			95000,
+			115000,
+			true,
+		},
+	};
+
+	std::vector<struct target_therm_cfg> volcano_profile1 = {
+		{
+			TemperatureType::CPU,
+			cpu_sensors_volcano,
+			"",
+			105000,
+			118000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-0" },
+			"GPU0",
+			105000,
+			118000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-1" },
+			"GPU1",
+			105000,
+			118000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nsphvx-0" },
+			"nsp0",
+			105000,
+			118000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nsphmx-0" },
+			"nsp2",
+			105000,
+			118000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nsphmx-1" },
+			"nsp3",
+			105000,
+			118000,
+			true,
+		},
+	};
+
+	std::vector<struct target_therm_cfg>  volcano_specific = {
+		{
+			TemperatureType::SKIN,
+			{ "sys-therm-0" },
+			"skin",
+			60000,
+			95000,
+			true,
+		},
+	};
+
+	std::vector<std::string> cpu_sensors_anorak =
+	{
+		"cpu-0-0-0",
+		"cpu-0-0-1",
+		"cpu-0-1-0",
+		"cpu-0-1-1",
+		"cpu-1-0-0",
+		"cpu-1-0-1",
+		"cpu-1-1-0",
+		"cpu-1-1-1",
+		"cpu-1-2-0",
+		"cpu-1-2-1",
+		"cpu-1-3-0",
+		"cpu-1-3-1",
+	};
+
+	std::vector<struct target_therm_cfg>  anorak_common = {
+		{
+			TemperatureType::CPU,
+			cpu_sensors_anorak,
+			"",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nspss-0" },
+			"nsp0",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nspss-1" },
+			"nsp1",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nspss-2" },
+			"nsp2",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-0" },
+			"GPU0",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-1" },
+			"GPU1",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-2" },
+			"GPU2",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-3" },
+			"GPU3",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-4" },
+			"GPU4",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-5" },
+			"GPU5",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-6" },
+			"GPU6",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-7" },
+			"GPU7",
+			95000,
+			115000,
+			true,
+		},
+	};
+
+	std::vector<struct target_therm_cfg>  anorak_specific = {
+		{
+			TemperatureType::BCL_CURRENT,
+			{ "pm8550b-ibat-lvl0" },
+			"ibat",
+			9000,
+			10000,
+			true,
+		},
+		{
+			TemperatureType::SKIN,
+			{ "sys-therm-0" },
+			"skin",
+			55000,
+			95000,
+			true,
+		},
+	};
+
+	std::vector<std::string> cpu_sensors_neo =
+	{
+		"cpu-0-0",
+		"cpu-0-1",
+		"cpu-0-2",
+		"cpu-0-3",
+	};
+
+	std::vector<struct target_therm_cfg>  neo_common = {
+		{
+			TemperatureType::CPU,
+			cpu_sensors_neo,
+			"",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-0" },
+			"GPU0",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-1" },
+			"GPU1",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nspss-0" },
+			"nsp0",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nspss-1" },
+			"nsp1",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nspss-2" },
+			"nsp2",
+			95000,
+			115000,
+			true,
+		},
+         // Google specific changes for aurora vxp product.
+		{
+			TemperatureType::SKIN,
+			{ "disp-lea-right" },
+			"SKIN-DISP-LEA",
+			65000,
+			85000,
+			true,
+		},
+		{
+			TemperatureType::SKIN,
+			{ "disp-lea-left" },
+			"SKIN-DISP-LEA",
+			65000,
+			85000,
+			true,
+		},
+	};
+
 	const std::unordered_map<int, std::vector<struct target_therm_cfg>>
 		msm_soc_map = {
 		{417, sensor_cfg_bengal}, // bengal
@@ -2528,6 +3224,8 @@ namespace thermal {
 		{502, lahaina_common},
 		{450, lahaina_common}, // shima
 		{454, sensor_cfg_holi}, // holi
+		{507, sensor_cfg_holi}, //blair
+		{578, sensor_cfg_holi}, //conic
 		{475, sensor_cfg_yupik}, // yupik
 		{515, sensor_cfg_yupik}, // YUPIK-LTE
 		{457, waipio_common}, //Waipio
@@ -2543,7 +3241,11 @@ namespace thermal {
 		{601, kalama_common}, //Kalamap_sg
 		{557, pineapple_common}, //Pineapple
 		{577, pineapple_common}, //Pineapplep
+		{682, pineapple_common}, //Pineapple gaming
 		{696, pineapple_common}, //Pineapple compute
+		{645, pineapple_common}, //Pineapple
+		{646, pineapple_common}, //Pineapple
+		{702, pineapple_common}, //Pineapple
 		{618, sun_specific}, //Sun
 		{639, sun_specific}, //Sunp
 		{537, parrot_common}, //Netrani mobile
@@ -2573,6 +3275,21 @@ namespace thermal {
 		{694, tuna_common}, //Bonito
 		{659, kera_common}, //Eliza
 		{686, kera_common}, //Eliza
+		{632, cliffs_common}, //cliffs
+		{614, cliffs_common}, //cliffs7
+		{623, sensor_cfg_pitti}, // Kalpeni
+		{629, niobe_common}, //Matrix
+		{652, niobe_common}, // Matrix_4k
+		{636, volcano_common}, //milos
+		{640, volcano_common}, //milos6
+		{657, volcano_specific}, //milos IOT with modem
+		{658, volcano_specific}, //milos IOT
+		{549, anorak_common},
+		{649, anorak_common}, // Halliday Pro
+		{672, seraph_common}, //Balsam-SAR1250P
+		{673, seraph_common}, //Balsam-SAR2230P
+		{525, neo_common},
+		{554, neo_common},
 	};
 
 	const std::unordered_map<int, std::vector<struct target_therm_cfg>>
@@ -2597,7 +3314,11 @@ namespace thermal {
 		{601, kalama_specific}, //Kalamap_sg
 		{557, pineapple_specific}, //Pineapple
 		{577, pineapple_specific}, //Pineapplep
+		{682, pineapple_specific}, //Pineapple gaming
 		{696, pineapple_specific}, //Pineapple compute
+		{645, pineapple_specific}, //Pineapple
+		{646, pineapple_specific}, //Pineapple
+		{702, pineapple_specific}, //Pineapple
 		{537, parrot_specific}, //Netrani mobile
 		{583, parrot_specific}, //Netrani mobile without modem
 		{613, parrot_specific}, //Netrani APQ
@@ -2611,6 +3332,17 @@ namespace thermal {
 		{694, tuna_specific}, //Bonito
 		{659, kera_specific}, //Eliza
 		{686, kera_specific}, //Eliza
+		{632, cliffs_specific}, //cliffs
+		{614, cliffs_specific}, //cliffs7
+		{623, pitti_specific}, // Kalpeni
+		{629, niobe_specific}, // Matrix
+		{652, niobe_specific}, // Matrix_4k
+		{636, volcano_specific}, //milos
+		{640, volcano_specific}, //milos6
+		{549, anorak_specific},
+		{649, anorak_specific}, // Halliday Pro
+		{672, seraph_specific}, //Balsam-SAR1250P
+		{673, seraph_specific}, //Balsam-SAR2230P
 	};
 
 	const std::unordered_multimap<int, std::pair<int, std::vector<struct target_therm_cfg>>>
@@ -2619,6 +3351,10 @@ namespace thermal {
 		{618, std::make_pair(1, sun_profile1)},
 		{639, std::make_pair(0, sun_profile0)},
 		{639, std::make_pair(1, sun_profile1)},
+		{657, std::make_pair(0, volcano_common)},
+		{657, std::make_pair(1, volcano_profile1)},
+		{658, std::make_pair(0, volcano_common)},
+		{658, std::make_pair(1, volcano_profile1)},
 	};
 
 	const std::unordered_map<int, std::string>
