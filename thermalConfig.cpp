@@ -53,14 +53,14 @@ namespace thermal {
 
 	std::vector<std::string> cpu_sensors_bengal =
 	{
-		"cpuss-2-usr",
-		"cpuss-2-usr",
-		"cpuss-2-usr",
-		"cpuss-2-usr",
-		"cpu-1-0-usr",
-		"cpu-1-1-usr",
-		"cpu-1-2-usr",
-		"cpu-1-3-usr",
+		"cpuss-0",
+		"cpuss-1",
+		"cpuss-2",
+		"cpuss-2",
+		"cpu-1-0",
+		"cpu-1-1",
+		"cpu-1-2",
+		"cpu-1-3",
 	};
 
 	std::vector<struct target_therm_cfg> sensor_cfg_bengal =
@@ -77,7 +77,7 @@ namespace thermal {
 		},
 		{
 			TemperatureType::GPU,
-			{ "gpu-usr" },
+			{ "gpu" },
 			"GPU",
 			{
 			[SEVERE] = 95000,
@@ -87,7 +87,7 @@ namespace thermal {
 		},
 		{
 			TemperatureType::SKIN,
-			{ "xo-therm-usr" },
+			{ "xo-therm" },
 			"skin",
 			{
 			[LIGHT] = 36500,
@@ -98,16 +98,6 @@ namespace thermal {
 			[SHUTDOWN] = 95000,
 			},
 			true,
-		},
-		{
-			TemperatureType::BCL_VOLTAGE,
-			{ "pmi632-vbat-lvl0" },
-			"vbat",
-			{
-			[SEVERE] = 3000,
-			[SHUTDOWN] = 2800,
-			},
-			false,
 		},
 		{
 			TemperatureType::BCL_CURRENT,
@@ -126,7 +116,7 @@ namespace thermal {
 			"socd",
 			{
 			[SEVERE] = 90,
-			[SHUTDOWN] = 98,
+			[SHUTDOWN] = 99,
 			},
 			true,
 		},
@@ -134,8 +124,9 @@ namespace thermal {
 
 	std::vector<std::string> cpu_sensors_khaje =
 	{
-		"cpuss-0",
-		"cpuss-1",
+		"cpuss-2",
+		"cpuss-2",
+		"cpuss-2",
 		"cpuss-2",
 		"cpu-1-0",
 		"cpu-1-1",
@@ -181,7 +172,7 @@ namespace thermal {
 		},
 		{
 			TemperatureType::BCL_VOLTAGE,
-			{ "pm7250b-vbat-lvl0" },
+			{ "vbat" },
 			"vbat",
 			{
 			[SEVERE] = 3000,
@@ -206,7 +197,7 @@ namespace thermal {
 			"socd",
 			{
 			[SEVERE] = 90,
-			[SHUTDOWN] = 98,
+			[SHUTDOWN] = 99,
 			},
 			true,
 		},
@@ -214,14 +205,14 @@ namespace thermal {
 
 	std::vector<std::string> cpu_sensors_trinket =
 	{
-		"cpuss-0-usr",
-		"cpuss-0-usr",
-		"cpuss-0-usr",
-		"cpuss-0-usr",
-		"cpu-1-0-usr",
-		"cpu-1-1-usr",
-		"cpu-1-2-usr",
-		"cpu-1-3-usr",
+		"cpuss-0",
+		"cpuss-0",
+		"cpuss-0",
+		"cpuss-0",
+		"cpu-1-0",
+		"cpu-1-1",
+		"cpu-1-2",
+		"cpu-1-3",
 	};
 
 	std::vector<struct target_therm_cfg> sensor_cfg_trinket =
@@ -238,7 +229,7 @@ namespace thermal {
 		},
 		{
 			TemperatureType::GPU,
-			{ "gpu-usr" },
+			{ "gpu" },
 			"GPU",
 			{
 			[SEVERE] = 95000,
@@ -248,7 +239,7 @@ namespace thermal {
 		},
 		{
 			TemperatureType::SKIN,
-			{ "xo-therm-adc" },
+			{ "xo-therm" },
 			"skin",
 			{
 			[LIGHT] = 36500,
@@ -262,7 +253,7 @@ namespace thermal {
 		},
 		{
 			TemperatureType::BCL_VOLTAGE,
-			{ "pmi632-vbat-lvl0" },
+			{ "vbat" },
 			"vbat",
 			{
 			[SEVERE] = 3000,
@@ -287,7 +278,7 @@ namespace thermal {
 			"socd",
 			{
 			[SEVERE] = 90,
-			[SHUTDOWN] = 98,
+			[SHUTDOWN] = 99,
 			},
 			true,
 		},
@@ -571,6 +562,10 @@ namespace thermal {
 			},
 			true,
 		},
+	};
+
+	std::vector<struct target_therm_cfg>  sensor_cfg_msmnile_specific =
+	{
 		{
 			TemperatureType::BCL_CURRENT,
 			{ "pm8150b-ibat-lvl0" },
@@ -598,7 +593,7 @@ namespace thermal {
 			"socd",
 			{
 			[SEVERE] = 90,
-			[SHUTDOWN] = 98,
+			[SHUTDOWN] = 99,
 			},
 			true,
 		},
@@ -617,7 +612,7 @@ namespace thermal {
 		},
 		{
 			TemperatureType::GPU,
-			{ "gpuss-0-usr" },
+			{ "gpuss-0" },
 			"GPU0",
 			{
 			[SEVERE] = 95000,
@@ -627,7 +622,7 @@ namespace thermal {
 		},
 		{
 			TemperatureType::GPU,
-			{ "gpuss-1-usr" },
+			{ "gpuss-1" },
 			"GPU1",
 			{
 			[SEVERE] = 95000,
@@ -637,7 +632,7 @@ namespace thermal {
 		},
 		{
 			TemperatureType::SKIN,
-			{ "skin-msm-therm-usr" },
+			{ "skin-msm-therm" },
 			"skin",
 			{
 			[LIGHT] = 36500,
@@ -665,7 +660,7 @@ namespace thermal {
 		},
 		{
 			TemperatureType::BCL_VOLTAGE,
-			{ "pm8150b-vbat-lvl0" },
+			{ "vbat" },
 			"vbat",
 			{
 			[SEVERE] = 3200,
@@ -679,13 +674,13 @@ namespace thermal {
 			"socd",
 			{
 			[SEVERE] = 90,
-			[SHUTDOWN] = 98,
+			[SHUTDOWN] = 99,
 			},
 			true,
 		},
 		{
 			TemperatureType::NPU,
-			{ "npu-usr" },
+			{ "npu" },
 			"npu",
 			{
 			[SEVERE] = 95000,
@@ -1158,6 +1153,87 @@ namespace thermal {
 		},
 	};
 
+	std::vector<std::string> cpu_sensors_crow =
+	{
+		"cpu-0-0",
+		"cpu-0-1",
+		"cpu-0-2",
+		"cpu-0-3",
+		"cpu-1-0",
+		"cpu-1-2",
+		"cpu-1-4",
+		"cpu-1-6",
+	};
+
+	std::vector<struct target_therm_cfg>  crow_common = {
+		{
+			TemperatureType::CPU,
+			cpu_sensors_crow,
+			"",
+			95000,
+			115000,
+			95000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-0" },
+			"GPU0",
+			102000,
+			115000,
+			102000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-1" },
+			"GPU1",
+			102000,
+			115000,
+			102000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nspss-0" },
+			"nsp0",
+			100000,
+			115000,
+			100000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nspss-1" },
+			"nsp1",
+			100000,
+			115000,
+			100000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nspss-2" },
+			"nsp2",
+			100000,
+			115000,
+			100000,
+			true,
+		},
+	};
+
+	std::vector<struct target_therm_cfg>  crow_specific = {
+		{
+			TemperatureType::SKIN,
+			{ "sys-therm-3" },
+			"skin",
+			60000,
+			95000,
+			60000,
+			true,
+		},
+	};
+
 	std::vector<struct target_therm_cfg>  diwali_specific = {
 		{
 			TemperatureType::BCL_CURRENT,
@@ -1182,6 +1258,75 @@ namespace thermal {
 			[EMERGENCY] = 55000,
 			[SHUTDOWN] = 95000,
 			},
+			true,
+		},
+	};
+
+	std::vector<std::string> cpu_sensors_lemansAU =
+	{
+		"cpu-0-0-0",
+		"cpu-0-1-0",
+		"cpu-0-2-0",
+		"cpu-0-3-0",
+		"cpu-1-0-0",
+		"cpu-1-1-0",
+		"cpu-1-2-0",
+		"cpu-1-3-0",
+	};
+
+	std::vector<struct target_therm_cfg>  lemansAU_common = {
+		{
+			TemperatureType::CPU,
+			cpu_sensors_lemansAU,
+			"",
+			105000,
+			118000,
+			105000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-0" },
+			"GPU0",
+			105000,
+			118000,
+			105000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-1" },
+			"GPU1",
+			105000,
+			118000,
+			105000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-2" },
+			"GPU2",
+			105000,
+			118000,
+			105000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nsp-0-0-0" },
+			"nsp0",
+			105000,
+			118000,
+			105000,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nsp-1-0-0" },
+			"nsp1",
+			105000,
+			118000,
+			105000,
 			true,
 		},
 	};
@@ -3374,6 +3519,11 @@ namespace thermal {
 		{469, sensor_cfg_bengal},
 		{470, sensor_cfg_bengal},
 		{518, sensor_cfg_khaje},  //khaje
+		{561, sensor_cfg_khaje},  //khajeP
+		{562, sensor_cfg_khaje},  //khajeQ
+		{584, sensor_cfg_khaje},  //khajeXR
+		{585, sensor_cfg_khaje},  //khajeG
+		{586, sensor_cfg_khaje},  //khajeIOT
 		{394, sensor_cfg_trinket},
 		{467, sensor_cfg_trinket},
 		{468, sensor_cfg_trinket},
@@ -3391,6 +3541,8 @@ namespace thermal {
 		{362, sensor_cfg_sa8155_common}, //auto
 		{367, sensor_cfg_sa8155_common}, //auto
 		{356, kona_common}, // kona
+		{481, kona_common}, //kona iot
+		{548, kona_common}, //kona iot
 		{415, lahaina_common}, // lahaina
 		{439, lahaina_common}, // lahainap
 		{456, lahaina_common}, // lahaina-atp
@@ -3413,6 +3565,10 @@ namespace thermal {
 		{536, kalama_common}, //Kalamap
 		{600, kalama_common}, //Kalama_sg
 		{601, kalama_common}, //Kalamap_sg
+		{603, kalama_common}, //Kalama_qcs
+		{604, kalama_common}, //Kalama_qcm
+		{668, kalama_common}, //Kalama_non-pop_qcs
+		{688, kalama_common}, //Kalama_non-pop_qcm
 		{557, pineapple_common}, //Pineapple
 		{577, pineapple_common}, //Pineapplep
 		{682, pineapple_common}, //Pineapple gaming
@@ -3464,11 +3620,16 @@ namespace thermal {
 		{673, seraph_common}, //Balsam-SAR2230P
 		{525, neo_common},
 		{554, neo_common},
+		{608, crow_common}, //crow
+		{644, crow_common}, //crow 4G
+		{532, lemansAU_common}, //Lemans auto
 	};
 
 	const std::unordered_map<int, std::vector<struct target_therm_cfg>>
 		msm_soc_specific = {
 		{356, kona_specific}, // kona
+		{481, kona_specific}, //kona iot
+		{548, kona_specific}, //kona iot
 		{415, lahaina_specific}, // lahaina
 		{439, lahaina_specific}, // lahainap
 		{456, lahaina_specific}, // lahaina-atp
@@ -3486,6 +3647,10 @@ namespace thermal {
 		{536, kalama_specific}, //Kalamap
 		{600, kalama_specific}, //Kalama_sg
 		{601, kalama_specific}, //Kalamap_sg
+		{603, kalama_specific}, //Kalama_qcs
+		{604, kalama_specific}, //Kalama_qcm
+		{668, kalama_specific}, //Kalama_non-pop_qcs
+		{688, kalama_specific}, //Kalama_non-pop_qcm
 		{557, pineapple_specific}, //Pineapple
 		{577, pineapple_specific}, //Pineapplep
 		{682, pineapple_specific}, //Pineapple gaming
@@ -3500,6 +3665,8 @@ namespace thermal {
 		{663, parrot_specific}, //Netrani pro
 		{713, parrot_specific},
 		{714, parrot_specific}, //Netrani APQ
+		{339, sensor_cfg_msmnile_specific},
+		{361, sensor_cfg_msmnile_specific},
 		{355, sensor_cfg_talos_specific},
 		{681, tuna_specific}, //Bonito
 		{655, tuna_specific}, //Bonito
@@ -3517,6 +3684,8 @@ namespace thermal {
 		{649, anorak_specific}, // Halliday Pro
 		{672, seraph_specific}, //Balsam-SAR1250P
 		{673, seraph_specific}, //Balsam-SAR2230P
+		{608, crow_specific}, //crow
+		{644, crow_specific}, //crow
 	};
 
 	const std::unordered_multimap<int, std::pair<int, std::vector<struct target_therm_cfg>>>
@@ -3537,6 +3706,7 @@ namespace thermal {
 		{405, "sa8195AU"},
 		{367, "hanaAU"},
 		{362, "hanaAU"},
+		{532, "lemansAU"},
 		{377, "talosAU"},
 		{380, "talosAU"},
 	};
