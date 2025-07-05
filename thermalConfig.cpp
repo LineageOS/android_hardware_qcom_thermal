@@ -3575,9 +3575,12 @@ namespace thermal {
 		{482, waipio_common}, //Waipio
 		{552, waipio_common}, //Waipio-LTE
 		{506, waipio_common}, //diwali
+		{547, waipio_common}, //diwali
+		{564, waipio_common}, //diwali-LTE
 		{530, waipio_common}, // cape
 		{531, waipio_common}, // cape
 		{540, waipio_common}, // cape
+		{591, waipio_common}, //ukee
 		{519, kalama_common}, //Kalama
 		{536, kalama_common}, //Kalamap
 		{600, kalama_common}, //Kalama_sg
@@ -3617,6 +3620,7 @@ namespace thermal {
 		{582, ravelin_common}, //Clarence IOT without modem
 		{653, ravelin_common}, //Clarence Gaming
 		{654, ravelin_common}, //Clarence Gaming
+		{602, ravelin_common}, //Clarence APQ
 		{681, tuna_common}, //Bonito
 		{655, tuna_common}, //Bonito
 		{694, tuna_common}, //Bonito
@@ -3637,6 +3641,7 @@ namespace thermal {
 		{673, seraph_common}, //Balsam-SAR2230P
 		{525, neo_common},
 		{554, neo_common},
+		{579, neo_common},
 		{608, crow_common}, //crow
 		{644, crow_common}, //crow 4G
 		{532, lemansAU_common}, //Lemans auto
@@ -3657,9 +3662,12 @@ namespace thermal {
 		{482, waipio_specific}, //Waipio
 		{552, waipio_specific}, //Waipio-LTE
 		{506, diwali_specific}, //diwali
+		{547, diwali_specific}, //diwali
+		{564, diwali_specific}, //diwali-LTE
 		{530, waipio_specific}, // cape
 		{531, waipio_specific}, // cape
 		{540, waipio_specific}, // cape
+		{591, waipio_specific}, //ukee
 		{519, kalama_specific}, //Kalama
 		{536, kalama_specific}, //Kalamap
 		{600, kalama_specific}, //Kalama_sg
@@ -3726,6 +3734,8 @@ namespace thermal {
 		{532, "lemansAU"},
 		{377, "talosAU"},
 		{380, "talosAU"},
+		{549, "anorak"},
+		{649, "anorakp"},
 	};
 
 	const std::unordered_multimap<int, std::pair<std::string,
