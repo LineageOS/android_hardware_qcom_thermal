@@ -2554,6 +2554,8 @@ namespace thermal {
 		{634, parrot_common}, //Netrani Gaming SKU without modem
 		{638, parrot_common}, //SM7435P
 		{663, parrot_common}, //SM7435
+		{713, parrot_common}, //Netrani APQ
+		{714, parrot_common}, //Netrani APQ
 		{486, sensor_cfg_monaco}, // monaco
 		{517, sensor_cfg_monaco}, // monaco
 		{355, sensor_cfg_talos_common},
@@ -2601,6 +2603,8 @@ namespace thermal {
 		{613, parrot_specific}, //Netrani APQ
 		{631, parrot_specific},
 		{663, parrot_specific}, //Netrani pro
+		{713, parrot_specific},
+		{714, parrot_specific}, //Netrani APQ
 		{355, sensor_cfg_talos_specific},
 		{681, tuna_specific}, //Bonito
 		{655, tuna_specific}, //Bonito

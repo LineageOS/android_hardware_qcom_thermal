@@ -81,7 +81,7 @@ ScopedAStatus Thermal::getCoolingDevices(std::vector<CoolingDevice>* out_data) {
 	std::vector<CoolingDevice> cdev;
 
 	if (!utils.isCdevInitialized())
-		return ndk::ScopedAStatus::fromExceptionCodeWithMessage(EX_ILLEGAL_ARGUMENT,
+		return ndk::ScopedAStatus::fromExceptionCodeWithMessage(EX_ILLEGAL_STATE,
 						"ThermalHAL given cdev not initialized.");
 	else {
 		if (utils.readCdevStates(cdev) <= 0)
@@ -160,7 +160,7 @@ ScopedAStatus Thermal::getTemperatureThresholds(std::vector<TemperatureThreshold
 	std::vector<TemperatureThreshold> thresh;
 
 	if (!utils.isSensorInitialized())
-		return ndk::ScopedAStatus::fromExceptionCodeWithMessage(EX_ILLEGAL_ARGUMENT,
+		return ndk::ScopedAStatus::fromExceptionCodeWithMessage(EX_ILLEGAL_STATE,
 					"ThermalHAL for sensor not initialized.");
 
 	if (utils.readTemperatureThreshold(thresh) <= 0)
