@@ -1486,6 +1486,23 @@ namespace thermal {
 			115000,
 			true,
 		},
+         // Google specific changes for aurora vxp product.
+		{
+			TemperatureType::SKIN,
+			{ "disp-lea-right" },
+			"SKIN-DISP-LEA",
+			65000,
+			85000,
+			true,
+		},
+		{
+			TemperatureType::SKIN,
+			{ "disp-lea-left" },
+			"SKIN-DISP-LEA",
+			65000,
+			85000,
+			true,
+		},
 	};
 
 	std::vector<std::string> cpu_sensors_parrot =
@@ -1919,7 +1936,7 @@ std::vector<std::string> cpu_sensors_cliffs = {
 			TemperatureType::CPU,
 			cpu_sensors_monaco,
 			"",
-			95000,
+			85000,
 			115000,
 			true,
 		},
@@ -1927,7 +1944,7 @@ std::vector<std::string> cpu_sensors_cliffs = {
 			TemperatureType::GPU,
 			{ "gpu" },
 			"gpu",
-			95000,
+			85000,
 			115000,
 			true,
 		},
@@ -2194,7 +2211,7 @@ std::vector<std::string> cpu_sensors_cliffs = {
 	std::vector<struct target_therm_cfg>  seraph_specific = {
 		{
 			TemperatureType::SKIN,
-			{ "sys-therm-0" },
+			{ "sys-therm-1" },
 			"skin",
 			60000,
 			95000,

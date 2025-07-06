@@ -31,7 +31,7 @@
 
 /* Changes from Qualcomm Innovation Center are provided under the following license:
 
-Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+Copyright (c) 2023, 2025 Qualcomm Innovation Center, Inc. All rights reserved.
 SPDX-License-Identifier: BSD-3-Clause-Clear */
 
 #include <android-base/file.h>
@@ -66,11 +66,9 @@ ThermalUtils::ThermalUtils(const ueventCB &inp_cb):
 	std::vector<struct therm_sensor> sensorList;
 	std::vector<struct target_therm_cfg> therm_cfg = cfg.fetchConfig();
 
-	is_sensor_init = false;
 	is_cdev_init = false;
 	ret = cmnInst.initThermalZones(therm_cfg);
 	if (ret > 0) {
-		is_sensor_init = true;
 		sensorList = cmnInst.fetch_sensor_list();
 		std::lock_guard<std::mutex> _lock(sens_cb_mutex);
 		for (struct therm_sensor sens: sensorList) {
@@ -86,6 +84,34 @@ ThermalUtils::ThermalUtils(const ueventCB &inp_cb):
 		is_cdev_init = true;
 		cdevList = cmnInst.fetch_cdev_list();
 	}
+}
+
+bool ThermalUtils::isSensorInitialized()
+{
+	std::lock_guard<std::mutex> _lock(sens_cb_mutex);
+
+	if (thermalConfig.begin() == thermalConfig.end())
+		return false;
+
+	return true;
+}
+
+bool ThermalUtils::isSensorInitialized(TemperatureType type)
+{
+	std::unordered_map<int, struct therm_sensor>::iterator it;
+	std::lock_guard<std::mutex> _lock(sens_cb_mutex);
+
+	if (thermalConfig.begin() == thermalConfig.end())
+		return false;
+
+	for (it = thermalConfig.begin(); it != thermalConfig.end();
+			it++) {
+		struct therm_sensor& sens = it->second;
+		if (sens.t.type == type)
+			return true;
+	}
+
+	return false;
 }
 
 void ThermalUtils::Notify(struct therm_sensor& sens)
@@ -136,8 +162,9 @@ void ThermalUtils::eventCreateParse(int tzn, const char *name)
 	std::vector<struct target_therm_cfg>::iterator it_vec;
 	std::vector<std::string>::iterator it;
 
-	if (isSensorInitialized())
+	if (thermalConfig.find(tzn) != thermalConfig.end())
 		return;
+
 	for (it_vec = therm_cfg.begin();
 		it_vec != therm_cfg.end(); it_vec++) {
 		for (it = it_vec->sensor_list.begin();
@@ -153,16 +180,18 @@ void ThermalUtils::eventCreateParse(int tzn, const char *name)
 			<< std::endl;
 		return;
 	}
-	ret = cmnInst.initThermalZones(therm_cfg);
+	ret = cmnInst.initNewThermalZone(*it_vec);
 	if (ret > 0) {
-		is_sensor_init = true;
 		sensorList = cmnInst.fetch_sensor_list();
 		std::lock_guard<std::mutex> _lock(sens_cb_mutex);
 		for (struct therm_sensor sens: sensorList) {
+			if (sens.sensor_name != name)
+				continue;
 			thermalConfig[sens.tzn] = sens;
 			cmnInst.read_temperature(sens);
 			cmnInst.estimateSeverity(sens);
 			cmnInst.initThreshold(sens);
+			break;
 		}
 	}
 }

@@ -310,6 +310,17 @@ int ThermalCommon::initializeCpuSensor(struct target_therm_cfg& cpu_cfg)
 	return 0;
 }
 
+int ThermalCommon::initNewThermalZone(struct target_therm_cfg& cfg)
+{
+
+	if (cfg.type == TemperatureType::CPU)
+		initializeCpuSensor(cfg);
+	else
+		initialize_sensor(cfg, 0);
+
+	return 1;
+}
+
 int ThermalCommon::initThermalZones(std::vector<struct target_therm_cfg>& cfg)
 {
 	std::vector<struct target_therm_cfg>::iterator it;
@@ -321,14 +332,10 @@ int ThermalCommon::initThermalZones(std::vector<struct target_therm_cfg>& cfg)
 
 	for (it = cfg.begin(); it != cfg.end(); it++)
 	{
-		if (it->type == TemperatureType::CPU) {
-			if (initializeCpuSensor(*it) < 0)
-				return -1;
-			continue;
-		}
-		if (initialize_sensor(*it, 0) < 0) {
-			return -1;
-		}
+		if (it->type == TemperatureType::CPU)
+			initializeCpuSensor(*it);
+		else
+			initialize_sensor(*it, 0);
 	}
 
 	return sens.size();
@@ -474,6 +481,30 @@ int ThermalCommon::estimateSeverity(struct therm_sensor& sensor)
 		return -1;
 	sensor.lastThrottleStatus = sensor.t.throttlingStatus;
 	sensor.t.throttlingStatus = severity;
+
+	if (sensor.sensor_name == "disp-lea-left" || sensor.sensor_name == "disp-lea-right") {
+		ThrottlingSeverity cur_severity =
+				std::max(left_display_throttle_severity, right_display_throttle_severity);
+		if (sensor.sensor_name == "disp-lea-left") {
+			left_display_throttle_severity = severity;
+		} else if (sensor.sensor_name == "disp-lea-right") {
+			right_display_throttle_severity = severity;
+		}
+
+		ThrottlingSeverity new_severity =
+				std::max(left_display_throttle_severity, right_display_throttle_severity);
+
+		LOG(DEBUG) << "Current display severity: " << (int)cur_severity
+			<< " New severity L: " << (int)left_display_throttle_severity
+			<< " New severity R: " << (int)right_display_throttle_severity
+			<< " New severity combined: " << (int)new_severity << std::endl;
+
+		if (cur_severity != new_severity) {
+			return (int)new_severity;
+		} else {
+			return -1;
+		}
+	}
 
 	return (int)severity;
 }
