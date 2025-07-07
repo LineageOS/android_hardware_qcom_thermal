@@ -2573,6 +2573,8 @@ namespace thermal {
 		{686, kera_common}, //Eliza
 		{720, kera_common}, //Eliza-Paloma
 		{721, kera_common}, //Eliza-Paloma
+		{731, kera_common}, //Eliza IOT
+		{732, kera_common}, //Eliza IOT
 	};
 
 	const std::unordered_map<int, std::vector<struct target_therm_cfg>>
@@ -2614,6 +2616,8 @@ namespace thermal {
 		{686, kera_specific}, //Eliza
 		{720, kera_specific}, //Eliza-Paloma
 		{721, kera_specific}, //Eliza-Paloma
+		{731, kera_specific}, //Eliza IOT
+		{732, kera_specific}, //Eliza IOT
 	};
 
 	const std::unordered_multimap<int, std::pair<int, std::vector<struct target_therm_cfg>>>
