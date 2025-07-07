@@ -2685,6 +2685,7 @@ namespace thermal {
 		{669, vienna_common}, //SW6100
 		{670, vienna_common}, //SW6100P
 		{685, alor_common}, // Molokai
+		{727, alor_common}, // Molokai APQ
 	};
 
 	const std::unordered_map<int, std::vector<struct target_therm_cfg>>
@@ -2719,6 +2720,7 @@ namespace thermal {
 		{669, vienna_specific}, //SW6100
 		{670, vienna_specific}, //SW6100P
 		{685, alor_specific}, //Molokai
+		{727, alor_specific}, //Molokai APQ
 	};
 
 	const std::unordered_multimap<int, std::pair<int, std::vector<struct target_therm_cfg>>>
