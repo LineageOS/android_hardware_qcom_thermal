@@ -2570,6 +2570,8 @@ namespace thermal {
 		{694, tuna_common}, //Bonito
 		{659, kera_common}, //Eliza
 		{686, kera_common}, //Eliza
+		{720, kera_common}, //Eliza-Paloma
+		{721, kera_common}, //Eliza-Paloma
 	};
 
 	const std::unordered_map<int, std::vector<struct target_therm_cfg>>
@@ -2608,6 +2610,8 @@ namespace thermal {
 		{694, tuna_specific}, //Bonito
 		{659, kera_specific}, //Eliza
 		{686, kera_specific}, //Eliza
+		{720, kera_specific}, //Eliza-Paloma
+		{721, kera_specific}, //Eliza-Paloma
 	};
 
 	const std::unordered_multimap<int, std::pair<int, std::vector<struct target_therm_cfg>>>
