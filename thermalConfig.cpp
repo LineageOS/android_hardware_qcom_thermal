@@ -881,14 +881,14 @@ namespace thermal {
 
 	std::vector<std::string> cpu_sensors_kona =
 	{
-		"cpu-0-0",
-		"cpu-0-1",
-		"cpu-0-2",
-		"cpu-0-3",
-		"cpu-1-0",
-		"cpu-1-1",
-		"cpu-1-2",
-		"cpu-1-3",
+		"cpu-0-0-usr",
+		"cpu-0-1-usr",
+		"cpu-0-2-usr",
+		"cpu-0-3-usr",
+		"cpu-1-0-usr",
+		"cpu-1-1-usr",
+		"cpu-1-2-usr",
+		"cpu-1-3-usr",
 	};
 
 	std::vector<struct target_therm_cfg>  kona_common = {
@@ -902,7 +902,7 @@ namespace thermal {
 		},
 		{
 			TemperatureType::GPU,
-			{ "gpuss-0" },
+			{ "gpuss-0-usr" },
 			"GPU0",
 			95000,
 			115000,
@@ -910,7 +910,7 @@ namespace thermal {
 		},
 		{
 			TemperatureType::GPU,
-			{ "gpuss-1" },
+			{ "gpuss-1-usr" },
 			"GPU1",
 			95000,
 			115000,
@@ -918,7 +918,7 @@ namespace thermal {
 		},
 		{
 			TemperatureType::SKIN,
-			{ "skin-msm-therm" },
+			{ "skin-msm-therm-usr" },
 			"skin",
 			40000,
 			95000,
@@ -937,7 +937,7 @@ namespace thermal {
 		},
 		{
 			TemperatureType::BCL_VOLTAGE,
-			{ "vbat" },
+			{ "pm8150b-vbat-lvl0" },
 			"vbat",
 			3200,
 			3000,
@@ -945,15 +945,15 @@ namespace thermal {
 		},
 		{
 			TemperatureType::BCL_PERCENTAGE,
-			{ "socd" },
-			"socd",
-			90,
-			99,
+			{ "soc" },
+			"soc",
+			10,
+			2,
 			false,
 		},
 		{
 			TemperatureType::NPU,
-			{ "npu" },
+			{ "npu-usr" },
 			"npu",
 			95000,
 			115000,
