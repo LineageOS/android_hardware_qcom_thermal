@@ -2376,14 +2376,14 @@ namespace thermal {
 	};
 
 	std::vector<std::string> cpu_sensors_alor = {
-		"cpu-0-0-0",
-		"cpu-0-1-0",
-		"cpu-0-2-0",
-		"cpu-0-3-0",
-		"cpu-0-4-0",
-		"cpu-0-5-0",
-		"cpu-1-0-0",
-		"cpu-1-1-0",
+		"cpu-0-0-1",
+		"cpu-0-1-1",
+		"cpu-0-2-1",
+		"cpu-0-3-1",
+		"cpu-0-4-1",
+		"cpu-0-5-1",
+		"cpu-1-0-1",
+		"cpu-1-1-1",
 	};
 
 	std::vector<struct target_therm_cfg> alor_common = {
