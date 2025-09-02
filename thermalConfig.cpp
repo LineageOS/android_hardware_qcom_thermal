@@ -2178,11 +2178,11 @@ namespace thermal {
 	std::vector<std::string> cpu_sensors_tuna = {
 		"cpu-0-0-0",
 		"cpu-0-1-0",
-		"cpu-1-0-0",
-		"cpu-1-1-0",
 		"cpu-1-2-0",
 		"cpu-1-3-0",
 		"cpu-1-4-0",
+		"cpu-1-0-0",
+		"cpu-1-1-0",
 		"cpu-2-0-0",
 	};
 
