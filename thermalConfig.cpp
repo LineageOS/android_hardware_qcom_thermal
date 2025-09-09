@@ -2725,7 +2725,7 @@ namespace thermal {
 	std::vector<struct target_therm_cfg> alor_specific = {
 		{
 			TemperatureType::SKIN,
-			{ "sys-therm-3" },
+			{ "sys-therm-0" },
 			"skin",
 			{
 			[LIGHT] = 48000,
@@ -2737,6 +2737,14 @@ namespace thermal {
 			},
 			true,
 			true,
+			true,
+			{ "sys-therm-0" },
+			{ 0.80 },
+			{ "sys-therm-0" },
+			40000,
+			38000,
+			3235,
+			5000,
 		},
 		{
 			TemperatureType::BCL_CURRENT,
