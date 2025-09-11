@@ -2440,6 +2440,17 @@ namespace thermal {
 
 	std::vector<struct target_therm_cfg> hamoa_specific = {
 		{
+			TemperatureType::BCL_CURRENT,
+			{ "smb2360_0-ibat-lvl0" },
+			"ibat",
+			{
+			[SEVERE] = 13500,
+			[SHUTDOWN] = 15000,
+			},
+			true,
+			true,
+		},
+		{
 			TemperatureType::SKIN,
 			{ "sys-therm-2" },
 			"skin",
