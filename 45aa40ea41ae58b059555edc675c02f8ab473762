@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "93cb2e4a_7d3257a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 34612
+      },
+      "writtenOn": "2025-09-14T08:56:33Z",
+      "side": 1,
+      "message": "Fixes \n\n`I thermal_hal: Thermal HAL Service AIDL starting...\nE android.hardware.thermal-service.qti: No thermal zone for sensor: vbat, ret:-1\nE android.hardware.thermal-service.qti: No thermal zone for sensor: socd, ret:-1\nE android.hardware.thermal-service.qti: Policy error:step_wise sensor:CPU0\nE android.hardware.thermal-service.qti: Error opening file: /sys/class/thermal/thermal_zone2/trip_point_1_temp\nE android.hardware.thermal-service.qti: Error opening file: /sys/class/thermal/thermal_zone3/trip_point_1_temp\nE android.hardware.thermal-service.qti: Policy error:step_wise sensor:CPU3\nE android.hardware.thermal-service.qti: Error opening file: /sys/class/thermal/thermal_zone7/trip_point_1_temp\nE android.hardware.thermal-service.qti: Policy error:step_wise sensor:CPU5\nE android.hardware.thermal-service.qti: Error opening file: /sys/class/thermal/thermal_zone9/trip_point_1_temp\nE android.hardware.thermal-service.qti: Error opening file: /sys/class/thermal/thermal_zone10/trip_point_1_temp\nE android.hardware.thermal-service.qti: Policy error:low_limits_floor sensor:gpu0\nE android.hardware.thermal-service.qti: Error opening file: /sys/class/thermal/thermal_zone27/trip_point_1_temp\nE android.hardware.thermal-service.qti: Policy error:step_wise sensor:battery\nI thermal_hal: Thermal HAL Service AIDL started successfully.`",
+      "revId": "45aa40ea41ae58b059555edc675c02f8ab473762",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
