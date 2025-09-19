@@ -2277,6 +2277,196 @@ namespace thermal {
 		},
 	};
 
+	std::vector<std::string> cpu_sensors_hamoa = {
+		"cpu-0-0-1-thermal",
+		"cpu-0-1-1-thermal",
+		"cpu-0-2-1-thermal",
+		"cpu-0-3-1-thermal",
+		"cpu-1-0-1-thermal",
+		"cpu-1-1-1-thermal",
+		"cpu-1-2-1-thermal",
+		"cpu-1-3-1-thermal",
+		"cpu-2-0-1-thermal",
+		"cpu-2-1-1-thermal",
+		"cpu-2-2-1-thermal",
+		"cpu-2-3-1-thermal",
+	};
+
+	std::vector<struct target_therm_cfg> hamoa_common = {
+		{
+			TemperatureType::CPU,
+			cpu_sensors_hamoa,
+			"",
+			{
+			[SEVERE] = 95000,
+			[SHUTDOWN] = 115000,
+			},
+			true,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-0-thermal" },
+			"GPU0",
+			{
+			[SEVERE] = 95000,
+			[SHUTDOWN] = 115000,
+			},
+			true,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-1-thermal" },
+			"GPU1",
+			{
+			[SEVERE] = 95000,
+			[SHUTDOWN] = 115000,
+			},
+			true,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-2-thermal" },
+			"GPU2",
+			{
+			[SEVERE] = 95000,
+			[SHUTDOWN] = 115000,
+			},
+			true,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-3-thermal" },
+			"GPU3",
+			{
+			[SEVERE] = 95000,
+			[SHUTDOWN] = 115000,
+			},
+			true,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-4-thermal" },
+			"GPU4",
+			{
+			[SEVERE] = 95000,
+			[SHUTDOWN] = 115000,
+			},
+			true,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-5-thermal" },
+			"GPU5",
+			{
+			[SEVERE] = 95000,
+			[SHUTDOWN] = 115000,
+			},
+			true,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-6-thermal" },
+			"GPU6",
+			{
+			[SEVERE] = 95000,
+			[SHUTDOWN] = 115000,
+			},
+			true,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-7-thermal" },
+			"GPU7",
+			{
+			[SEVERE] = 95000,
+			[SHUTDOWN] = 115000,
+			},
+			true,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nsp-0-thermal" },
+			"nsp0",
+			{
+			[SEVERE] = 95000,
+			[SHUTDOWN] = 115000,
+			},
+			true,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nsp-1-thermal" },
+			"nsp1",
+			{
+			[SEVERE] = 95000,
+			[SHUTDOWN] = 115000,
+			},
+			true,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nsp-2-thermal" },
+			"nsp2",
+			{
+			[SEVERE] = 95000,
+			[SHUTDOWN] = 115000,
+			},
+			true,
+			true,
+		},
+		{
+			TemperatureType::NPU,
+			{ "nsp-3-thermal" },
+			"nsp3",
+			{
+			[SEVERE] = 95000,
+			[SHUTDOWN] = 115000,
+			},
+			true,
+			true,
+		},
+	};
+
+	std::vector<struct target_therm_cfg> hamoa_specific = {
+		{
+			TemperatureType::BCL_CURRENT,
+			{ "smb2360_0-ibat-lvl0" },
+			"ibat",
+			{
+			[SEVERE] = 13500,
+			[SHUTDOWN] = 15000,
+			},
+			true,
+			true,
+		},
+		{
+			TemperatureType::SKIN,
+			{ "sys-therm-2" },
+			"skin",
+			{
+			[LIGHT] = 48000,
+			[MODERATE] = 49000,
+			[SEVERE] = 50000,
+			[CRITICAL] = 60000,
+			[EMERGENCY] = 61000,
+			[SHUTDOWN] = 90000,
+			},
+			true,
+			true,
+		},
+	};
+
 	std::vector<std::string> cpu_sensors_vienna = {
 		"cpu-0-0-0",
 		"cpu-0-0-1",
@@ -2546,7 +2736,7 @@ namespace thermal {
 	std::vector<struct target_therm_cfg> alor_specific = {
 		{
 			TemperatureType::SKIN,
-			{ "sys-therm-3" },
+			{ "sys-therm-0" },
 			"skin",
 			{
 			[LIGHT] = 48000,
@@ -2558,6 +2748,14 @@ namespace thermal {
 			},
 			true,
 			true,
+			true,
+			{ "sys-therm-0" },
+			{ 0.80 },
+			{ "sys-therm-0" },
+			40000,
+			38000,
+			3235,
+			5000,
 		},
 		{
 			TemperatureType::BCL_CURRENT,
@@ -2686,6 +2884,7 @@ namespace thermal {
 		{670, vienna_common}, //SW6100P
 		{685, alor_common}, // Molokai
 		{727, alor_common}, // Molokai APQ
+		{555, hamoa_common}, // Hamoa
 	};
 
 	const std::unordered_map<int, std::vector<struct target_therm_cfg>>
@@ -2721,6 +2920,7 @@ namespace thermal {
 		{670, vienna_specific}, //SW6100P
 		{685, alor_specific}, //Molokai
 		{727, alor_specific}, //Molokai APQ
+		{555, hamoa_specific}, // Hamoa
 	};
 
 	const std::unordered_multimap<int, std::pair<int, std::vector<struct target_therm_cfg>>>
