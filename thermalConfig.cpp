@@ -2880,6 +2880,9 @@ namespace thermal {
 		{517, sensor_cfg_monaco}, // monaco
 		{660, canoe_common}, //Canoe
 		{661, canoe_common}, //Canoep
+		{722, canoe_common}, //Alana
+		{723, canoe_common}, //Alana APQ
+		{743, canoe_common}, //Gaming SKU
 		{669, vienna_common}, //SW6100
 		{670, vienna_common}, //SW6100P
 		{685, alor_common}, // Molokai
@@ -2916,6 +2919,10 @@ namespace thermal {
 		{663, parrot_specific}, //Netrani pro
 		{660, canoe_specific}, //Canoe
 		{661, canoe_specific}, //Canoep
+		{722, canoe_common}, //Alana
+                {723, canoe_common}, //Alana APQ
+                {743, canoe_common}, //Gaming SKU
+
 		{669, vienna_specific}, //SW6100
 		{670, vienna_specific}, //SW6100P
 		{685, alor_specific}, //Molokai
