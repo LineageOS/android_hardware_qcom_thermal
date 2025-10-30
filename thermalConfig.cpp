@@ -920,7 +920,7 @@ namespace thermal {
 			TemperatureType::SKIN,
 			{ "skin-msm-therm-usr" },
 			"skin",
-			40000,
+			55000,
 			95000,
 			true,
 		}
