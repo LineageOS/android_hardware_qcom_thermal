@@ -97,7 +97,7 @@ using ::aidl::android::hardware::thermal::ThrottlingSeverity;
 		std::string label;
 		int thresh[SHUTDOWN + 1];
 		bool positive_thresh_ramp;
-		bool no_trip_set = false;
+		bool no_trip_set = true;
 		bool virtual_sensor_flag = false;
 		std::vector<std::string> vs_sensor_list;
 		std::vector<double> weight_list;
