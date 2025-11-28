@@ -53,6 +53,45 @@ namespace thermal {
 	constexpr std::string_view socIDPath("/sys/devices/soc0/soc_id");
 	constexpr std::string_view hwPlatformPath("/sys/devices/soc0/hw_platform");
 
+	std::vector<std::string> cpu_sensors_msm8998 =
+	{
+		"tsens_tz_sensor1",
+		"tsens_tz_sensor2",
+		"tsens_tz_sensor3",
+		"tsens_tz_sensor4",
+		"tsens_tz_sensor7",
+		"tsens_tz_sensor8",
+		"tsens_tz_sensor9",
+		"tsens_tz_sensor10",
+	};
+
+	std::vector<struct target_therm_cfg> sensor_cfg_msm8998 = {
+		{
+			TemperatureType::CPU,
+			cpu_sensors_msm8998,
+			"",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{"tsens_tz_sensor12"},
+			"GPU",
+			95000,
+			115000,
+			true,
+		},
+		{
+			TemperatureType::SKIN,
+			{"quiet_therm"},
+			"skin",
+			55000,
+			95000,
+			true,
+		},
+	};
+
 	std::vector<std::string> cpu_sensors_439 =
 	{
 		"apc1-cpu0-usr",
@@ -2587,6 +2626,8 @@ std::vector<std::string> cpu_sensors_cliffs = {
 
 	const std::unordered_map<int, std::vector<struct target_therm_cfg>>
 		msm_soc_map = {
+		{292, sensor_cfg_msm8998},
+		{319, sensor_cfg_msm8998}, // msm8998
 		{353, sensor_cfg_439},
 		{354, sensor_cfg_439},
 		{363, sensor_cfg_439},
