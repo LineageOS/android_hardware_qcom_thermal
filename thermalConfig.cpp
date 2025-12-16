@@ -3019,8 +3019,8 @@ namespace thermal {
 		{663, parrot_specific}, //Netrani pro
 		{660, canoe_specific}, //Canoe
 		{661, canoe_specific}, //Canoep
-		{722, canoe_common}, //Alana
-                {723, canoe_common}, //Alana APQ
+		{722, canoe_specific}, //Alana
+                {723, canoe_specific}, //Alana APQ
                 {743, canoe_common}, //Gaming SKU
 
 		{669, vienna_specific}, //SW6100
