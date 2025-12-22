@@ -2912,6 +2912,93 @@ namespace thermal {
 		},
 	};
 
+	std::vector<std::string> cpu_sensors_malabar = {
+		"cpu-0-0",
+		"cpu-0-1",
+		"cpu-0-2",
+		"cpu-0-3",
+		"cpu-1-0",
+		"cpu-1-1",
+		"cpu-2-0",
+		"cpu-2-1",
+	};
+	std::vector<struct target_therm_cfg> malabar_common = {
+		{
+			TemperatureType::CPU,
+			cpu_sensors_malabar,
+			"",
+			{
+			[SEVERE] = 95000,
+			[SHUTDOWN] = 115000,
+			},
+			true,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-0" },
+			"GPU0",
+			{
+			[SEVERE] = 95000,
+			[SHUTDOWN] = 115000,
+			},
+			true,
+			true,
+		},
+		{
+			TemperatureType::GPU,
+			{ "gpuss-1" },
+			"GPU1",
+			{
+			[SEVERE] = 95000,
+			[SHUTDOWN] = 115000,
+			},
+			true,
+			true,
+		},
+	};
+
+	std::vector<struct target_therm_cfg>  malabar_specific = {
+		{
+			TemperatureType::SKIN,
+			{ "sys-therm-0" },
+			"skin",
+			{
+			[LIGHT] = 48000,
+			[MODERATE] = 49000,
+			[SEVERE] = 50000,
+			[CRITICAL] = 60000,
+			[EMERGENCY] = 61000,
+			[SHUTDOWN] = 90000,
+			},
+			true,
+			true,
+		},
+		{
+			TemperatureType::BCL_CURRENT,
+			{ "pm7250b-ibat-lvl0" },
+			"ibat",
+			{
+			[SEVERE] = 6000,
+			[SHUTDOWN] = 7500,
+			},
+			true,
+			true,
+		},
+		{
+			TemperatureType::BCL_CURRENT,
+			{ "pmiv010x-ibat-lvl0" },
+			"ibat",
+			{
+			[SEVERE] = 6000,
+			[SHUTDOWN] = 7500,
+			},
+			true,
+			true,
+		},
+	};
+
+
 	const std::unordered_map<int, std::vector<struct target_therm_cfg>>
 		msm_soc_map = {
 		{417, sensor_cfg_bengal}, // bengal
@@ -2988,6 +3075,8 @@ namespace thermal {
 		{555, hamoa_common}, // Hamoa
 		{724, chora_common}, // Skyros
 		{744, chora_common}, //APQ Skyros
+		{733, malabar_common}, //Aldabara
+		{757, malabar_common}, //APQ Aldabara
 	};
 
 	const std::unordered_map<int, std::vector<struct target_therm_cfg>>
@@ -3030,6 +3119,8 @@ namespace thermal {
 		{555, hamoa_specific}, // Hamoa
 		{724, chora_specific}, // Skyros
 		{744, chora_specific}, //APQ Skyros
+		{733, malabar_specific}, // Aldabra
+		{757, malabar_specific}, //APQ Aldabra
 	};
 
 	const std::unordered_multimap<int, std::pair<int, std::vector<struct target_therm_cfg>>>
