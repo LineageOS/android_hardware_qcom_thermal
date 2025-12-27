@@ -2859,17 +2859,6 @@ namespace thermal {
 			true,
 			true,
 		},
-		{
-			TemperatureType::GPU,
-			{ "gpuss-2" },
-			"GPU2",
-			{
-			[SEVERE] = 95000,
-			[SHUTDOWN] = 115000,
-			},
-			true,
-			true,
-		},
 	};
 
 	std::vector<struct target_therm_cfg>  chora_specific = {
