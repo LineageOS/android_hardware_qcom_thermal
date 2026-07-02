@@ -51,10 +51,12 @@ namespace thermal {
 
 ThermalUtils::ThermalUtils(const ueventCB &inp_cb, const notifyCB &inp_cdev_cb):
 	cfg(),
-	cmnInst(),
+	cmnInst(std::bind(&ThermalUtils::virtualNotify, this,
+				std::placeholders::_1)),
 	monitor(std::bind(&ThermalUtils::eventParse, this,
 				std::placeholders::_1,
-				std::placeholders::_2),
+				std::placeholders::_2,
+				std::placeholders::_3),
 		std::bind(&ThermalUtils::sampleParse, this,
 				std::placeholders::_1,
 				std::placeholders::_2),
@@ -154,6 +156,11 @@ void ThermalUtils::Notify(struct therm_sensor& sens)
 	}
 }
 
+void ThermalUtils::virtualNotify(struct therm_sensor *sens)
+{
+	cb(sens->t);
+}
+
 void ThermalUtils::cdevNotify(struct therm_cdev& cdev, int state)
 {
 
@@ -177,7 +184,31 @@ void ThermalUtils::cdevEventParse(int cdevn, int state)
 	return cdevNotify(cdevs, state);
 }
 
-void ThermalUtils::eventParse(int tzn, int trip)
+void ThermalUtils::VirturalSensorEventParse(struct therm_sensor& sens,
+                                              int tzn, int temp)
+{
+	pthread_mutex_lock(&cmnInst.waitMutex);
+	if (temp >= sens.trip_sensor_thresholds) {
+		if (!cmnInst.pollingMode) {
+			cmnInst.pollingMode = true;
+			pthread_cond_broadcast(&cmnInst.waitCond);
+		}
+
+		if (!sens.no_trip_set)
+			cmnInst.initThreshold(sens);
+	} else if (temp < sens.trip_sensor_thresholds_clr) {
+		if (!sens.no_trip_set)
+			cmnInst.initThreshold(sens);
+
+		if (cmnInst.pollingMode) {
+			cmnInst.pollingMode = false;
+			pthread_cond_broadcast(&cmnInst.waitCond);
+		}
+	}
+	pthread_mutex_unlock(&cmnInst.waitMutex);
+}
+
+void ThermalUtils::eventParse(int tzn, int trip, int temp)
 {
 	if (trip != 1)
 		return;
@@ -188,7 +219,11 @@ void ThermalUtils::eventParse(int tzn, int trip)
 	}
 	std::lock_guard<std::mutex> _lock(sens_cb_mutex);
 	struct therm_sensor& sens = thermalConfig[tzn];
-	return Notify(sens);
+
+	if (!sens.virtual_sensor_flag)
+		return Notify(sens);
+
+	VirturalSensorEventParse(sens, tzn, temp);
 }
 
 void ThermalUtils::sampleParse(int tzn, int temp)
@@ -200,6 +235,8 @@ void ThermalUtils::sampleParse(int tzn, int temp)
 	}
 	std::lock_guard<std::mutex> _lock(sens_cb_mutex);
 	struct therm_sensor& sens = thermalConfig[tzn];
+	if (sens.virtual_sensor_flag)
+		return;
 	sens.t.value = (float)temp / (float)sens.mulFactor;
 	return Notify(sens);
 }

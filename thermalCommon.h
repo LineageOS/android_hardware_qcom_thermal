@@ -31,6 +31,7 @@
 #ifndef THERMAL_THERMAL_COMMON_H__
 #define THERMAL_THERMAL_COMMON_H__
 
+#include <thread>
 #include "thermalData.h"
 
 namespace aidl {
@@ -39,11 +40,13 @@ namespace hardware {
 namespace thermal {
 
 #define RETRY_CT 3
+using virtualCB = std::function<void(struct therm_sensor *sens)>;
 
 class ThermalCommon {
 	public:
 		ThermalCommon();
-		~ThermalCommon() = default;
+		ThermalCommon(const virtualCB &inp_cb);
+		~ThermalCommon();
 
 		int readFromFile(std::string_view path, std::string& out);
 		int initThermalZones(std::vector<struct target_therm_cfg>& cfg);
@@ -53,6 +56,8 @@ class ThermalCommon {
 
 		int read_cdev_state(struct therm_cdev& cdev);
 		int read_temperature(struct therm_sensor& sensor);
+		int virtual_sensor_read_temperature(struct therm_sensor& sensor);
+		int read_trip_temperature(struct therm_sensor& sensor);
 		int estimateSeverity(struct therm_sensor& sensor);
 		int findLimitProfile(void);
 		std::vector<struct therm_sensor> fetch_sensor_list()
@@ -64,8 +69,15 @@ class ThermalCommon {
 			return cdev;
 		};
 
+		pthread_mutex_t waitMutex;
+		pthread_cond_t waitCond;
+		bool pollingMode, exitMode;
+
 	private:
+		void TripSensorMonitorLoop(struct therm_sensor *sensor);
+		std::thread virtualThread;
 		int ncpus;
+		virtualCB cb;
 		std::vector<struct target_therm_cfg> cfg;
 		std::vector<struct therm_sensor> sens;
 		std::vector<struct therm_cdev> cdev;
