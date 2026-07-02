@@ -10,7 +10,7 @@ cc_binary {
 	shared_libs: [
 	"libbase",
 	"libbinder_ndk",
-	"android.hardware.thermal-V2-ndk",
+	"android.hardware.thermal-V3-ndk",
 	"libcutils",
 	"libutils",
 	"liblog",
@@ -48,7 +48,7 @@ cc_fuzz {
         "libcutils",
         "libbinder",
         "libbinder_ndk",
-        "android.hardware.thermal-V2-ndk",
+        "android.hardware.thermal-V3-ndk",
         "libnl",
     ],
 

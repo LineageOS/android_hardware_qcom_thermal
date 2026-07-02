@@ -49,12 +49,13 @@ namespace android {
 namespace hardware {
 namespace thermal {
 
+using eventMonCB = std::function<void(int, int, int)>;
 using eventMonitorCB = std::function<void(int, int)>;
 using eventCreateMonitorCB = std::function<void(int, const char *)>;
 
 class ThermalMonitor {
 	public:
-		ThermalMonitor(const eventMonitorCB &inp_event_cb,
+		ThermalMonitor(const eventMonCB &inp_event_cb,
 			const eventMonitorCB &inp_sample_cb,
 			const eventCreateMonitorCB &inp_event_create_cb,
 			const eventMonitorCB &inp_event_cdev_cb);
@@ -74,7 +75,8 @@ class ThermalMonitor {
 		struct nl_sock *event_soc, *sample_soc;
 		int event_group, sample_group;
 		bool monitor_shutdown;
-		eventMonitorCB event_cb, sample_cb;
+		eventMonCB event_cb;
+		eventMonitorCB sample_cb;
 		eventCreateMonitorCB event_create_cb;
 		eventMonitorCB  cdev_cb;
 
