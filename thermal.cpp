@@ -143,7 +143,7 @@ ScopedAStatus Thermal::getTemperaturesWithType(TemperatureType in_type,
 
 	if (!utils.isSensorInitialized(in_type))
 		return ndk::ScopedAStatus::fromExceptionCodeWithMessage(EX_ILLEGAL_STATE,
-					"ThermalHAL given sensor type Not initialized.");
+					"ThermalHAL given sensor type not initialized.");
 	else {
 		if (utils.readTemperatures(in_type, temperatures) <= 0)
 			LOG(VERBOSE) << __func__ << "Sensor Temperature read failure.";
@@ -355,5 +355,8 @@ void Thermal::sendThrottlingChangeCB(const Temperature &t)
 	}
 }
 
+ndk::ScopedAStatus Thermal::forecastSkinTemperature(int32_t forecastSeconds, float*_aidl_return) {
+    return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
+}
 
 }  // namespace aidl::android::hardware::thermal
