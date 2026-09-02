@@ -3244,8 +3244,8 @@ namespace thermal {
 			{ "sys-therm-0" },
 			"skin",
 			{
-			[LIGHT] = 36500,
-			[MODERATE] = 40000,
+			[LIGHT] = 40000,
+			[MODERATE] = 48000,
 			[SEVERE] = 60000,
 			[CRITICAL] = 65000,
 			[EMERGENCY] = 70000,
