@@ -453,14 +453,14 @@ namespace thermal {
 
 	std::vector<std::string> cpu_sensors_trinket =
 	{
-		"cpuss-0",
-		"cpuss-0",
-		"cpuss-0",
-		"cpuss-0",
-		"cpu-1-0",
-		"cpu-1-1",
-		"cpu-1-2",
-		"cpu-1-3",
+		"cpuss-0-usr",
+		"cpuss-0-usr",
+		"cpuss-0-usr",
+		"cpuss-0-usr",
+		"cpu-1-0-usr",
+		"cpu-1-1-usr",
+		"cpu-1-2-usr",
+		"cpu-1-3-usr",
 	};
 
 	std::vector<struct target_therm_cfg> sensor_cfg_trinket =
@@ -475,7 +475,7 @@ namespace thermal {
 		},
 		{
 			TemperatureType::GPU,
-			{ "gpu" },
+			{ "gpu-usr" },
 			"GPU",
 			95000,
 			115000,
@@ -483,7 +483,7 @@ namespace thermal {
 		},
 		{
 			TemperatureType::SKIN,
-			{ "xo-therm" },
+			{ "xo-therm-adc" },
 			"skin",
 			55000,
 			95000,
@@ -491,7 +491,7 @@ namespace thermal {
 		},
 		{
 			TemperatureType::BCL_VOLTAGE,
-			{ "vbat" },
+			{ "pmi632-vbat-lvl0" },
 			"vbat",
 			3000,
 			2800,
@@ -507,11 +507,11 @@ namespace thermal {
 		},
 		{
 			TemperatureType::BCL_PERCENTAGE,
-			{ "socd" },
-			"socd",
-			90,
-			99,
-			true,
+			{ "soc" },
+			"soc",
+			10,
+			2,
+			false,
 		},
 	};
 
