@@ -663,23 +663,11 @@ namespace thermal {
 		},
 	};
 
-	std::vector<std::string> cpu_sensors_holi =
-	{
-		"cpu-0-0",
-		"cpu-0-1",
-		"cpu-0-2",
-		"cpu-0-3",
-		"cpu-0-4",
-		"cpu-0-5",
-		"cpu-1-0",
-		"cpu-1-2",
-	};
-
 	std::vector<struct target_therm_cfg> sensor_cfg_holi =
 	{
 		{
 			TemperatureType::CPU,
-			cpu_sensors_holi,
+			cpu_sensors_lito,
 			"",
 			95000,
 			115000,
@@ -687,7 +675,7 @@ namespace thermal {
 		},
 		{
 			TemperatureType::GPU,
-			{ "gpuss-0" },
+			{ "gpuss-0-usr" },
 			"gpu0",
 			95000,
 			115000,
@@ -695,7 +683,7 @@ namespace thermal {
 		},
 		{
 			TemperatureType::GPU,
-			{ "gpuss-1" },
+			{ "gpuss-1-usr" },
 			"gpu1",
 			95000,
 			115000,
@@ -703,7 +691,7 @@ namespace thermal {
 		},
 		{
 			TemperatureType::SKIN,
-			{ "quiet-therm" },
+			{ "quiet-therm-usr" },
 			"skin",
 			55000,
 			95000,
