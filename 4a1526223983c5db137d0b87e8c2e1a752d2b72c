@@ -33,6 +33,23 @@
       "message": "Looks good to me, follows others from the kernel family",
       "revId": "4a1526223983c5db137d0b87e8c2e1a752d2b72c",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f4580cf_34d2f696",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 16185
+      },
+      "writtenOn": "2026-09-12T19:42:06Z",
+      "side": 1,
+      "message": "ff\u0027d to 24",
+      "revId": "4a1526223983c5db137d0b87e8c2e1a752d2b72c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ],
   "submitRequirementResults": [
