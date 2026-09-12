@@ -281,14 +281,14 @@ namespace thermal {
 
 	std::vector<std::string> cpu_sensors_bengal =
 	{
-		"cpuss-0",
-		"cpuss-1",
-		"cpuss-2",
-		"cpuss-2",
-		"cpu-1-0",
-		"cpu-1-1",
-		"cpu-1-2",
-		"cpu-1-3",
+		"cpuss-0-usr",
+		"cpuss-1-usr",
+		"cpuss-2-usr",
+		"cpuss-2-usr",
+		"cpu-1-0-usr",
+		"cpu-1-1-usr",
+		"cpu-1-2-usr",
+		"cpu-1-3-usr",
 	};
 
 	std::vector<struct target_therm_cfg> sensor_cfg_bengal =
@@ -303,7 +303,7 @@ namespace thermal {
 		},
 		{
 			TemperatureType::GPU,
-			{ "gpu" },
+			{ "gpu-usr" },
 			"GPU",
 			95000,
 			115000,
@@ -311,11 +311,19 @@ namespace thermal {
 		},
 		{
 			TemperatureType::SKIN,
-			{ "xo-therm" },
+			{ "xo-therm-usr" },
 			"skin",
 			55000,
 			95000,
 			true,
+		},
+		{
+			TemperatureType::BCL_VOLTAGE,
+			{ "pmi632-vbat-lvl0" },
+			"vbat",
+			3000,
+			2800,
+			false,
 		},
 		{
 			TemperatureType::BCL_CURRENT,
@@ -327,10 +335,10 @@ namespace thermal {
 		},
 		{
 			TemperatureType::BCL_PERCENTAGE,
-			{ "socd" },
-			"socd",
-			90,
-			99,
+			{ "soc" },
+			"soc",
+			10,
+			2,
 			false,
 		},
 	};
@@ -387,23 +395,11 @@ namespace thermal {
 		},
 	};
 
-	std::vector<std::string> cpu_sensors_khaje =
-	{
-		"cpuss-2",
-		"cpuss-2",
-		"cpuss-2",
-		"cpuss-2",
-		"cpu-1-0",
-		"cpu-1-1",
-		"cpu-1-2",
-		"cpu-1-3",
-	};
-
 	std::vector<struct target_therm_cfg> sensor_cfg_khaje =
 	{
 		{
 			TemperatureType::CPU,
-			cpu_sensors_khaje,
+			cpu_sensors_bengal,
 			"",
 			95000,
 			115000,
@@ -411,7 +407,7 @@ namespace thermal {
 		},
 		{
 			TemperatureType::GPU,
-			{ "gpu" },
+			{ "gpu-usr" },
 			"GPU",
 			95000,
 			115000,
@@ -419,7 +415,7 @@ namespace thermal {
 		},
 		{
 			TemperatureType::SKIN,
-			{ "xo-therm" },
+			{ "xo-therm-usr" },
 			"skin",
 			55000,
 			95000,
@@ -427,7 +423,7 @@ namespace thermal {
 		},
 		{
 			TemperatureType::BCL_VOLTAGE,
-			{ "vbat" },
+			{ "pm7250b-vbat-lvl0" },
 			"vbat",
 			3000,
 			2800,
@@ -443,11 +439,11 @@ namespace thermal {
 		},
 		{
 			TemperatureType::BCL_PERCENTAGE,
-			{ "socd" },
-			"socd",
-			90,
-			99,
-			true,
+			{ "soc" },
+			"soc",
+			10,
+			2,
+			false,
 		},
 	};
 
