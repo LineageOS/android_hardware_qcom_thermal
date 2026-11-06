@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d7c933b_8f1fec2a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 29415
+      },
+      "writtenOn": "2026-11-06T02:47:00Z",
+      "side": 1,
+      "message": "afaict, HAL waipio shipped with didn\u0027t start throttling until 55C (it only had throt_thresh, shutdwn_thresh and vr_thresh), so this looks good with what intent was with old HAL.\n\n\tstd::vector\u003cstruct target_therm_cfg\u003e  waipio_specific \u003d {\n\t\t{\n\t\t\tTemperatureType::BCL_CURRENT,\n\t\t\t{ \"pm8350b-ibat-lvl0\" },\n\t\t\t\"ibat\",\n\t\t\t6000,\n\t\t\t7500,\n\t\t\t6000,\n\t\t\ttrue,\n\t\t},\n\t\t{\n\t\t\tTemperatureType::SKIN,\n\t\t\t{ \"xo-therm\" },\n\t\t\t\"skin\",\n\t\t\t55000,\n\t\t\t95000,\n\t\t\t55000,\n\t\t\ttrue,\n\t\t},\n\t};",
+      "revId": "b9a35b160ddc01da63e67c92de8afacc43117905",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
