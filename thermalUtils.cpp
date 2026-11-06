@@ -65,7 +65,10 @@ ThermalUtils::ThermalUtils(const ueventCB &inp_cb):
 		sensorList = cmnInst.fetch_sensor_list();
 		std::lock_guard<std::mutex> _lock(sens_cb_mutex);
 		for (struct therm_sensor sens: sensorList) {
-			thermalConfig[sens.sensor_name] = sens;
+			// Several sensors may read one zone (sdm660 reads cpuss-0-usr
+			// for CPU0-3) and several zones may report one name (neo:
+			// disp-lea-left/right are both SKIN-DISP-LEA): key by both.
+			thermalConfig[sens.sensor_name + "/" + sens.t.name] = sens;
 			cmnInst.read_temperature(sens);
 			cmnInst.estimateSeverity(sens);
 			cmnInst.initThreshold(sens);
@@ -124,15 +127,19 @@ void ThermalUtils::ueventParse(std::string sensor_name, int temp)
 {
 	LOG(DEBUG) << "uevent triggered for sensor: " << sensor_name
 		<< std::endl;
-	if (thermalConfig.find(sensor_name) == thermalConfig.end()) {
+	bool found = false;
+	std::lock_guard<std::mutex> _lock(sens_cb_mutex);
+	for (auto& it : thermalConfig) {
+		struct therm_sensor& sens = it.second;
+		if (sens.sensor_name != sensor_name)
+			continue;
+		found = true;
+		sens.t.value = (float)temp / (float)sens.mulFactor;
+		Notify(sens);
+	}
+	if (!found)
 		LOG(DEBUG) << "sensor is not monitored:" << sensor_name
 			<< std::endl;
-		return;
-	}
-	std::lock_guard<std::mutex> _lock(sens_cb_mutex);
-	struct therm_sensor& sens = thermalConfig[sensor_name];
-	sens.t.value = (float)temp / (float)sens.mulFactor;
-	return Notify(sens);
 }
 
 int ThermalUtils::readTemperatures(std::vector<Temperature>& temp)
